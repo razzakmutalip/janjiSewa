@@ -67,7 +67,7 @@
             <div id="step2" class="hidden">
                 <div class="section-title" id="t2">Maklumat Harta Tanah</div>
                 <div class="form-group">
-                    <label id="l14">Jenis Perolenan</label>
+                    <label id="l14">Jenis Sewaan</label>
                     <select id="rentalType">
                         <option value="Keseluruhan Rumah">Keseluruhan Rumah / Whole House</option>
                         <option value="Bilik Sahaja">Bilik Sahaja / Room Only</option>
@@ -90,9 +90,9 @@
 
             <!-- STEP 3: TERMS -->
             <div id="step3" class="hidden">
-                <div class="section-title" id="t3">Terma Perolenan</div>
+                <div class="section-title" id="t3">Terma Sewaan</div>
                 <div class="form-group"><label id="l20">Tarikh Mula</label><input type="date" id="leaseStart"></div>
-                <div class="form-group"><label id="l21">Tempoh Perolenan</label><select id="leaseDuration"><option value="6">6 bulan</option><option value="12" selected>12 bulan</option><option value="24">24 bulan</option></select></div>
+                <div class="form-group"><label id="l21">Tempoh Sewaan</label><select id="leaseDuration"><option value="6">6 bulan</option><option value="12" selected>12 bulan</option><option value="24">24 bulan</option></select></div>
                 <div class="form-group"><label id="l22">Sewa Bulanan (RM)</label><input type="number" id="rent" placeholder="1500" onchange="showDeposit()"></div>
                 <div id="depositDiv" class="deposit" style="display:none"></div>
                 <div class="form-group"><label id="l23">Notis Pembatalan</label><select id="notice"><option>1 bulan</option><option>2 bulan</option><option>3 bulan</option></select></div>
@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="preview-box">
-                    <h4 id="previewTitle">📋 PERJANJIAN PEROLENAN TENANCY</h4>
+                    <h4 id="previewTitle">📋 PERJANJIAN SEWAAN</h4>
                     <hr style="margin:10px 0">
                     <p style="color:#0369a1;font-weight:bold" id="previewFeatures">✓ Yang termasuk dalam PDF:</p>
                     <ul>
@@ -154,8 +154,8 @@
                     <p><strong id="fpl1">Landlord:</strong> <span id="previewLandlord"></span></p>
                     <p><strong id="fpl2">Tenant:</strong> <span id="previewTenant"></span></p>
                     <p><strong id="fpl3">Property:</strong> <span id="previewProp"></span></p>
-                    <p><strong id="fpl4">Rental Type:</strong> <span id="previewRental"></span></p>
-                    <p><strong id="fpl5">Monthly Rent:</strong> RM<span id="previewRent"></span></p>
+                    <p><strong id="fpl4">Jenis Sewaan:</strong> <span id="previewRental"></span></p>
+                    <p><strong id="fpl5">Sewa Bulanan:</strong> RM<span id="previewRent"></span></p>
                 </div>
             </div>
 
@@ -186,17 +186,17 @@
 
         const translations = {
             bm: {
-                t1: 'Pemilik & Penyewa', t2: 'Maklumat Harta Tanah', t3: 'Terma Perolenan', t4: 'Tandatangan / Signatures', t5: 'Semak & Bayar', t6: '✓ Pembayaran Berjaya!', t7: 'Terima kasih! Muat turun PDF anda di bawah:',
+                t1: 'Pemilik & Penyewa', t2: 'Maklumat Harta Tanah', t3: 'Terma Sewaan', t4: 'Tandatangan / Signatures', t5: 'Semak & Bayar', t6: '✓ Pembayaran Berjaya!', t7: 'Terima kasih! Muat turun PDF anda di bawah:',
                 l1: 'Nama Penuh', l2: 'No. ID', l3: 'Telefon', l4: 'Email', l5: 'Alamat', l6: 'Foto ID/Pasport',
                 l7: 'Nama Penuh', l8: 'No. ID', l9: 'Telefon', l10: 'Email', l11: 'Alamat', l12: 'Foto ID/Pasport',
-                l13: 'Alamat Harta', l14: 'Jenis Perolenan', l15: 'Jenis Harta', l16: 'Keluasan', l17: 'Negeri', l18: 'Bilangan Max Penghuni', l19: 'Foto Harta Tanah',
-                l20: 'Tarikh Mula', l21: 'Tempoh Perolenan', l22: 'Sewa Bulanan (RM)', l23: 'Notis Pembatalan', l24: 'Kaedah Bayar',
+                l13: 'Alamat Harta', l14: 'Jenis Sewaan', l15: 'Jenis Harta', l16: 'Keluasan', l17: 'Negeri', l18: 'Bilangan Max Penghuni', l19: 'Foto Harta Tanah',
+                l20: 'Tarikh Mula', l21: 'Tempoh Sewaan', l22: 'Sewa Bulanan (RM)', l23: 'Notis Pembatalan', l24: 'Kaedah Bayar',
                 l25: 'Tandatangan Pemilik / Landlord Signature', l26: 'Nama: ', l27: 'Tandatangan Penyewa / Tenant Signature', l28: 'Nama: ',
                 priceLabel: 'Harga:', priceDesc: 'Perjanjian lengkap + semua dokumen',
-                previewTitle: '📋 PERJANJIAN PEROLENAN TENANCY', previewFeatures: '✓ Yang termasuk dalam PDF:',
+                previewTitle: '📋 PERJANJIAN SEWAAN', previewFeatures: '✓ Yang termasuk dalam PDF:',
                 f1: 'Landlord & Tenant details', f2: 'Property information', f3: 'Rental terms & conditions', f4: 'Payment schedule', f5: 'Signature sections', f6: 'Full legal agreement (Malaysia-compliant)',
                 previewReady: 'Siap untuk dimuat turun selepas pembayaran!', previewWait: '(Full PDF akan tersedia setelah bayar)',
-                formPreviewTitle: 'Maklumat Yang Telah Diisi:', fpl1: 'Landlord:', fpl2: 'Tenant:', fpl3: 'Property:', fpl4: 'Rental Type:', fpl5: 'Monthly Rent:',
+                formPreviewTitle: 'Maklumat Yang Telah Diisi:', fpl1: 'Landlord:', fpl2: 'Tenant:', fpl3: 'Property:', fpl4: 'Jenis Sewaan:', fpl5: 'Sewa Bulanan:',
                 dlLandlord: '📥 Muat Turun Foto Pemilik', dlTenant: '📥 Muat Turun Foto Penyewa', dlProp: '📥 Muat Turun Foto Harta', dlPDF: '📥 Muat Turun PDF Perjanjian', resetBtn: 'Buat Satu Lagi'
             },
             en: {
@@ -309,7 +309,7 @@
             let y = 15;
 
             doc.setFontSize(16);
-            doc.text(lang === 'bm' ? 'PERJANJIAN PEROLENAN TENANCY' : 'TENANCY AGREEMENT', 10, y);
+            doc.text(lang === 'bm' ? 'PERJANJIAN SEWAAN' : 'TENANCY AGREEMENT', 10, y);
             y += 15;
 
             doc.setFontSize(10);
@@ -319,7 +319,7 @@
                 [lang === 'bm' ? 'Tenant:' : 'Tenant:', document.getElementById('tenantName').value],
                 [lang === 'bm' ? 'ID:' : 'ID:', document.getElementById('tenantId').value],
                 [lang === 'bm' ? 'Property:' : 'Property:', document.getElementById('propAddr').value],
-                [lang === 'bm' ? 'Jenis Perolenan:' : 'Rental Type:', document.getElementById('rentalType').value],
+                [lang === 'bm' ? 'Jenis Sewaan:' : 'Rental Type:', document.getElementById('rentalType').value],
                 [lang === 'bm' ? 'Sewa:' : 'Rent:', 'RM ' + document.getElementById('rent').value],
                 [lang === 'bm' ? 'Tempoh:' : 'Duration:', document.getElementById('leaseDuration').value + (lang === 'bm' ? ' bulan' : ' months')]
             ];
