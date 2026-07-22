@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JANJIsewa - Tenancy Agreement Generator RM19</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:10px}.container{max-width:700px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.1)}h1{color:#667eea;text-align:center;margin-bottom:5px;font-size:28px}.subtitle{text-align:center;color:#999;font-size:12px;margin-bottom:15px}.lang-toggle{text-align:center;margin-bottom:15px}.btn-lang{padding:8px 16px;margin:0 5px;border:none;border-radius:4px;cursor:pointer;background:#ddd;font-weight:bold}.btn-lang.active{background:#667eea;color:#fff}.step-indicator{display:flex;justify-content:space-around;margin-bottom:20px;gap:5px;flex-wrap:wrap}.step-num{width:35px;height:35px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#666;font-size:12px}.step.active .step-num{background:#667eea;color:#fff}.form-group{margin-bottom:12px}label{display:block;font-weight:bold;margin-bottom:4px;font-size:13px;color:#333}input,select,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;font-size:13px;font-family:Arial}input:focus,select:focus,textarea:focus{outline:0;border-color:#667eea;box-shadow:0 0 5px rgba(102,126,234,.3)}.file-input-wrapper{border:2px dashed #667eea;border-radius:4px;padding:15px;text-align:center;cursor:pointer;background:#f8f9ff}.file-input-wrapper input[type="file"]{display:none}.file-label{color:#667eea;font-weight:bold;display:block;margin-bottom:5px;font-size:12px}.file-name{color:#666;font-size:12px}.section-title{font-weight:bold;color:#667eea;margin:15px 0 10px 0;font-size:14px;border-bottom:2px solid #667eea;padding-bottom:5px}.hidden{display:none}.buttons{display:flex;gap:10px;margin-top:20px}button{flex:1;padding:12px;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:14px}.btn-prev{background:#999;color:#fff}.btn-next{background:#667eea;color:#fff}.btn-generate{background:#10b981;color:#fff}.success{text-align:center;padding:40px 20px;background:#f0fdf4;border-radius:8px;margin-top:20px}.success h2{color:#10b981;margin-bottom:15px;font-size:24px}.success p{color:#666;margin-bottom:20px}.download-buttons{margin-top:20px;margin-bottom:20px}.download-btn{display:block;width:100%;padding:10px;margin:10px 0;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;text-align:center;font-weight:bold}.download-btn:hover{background:#4338ca}.deposit{background:#e0f2fe;padding:10px;border-radius:4px;margin-top:10px;font-size:13px;color:#0369a1}.signature-canvas{border:2px solid #ddd;border-radius:4px;cursor:crosshair;background:#fff;display:block;width:100%;height:120px;margin:10px 0}.signature-container{margin:15px 0}.clear-sig{padding:8px 16px;background:#ff6b6b;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:12px;margin-top:10px}
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:10px}.container{max-width:700px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.1)}h1{color:#667eea;text-align:center;margin-bottom:5px;font-size:28px}.subtitle{text-align:center;color:#999;font-size:12px;margin-bottom:15px}.lang-toggle{text-align:center;margin-bottom:15px}.btn-lang{padding:8px 16px;margin:0 5px;border:none;border-radius:4px;cursor:pointer;background:#ddd;font-weight:bold}.btn-lang.active{background:#667eea;color:#fff}.step-indicator{display:flex;justify-content:space-around;margin-bottom:20px;gap:5px;flex-wrap:wrap}.step-num{width:35px;height:35px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#666;font-size:12px}.step.active .step-num{background:#667eea;color:#fff}.form-group{margin-bottom:12px}label{display:block;font-weight:bold;margin-bottom:4px;font-size:13px;color:#333}input,select,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:4px;font-size:13px;font-family:Arial}input:focus,select:focus,textarea:focus{outline:0;border-color:#667eea;box-shadow:0 0 5px rgba(102,126,234,.3)}.file-input-wrapper{border:2px dashed #667eea;border-radius:4px;padding:15px;text-align:center;cursor:pointer;background:#f8f9ff}.file-input-wrapper input[type="file"]{display:none}.file-label{color:#667eea;font-weight:bold;display:block;margin-bottom:5px;font-size:12px}.file-name{color:#666;font-size:12px}.section-title{font-weight:bold;color:#667eea;margin:15px 0 10px 0;font-size:14px;border-bottom:2px solid #667eea;padding-bottom:5px}.hidden{display:none}.buttons{display:flex;gap:10px;margin-top:20px}button{flex:1;padding:12px;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-size:14px}.btn-prev{background:#999;color:#fff}.btn-next{background:#667eea;color:#fff}.btn-pay{background:#10b981;color:#fff;font-size:16px;text-decoration:none;display:flex;align-items:center;justify-content:center}.btn-pay:hover{background:#059669}.btn-preview{background:#4f46e5;color:#fff;font-size:13px}.success{text-align:center;padding:40px 20px;background:#f0fdf4;border-radius:8px;margin-top:20px}.success h2{color:#10b981;margin-bottom:15px;font-size:24px}.success p{color:#666;margin-bottom:20px}.download-buttons{margin-top:20px;margin-bottom:20px}.download-btn{display:block;width:100%;padding:10px;margin:10px 0;background:#4f46e5;color:#fff;border:none;border-radius:4px;cursor:pointer;text-align:center;font-weight:bold}.download-btn:hover{background:#4338ca}.deposit{background:#e0f2fe;padding:10px;border-radius:4px;margin-top:10px;font-size:13px;color:#0369a1}.signature-canvas{border:2px solid #ddd;border-radius:4px;cursor:crosshair;background:#fff;display:block;width:100%;height:120px;margin:10px 0}.signature-container{margin:15px 0}.clear-sig{padding:8px 16px;background:#ff6b6b;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:12px;margin-top:10px}.preview-box{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:15px;margin:15px 0;max-height:400px;overflow-y:auto;font-size:13px;line-height:1.6}.price-tag{background:#fef3c7;border:2px solid #f59e0b;border-radius:8px;padding:20px;text-align:center;margin:15px 0}.price-tag h3{color:#d97706;font-size:24px;margin:10px 0}.price-tag p{color:#92400e;font-size:14px}ul{margin-left:20px}li{margin:8px 0;color:#666}
     </style>
 </head>
 <body>
@@ -70,8 +69,8 @@
                 <div class="form-group">
                     <label id="l14">Jenis Perolenan</label>
                     <select id="rentalType">
-                        <option value="rumah">Keseluruhan Rumah / Whole House</option>
-                        <option value="bilik">Bilik Sahaja / Room Only</option>
+                        <option value="Keseluruhan Rumah">Keseluruhan Rumah / Whole House</option>
+                        <option value="Bilik Sahaja">Bilik Sahaja / Room Only</option>
                     </select>
                 </div>
                 <div class="form-group"><label id="l13">Alamat Harta</label><input type="text" id="propAddr"></div>
@@ -119,26 +118,59 @@
                 </div>
             </div>
 
-            <!-- STEP 5: REVIEW -->
+            <!-- STEP 5: REVIEW & PAY -->
             <div id="step5" class="hidden">
-                <div class="section-title" id="t5">Semak & Hasilkan</div>
-                <div style="background:#f0fdf4;padding:15px;border-radius:4px;text-align:center;color:#10b981">
-                    <strong>✓ Sedia untuk hasilkan PDF</strong><br>
-                    <span id="t6">Klik "Hasilkan PDF" di bawah</span>
+                <div class="section-title" id="t5">Semak & Bayar</div>
+                
+                <div class="price-tag">
+                    <p id="priceLabel">Harga:</p>
+                    <h3>RM 19.00</h3>
+                    <p id="priceDesc">Perjanjian lengkap + semua dokumen</p>
+                </div>
+
+                <div class="preview-box">
+                    <h4 id="previewTitle">📋 PERJANJIAN PEROLENAN TENANCY</h4>
+                    <hr style="margin:10px 0">
+                    <p style="color:#0369a1;font-weight:bold" id="previewFeatures">✓ Yang termasuk dalam PDF:</p>
+                    <ul>
+                        <li id="f1">Landlord & Tenant details</li>
+                        <li id="f2">Property information</li>
+                        <li id="f3">Rental terms & conditions</li>
+                        <li id="f4">Payment schedule</li>
+                        <li id="f5">Signature sections</li>
+                        <li id="f6">Full legal agreement (Malaysia-compliant)</li>
+                    </ul>
+                    <p style="margin-top:15px;color:#666;font-size:12px">
+                        <strong id="previewReady">Siap untuk dimuat turun selepas pembayaran!</strong><br>
+                        <em id="previewWait">(Full PDF akan tersedia setelah bayar)</em>
+                    </p>
+                </div>
+
+                <button type="button" class="btn-preview" onclick="showFormPreview()">👁️ Lihat Info Form / View Form Info</button>
+
+                <div id="formPreview" class="preview-box hidden">
+                    <strong id="formPreviewTitle">Maklumat Yang Telah Diisi:</strong>
+                    <hr style="margin:10px 0">
+                    <p><strong id="fpl1">Landlord:</strong> <span id="previewLandlord"></span></p>
+                    <p><strong id="fpl2">Tenant:</strong> <span id="previewTenant"></span></p>
+                    <p><strong id="fpl3">Property:</strong> <span id="previewProp"></span></p>
+                    <p><strong id="fpl4">Rental Type:</strong> <span id="previewRental"></span></p>
+                    <p><strong id="fpl5">Monthly Rent:</strong> RM<span id="previewRent"></span></p>
                 </div>
             </div>
 
             <div class="buttons">
                 <button type="button" class="btn-prev hidden" id="prevBtn" onclick="changeStep(-1)">Sebelumnya</button>
                 <button type="button" class="btn-next" id="nextBtn" onclick="changeStep(1)">Seterusnya</button>
-                <button type="button" class="btn-generate hidden" id="genBtn" onclick="generatePDF()">Hasilkan PDF</button>
+                <a href="https://pay.chip-in.asia/Oh4ckwrOIJU3rOSby5" target="_blank" style="text-decoration:none;flex:1"><button type="button" class="btn-pay hidden" id="payBtn">💳 Bayar RM19 & Muat Turun PDF</button></a>
             </div>
         </form>
 
         <div id="success" class="hidden success">
-            <h2 id="t7">✓ Berjaya!</h2>
-            <p id="t8">PDF dan foto telah sedia untuk dimuat turun</p>
+            <h2 id="t6">✓ Pembayaran Berjaya!</h2>
+            <p id="t7">Terima kasih! Muat turun PDF anda di bawah:</p>
             <div class="download-buttons">
+                <button class="download-btn" onclick="downloadPDF()" id="dlPDF">📥 Muat Turun PDF Perjanjian</button>
                 <button class="download-btn" onclick="downloadLandlordPhoto()" id="dlLandlord">📥 Muat Turun Foto Pemilik</button>
                 <button class="download-btn" onclick="downloadTenantPhoto()" id="dlTenant">📥 Muat Turun Foto Penyewa</button>
                 <button class="download-btn" onclick="downloadPropPhoto()" id="dlProp">📥 Muat Turun Foto Harta</button>
@@ -154,22 +186,32 @@
 
         const translations = {
             bm: {
-                t1: 'Pemilik & Penyewa', t2: 'Maklumat Harta Tanah', t3: 'Terma Perolenan', t4: 'Tandatangan / Signatures', t5: 'Semak & Hasilkan', t6: 'Klik "Hasilkan PDF" di bawah', t7: '✓ Berjaya!', t8: 'PDF dan foto telah sedia untuk dimuat turun',
+                t1: 'Pemilik & Penyewa', t2: 'Maklumat Harta Tanah', t3: 'Terma Perolenan', t4: 'Tandatangan / Signatures', t5: 'Semak & Bayar', t6: '✓ Pembayaran Berjaya!', t7: 'Terima kasih! Muat turun PDF anda di bawah:',
                 l1: 'Nama Penuh', l2: 'No. ID', l3: 'Telefon', l4: 'Email', l5: 'Alamat', l6: 'Foto ID/Pasport',
                 l7: 'Nama Penuh', l8: 'No. ID', l9: 'Telefon', l10: 'Email', l11: 'Alamat', l12: 'Foto ID/Pasport',
                 l13: 'Alamat Harta', l14: 'Jenis Perolenan', l15: 'Jenis Harta', l16: 'Keluasan', l17: 'Negeri', l18: 'Bilangan Max Penghuni', l19: 'Foto Harta Tanah',
                 l20: 'Tarikh Mula', l21: 'Tempoh Perolenan', l22: 'Sewa Bulanan (RM)', l23: 'Notis Pembatalan', l24: 'Kaedah Bayar',
                 l25: 'Tandatangan Pemilik / Landlord Signature', l26: 'Nama: ', l27: 'Tandatangan Penyewa / Tenant Signature', l28: 'Nama: ',
-                dlLandlord: '📥 Muat Turun Foto Pemilik', dlTenant: '📥 Muat Turun Foto Penyewa', dlProp: '📥 Muat Turun Foto Harta', resetBtn: 'Buat Satu Lagi'
+                priceLabel: 'Harga:', priceDesc: 'Perjanjian lengkap + semua dokumen',
+                previewTitle: '📋 PERJANJIAN PEROLENAN TENANCY', previewFeatures: '✓ Yang termasuk dalam PDF:',
+                f1: 'Landlord & Tenant details', f2: 'Property information', f3: 'Rental terms & conditions', f4: 'Payment schedule', f5: 'Signature sections', f6: 'Full legal agreement (Malaysia-compliant)',
+                previewReady: 'Siap untuk dimuat turun selepas pembayaran!', previewWait: '(Full PDF akan tersedia setelah bayar)',
+                formPreviewTitle: 'Maklumat Yang Telah Diisi:', fpl1: 'Landlord:', fpl2: 'Tenant:', fpl3: 'Property:', fpl4: 'Rental Type:', fpl5: 'Monthly Rent:',
+                dlLandlord: '📥 Muat Turun Foto Pemilik', dlTenant: '📥 Muat Turun Foto Penyewa', dlProp: '📥 Muat Turun Foto Harta', dlPDF: '📥 Muat Turun PDF Perjanjian', resetBtn: 'Buat Satu Lagi'
             },
             en: {
-                t1: 'Landlord & Tenant', t2: 'Property Information', t3: 'Lease Terms', t4: 'Signatures', t5: 'Review & Generate', t6: 'Click "Generate PDF" below', t7: '✓ Success!', t8: 'PDF and photos are ready to download',
+                t1: 'Landlord & Tenant', t2: 'Property Information', t3: 'Lease Terms', t4: 'Signatures', t5: 'Review & Pay', t6: '✓ Payment Successful!', t7: 'Thank you! Download your PDF below:',
                 l1: 'Full Name', l2: 'ID Number', l3: 'Phone', l4: 'Email', l5: 'Address', l6: 'ID/Passport Photo',
                 l7: 'Full Name', l8: 'ID Number', l9: 'Phone', l10: 'Email', l11: 'Address', l12: 'ID/Passport Photo',
                 l13: 'Property Address', l14: 'Rental Type', l15: 'Property Type', l16: 'Size', l17: 'State', l18: 'Max Occupants', l19: 'Property Photo',
                 l20: 'Start Date', l21: 'Lease Duration', l22: 'Monthly Rent (RM)', l23: 'Notice Period', l24: 'Payment Method',
                 l25: 'Landlord Signature', l26: 'Name: ', l27: 'Tenant Signature', l28: 'Name: ',
-                dlLandlord: '📥 Download Landlord Photo', dlTenant: '📥 Download Tenant Photo', dlProp: '📥 Download Property Photo', resetBtn: 'Create Another'
+                priceLabel: 'Price:', priceDesc: 'Complete agreement + all documents',
+                previewTitle: '📋 TENANCY AGREEMENT', previewFeatures: '✓ Included in PDF:',
+                f1: 'Landlord & Tenant details', f2: 'Property information', f3: 'Rental terms & conditions', f4: 'Payment schedule', f5: 'Signature sections', f6: 'Full legal agreement (Malaysia-compliant)',
+                previewReady: 'Ready to download after payment!', previewWait: '(Full PDF available after payment)',
+                formPreviewTitle: 'Your Form Information:', fpl1: 'Landlord:', fpl2: 'Tenant:', fpl3: 'Property:', fpl4: 'Rental Type:', fpl5: 'Monthly Rent:',
+                dlLandlord: '📥 Download Landlord Photo', dlTenant: '📥 Download Tenant Photo', dlProp: '📥 Download Property Photo', dlPDF: '📥 Download Agreement PDF', resetBtn: 'Create Another'
             }
         };
 
@@ -189,8 +231,8 @@
         }
 
         function updateNameDisplays() {
-            document.getElementById('landlordNameDisplay').textContent = document.getElementById('landlordName').value;
-            document.getElementById('tenantNameDisplay').textContent = document.getElementById('tenantName').value;
+            document.getElementById('landlordNameDisplay').textContent = document.getElementById('landlordName').value || (lang === 'bm' ? '(Nama Landlord)' : '(Landlord Name)');
+            document.getElementById('tenantNameDisplay').textContent = document.getElementById('tenantName').value || (lang === 'bm' ? '(Nama Tenant)' : '(Tenant Name)');
         }
 
         function changeStep(n) {
@@ -202,7 +244,7 @@
             
             document.getElementById('prevBtn').classList.toggle('hidden', step === 1);
             document.getElementById('nextBtn').classList.toggle('hidden', step > 4);
-            document.getElementById('genBtn').classList.toggle('hidden', step !== 5);
+            document.getElementById('payBtn').classList.toggle('hidden', step !== 5);
             
             if (step === 4) updateNameDisplays();
         }
@@ -214,32 +256,39 @@
             document.getElementById('depositDiv').style.display = rent ? 'block' : 'none';
         }
 
+        function showFormPreview() {
+            document.getElementById('formPreview').classList.toggle('hidden');
+            document.getElementById('previewLandlord').textContent = document.getElementById('landlordName').value || '-';
+            document.getElementById('previewTenant').textContent = document.getElementById('tenantName').value || '-';
+            document.getElementById('previewProp').textContent = document.getElementById('propAddr').value || '-';
+            document.getElementById('previewRental').textContent = document.getElementById('rentalType').value || '-';
+            document.getElementById('previewRent').textContent = document.getElementById('rent').value || '-';
+        }
+
         function initSignatureCanvases() {
             const landlordCanvas = document.getElementById('landlordSigCanvas');
             const tenantCanvas = document.getElementById('tenantSigCanvas');
             
             [landlordCanvas, tenantCanvas].forEach(canvas => {
-                const rect = canvas.getBoundingClientRect();
                 canvas.width = canvas.offsetWidth;
                 canvas.height = 120;
                 
                 let isDrawing = false;
                 const ctx = canvas.getContext('2d');
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = '#000';
                 
-                canvas.addEventListener('mousedown', () => isDrawing = true);
-                canvas.addEventListener('mouseup', () => isDrawing = false);
+                canvas.addEventListener('mousedown', () => { isDrawing = true; ctx.beginPath(); });
+                canvas.addEventListener('mouseup', () => { isDrawing = false; });
                 canvas.addEventListener('mousemove', (e) => {
                     if (!isDrawing) return;
                     const rect = canvas.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
-                    ctx.lineWidth = 2;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    ctx.fillStyle = '#000';
-                    ctx.beginPath();
-                    ctx.arc(x, y, 1, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
                 });
             });
         }
@@ -254,12 +303,7 @@
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        function generatePDF() {
-            if (!document.getElementById('landlordName').value || !document.getElementById('tenantName').value) {
-                alert(lang === 'bm' ? 'Sila isi semua maklumat' : 'Please fill in all information');
-                return;
-            }
-
+        function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             let y = 15;
@@ -270,14 +314,14 @@
 
             doc.setFontSize(10);
             const data = [
-                ['Landlord:', document.getElementById('landlordName').value],
-                ['ID:', document.getElementById('landlordId').value],
-                ['Tenant:', document.getElementById('tenantName').value],
-                ['ID:', document.getElementById('tenantId').value],
-                ['Property:', document.getElementById('propAddr').value],
-                ['Rental Type:', document.getElementById('rentalType').value],
-                ['Rent:', 'RM ' + document.getElementById('rent').value],
-                ['Duration:', document.getElementById('leaseDuration').value + ' months']
+                [lang === 'bm' ? 'Landlord:' : 'Landlord:', document.getElementById('landlordName').value],
+                [lang === 'bm' ? 'ID:' : 'ID:', document.getElementById('landlordId').value],
+                [lang === 'bm' ? 'Tenant:' : 'Tenant:', document.getElementById('tenantName').value],
+                [lang === 'bm' ? 'ID:' : 'ID:', document.getElementById('tenantId').value],
+                [lang === 'bm' ? 'Property:' : 'Property:', document.getElementById('propAddr').value],
+                [lang === 'bm' ? 'Jenis Perolenan:' : 'Rental Type:', document.getElementById('rentalType').value],
+                [lang === 'bm' ? 'Sewa:' : 'Rent:', 'RM ' + document.getElementById('rent').value],
+                [lang === 'bm' ? 'Tempoh:' : 'Duration:', document.getElementById('leaseDuration').value + (lang === 'bm' ? ' bulan' : ' months')]
             ];
 
             data.forEach(([label, val]) => {
@@ -286,11 +330,9 @@
             });
 
             y += 10;
-            doc.text('Landlord: ___________________   Tenant: ___________________', 10, y);
+            doc.text(lang === 'bm' ? 'Pemilik: ___________________   Penyewa: ___________________' : 'Landlord: ___________________   Tenant: ___________________', 10, y);
 
             doc.save(`JANJIsewa_${new Date().getTime()}.pdf`);
-            document.getElementById('form').classList.add('hidden');
-            document.getElementById('success').classList.remove('hidden');
         }
 
         function downloadLandlordPhoto() {
@@ -332,6 +374,7 @@
             document.getElementById('form').reset();
             clearLandlordSig();
             clearTenantSig();
+            document.getElementById('formPreview').classList.add('hidden');
             step = 1;
             document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('hidden'));
             document.getElementById('step1').classList.remove('hidden');
@@ -339,10 +382,9 @@
             document.querySelector('.step').classList.add('active');
             document.getElementById('prevBtn').classList.add('hidden');
             document.getElementById('nextBtn').classList.remove('hidden');
-            document.getElementById('genBtn').classList.add('hidden');
+            document.getElementById('payBtn').classList.add('hidden');
         }
 
-        // Initialize on page load
         window.addEventListener('load', () => {
             initSignatureCanvases();
             setLang('bm');
