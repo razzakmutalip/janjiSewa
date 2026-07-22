@@ -52,41 +52,42 @@
             <div class="step active" id="step1">
                 <div class="section-title">Pemilik & Penyewa</div>
                 <div style="font-size:12px;color:#555;margin:15px 0 10px 0;font-weight:bold">LANDLORD</div>
-                <div class="form-group"><label>Nama Penuh</label><input type="text" id="landlordName"></div>
-                <div class="form-group"><label>No. ID</label><input type="text" id="landlordId"></div>
-                <div class="form-group"><label>Telefon</label><input type="tel" id="landlordPhone"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="landlordEmail"></div>
-                <div class="form-group"><label>Alamat</label><input type="text" id="landlordAddr"></div>
+                <div class="form-group"><label>Nama Penuh</label><input type="text" id="landlordName" onchange="saveFormData()"></div>
+                <div class="form-group"><label>No. ID</label><input type="text" id="landlordId" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Telefon</label><input type="tel" id="landlordPhone" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="landlordEmail" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Alamat</label><input type="text" id="landlordAddr" onchange="saveFormData()"></div>
 
                 <div style="font-size:12px;color:#555;margin:15px 0 10px 0;font-weight:bold">TENANT</div>
-                <div class="form-group"><label>Nama Penuh</label><input type="text" id="tenantName"></div>
-                <div class="form-group"><label>No. ID</label><input type="text" id="tenantId"></div>
-                <div class="form-group"><label>Telefon</label><input type="tel" id="tenantPhone"></div>
-                <div class="form-group"><label>Email</label><input type="email" id="tenantEmail"></div>
-                <div class="form-group"><label>Alamat</label><input type="text" id="tenantAddr"></div>
+                <div class="form-group"><label>Nama Penuh</label><input type="text" id="tenantName" onchange="saveFormData()"></div>
+                <div class="form-group"><label>No. ID</label><input type="text" id="tenantId" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Telefon</label><input type="tel" id="tenantPhone" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="tenantEmail" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Alamat</label><input type="text" id="tenantAddr" onchange="saveFormData()"></div>
             </div>
 
             <div class="step" id="step2">
                 <div class="section-title">Maklumat Harta</div>
-                <div class="form-group"><label>Jenis Sewaan</label><select id="rentalType"><option>Keseluruhan Rumah</option><option>Bilik Sahaja</option></select></div>
-                <div class="form-group"><label>Alamat Harta</label><input type="text" id="propAddr"></div>
-                <div class="form-group"><label>Jenis Harta</label><select id="propType"><option>Apartment</option><option>Rumah</option><option>Kedai</option><option>Bilik</option></select></div>
-                <div class="form-group"><label>Keluasan</label><input type="text" id="propSize" placeholder="800 sqft"></div>
-                <div class="form-group"><label>Negeri</label><select id="propState"><option>Selangor</option><option>KL</option><option>Johor</option><option>Penang</option></select></div>
-                <div class="form-group"><label>Max Penghuni</label><input type="number" id="maxOccupants" value="4"></div>
+                <div class="form-group"><label>Jenis Sewaan</label><select id="rentalType" onchange="saveFormData()"><option>Keseluruhan Rumah</option><option>Bilik Sahaja</option></select></div>
+                <div class="form-group"><label>Alamat Harta</label><input type="text" id="propAddr" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Jenis Harta</label><select id="propType" onchange="saveFormData()"><option>Apartment</option><option>Rumah</option><option>Kedai</option><option>Bilik</option></select></div>
+                <div class="form-group"><label>Keluasan</label><input type="text" id="propSize" placeholder="800 sqft" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Negeri</label><select id="propState" onchange="saveFormData()"><option>Selangor</option><option>KL</option><option>Johor</option><option>Penang</option></select></div>
+                <div class="form-group"><label>Max Penghuni</label><input type="number" id="maxOccupants" value="4" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Status Perabot</label><select id="furnitureStatus" onchange="saveFormData()"><option>Furnished</option><option>Unfurnished</option><option>Partially Furnished</option></select></div>
             </div>
 
             <div class="step" id="step3">
                 <div class="section-title">Terma Sewaan</div>
-                <div class="form-group"><label>Tarikh Mula</label><input type="date" id="leaseStart"></div>
-                <div class="form-group"><label>Tempoh</label><select id="leaseDuration"><option value="6">6 bulan</option><option value="12">12 bulan</option><option value="24">24 bulan</option></select></div>
+                <div class="form-group"><label>Tarikh Mula</label><input type="date" id="leaseStart" onchange="saveFormData()"></div>
+                <div class="form-group"><label>Tempoh</label><select id="leaseDuration" onchange="saveFormData()"><option value="6">6 bulan</option><option value="12">12 bulan</option><option value="24">24 bulan</option></select></div>
                 <div class="form-group"><label>Sewa Bulanan (RM)</label><input type="number" id="rent" placeholder="1500" onchange="calcDeposits()"></div>
                 <div class="form-group"><label>Deposit Sewaan (Bulan)</label><select id="depositMonths" onchange="calcDeposits()"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></div>
                 <div id="rentalDepositDiv" style="background:#e0f2fe;padding:10px;border-radius:4px;margin:10px 0;display:none;font-size:12px"></div>
                 <div class="form-group"><label>Deposit Utiliti (RM)</label><input type="number" id="utilityDeposit" placeholder="0" onchange="calcDeposits()"></div>
                 <div id="totalDepositDiv" style="background:#d4edda;padding:10px;border-radius:4px;margin:10px 0;display:none;font-weight:bold"></div>
-                <div class="form-group"><label>Notis Pembatalan</label><select id="notice"><option>1 bulan</option><option>2 bulan</option><option>3 bulan</option></select></div>
-                <div class="form-group"><label>Kaedah Bayar</label><select id="payment"><option>FPX</option><option>Tunai</option><option>E-wallet</option></select></div>
+                <div class="form-group"><label>Notis Pembatalan</label><select id="notice" onchange="saveFormData()"><option>1 bulan</option><option>2 bulan</option><option>3 bulan</option></select></div>
+                <div class="form-group"><label>Kaedah Bayar</label><select id="payment" onchange="saveFormData()"><option>FPX</option><option>Tunai</option><option>E-wallet</option></select></div>
             </div>
 
             <div class="step" id="step4">
@@ -115,7 +116,7 @@
             <div class="buttons">
                 <button type="button" id="prevBtn" class="hidden" onclick="prevStep()" style="background:#999">⬅️ Sebelumnya</button>
                 <button type="button" id="nextBtn" class="btn-next" onclick="nextStep()">Seterusnya ➡️</button>
-                <a href="https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00" target="_blank" style="text-decoration:none;flex:1;display:none" id="payBtnWrapper">
+                <a href="#" style="text-decoration:none;flex:1;display:none" id="payBtnWrapper" onclick="saveFormDataAndRedirect(event)">
                     <button type="button" class="btn-pay" id="payBtn" disabled>💳 Bayar RM19</button>
                 </a>
             </div>
@@ -125,8 +126,80 @@
     <script>
         let currentStep = 1;
 
+        function saveFormData() {
+            const data = {
+                landlordName: document.getElementById('landlordName').value,
+                landlordId: document.getElementById('landlordId').value,
+                landlordPhone: document.getElementById('landlordPhone').value,
+                landlordEmail: document.getElementById('landlordEmail').value,
+                landlordAddr: document.getElementById('landlordAddr').value,
+                tenantName: document.getElementById('tenantName').value,
+                tenantId: document.getElementById('tenantId').value,
+                tenantPhone: document.getElementById('tenantPhone').value,
+                tenantEmail: document.getElementById('tenantEmail').value,
+                tenantAddr: document.getElementById('tenantAddr').value,
+                rentalType: document.getElementById('rentalType').value,
+                propAddr: document.getElementById('propAddr').value,
+                propType: document.getElementById('propType').value,
+                propSize: document.getElementById('propSize').value,
+                propState: document.getElementById('propState').value,
+                maxOccupants: document.getElementById('maxOccupants').value,
+                furnitureStatus: document.getElementById('furnitureStatus').value,
+                leaseStart: document.getElementById('leaseStart').value,
+                leaseDuration: document.getElementById('leaseDuration').value,
+                rent: document.getElementById('rent').value,
+                depositMonths: document.getElementById('depositMonths').value,
+                utilityDeposit: document.getElementById('utilityDeposit').value,
+                notice: document.getElementById('notice').value,
+                payment: document.getElementById('payment').value,
+                landlordSig: document.getElementById('landlordSigCanvas').toDataURL('image/png'),
+                tenantSig: document.getElementById('tenantSigCanvas').toDataURL('image/png')
+            };
+            localStorage.setItem('janjiSewaFormData', JSON.stringify(data));
+        }
+
+        function loadFormData() {
+            const saved = localStorage.getItem('janjiSewaFormData');
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('landlordName').value = data.landlordName || '';
+                document.getElementById('landlordId').value = data.landlordId || '';
+                document.getElementById('landlordPhone').value = data.landlordPhone || '';
+                document.getElementById('landlordEmail').value = data.landlordEmail || '';
+                document.getElementById('landlordAddr').value = data.landlordAddr || '';
+                document.getElementById('tenantName').value = data.tenantName || '';
+                document.getElementById('tenantId').value = data.tenantId || '';
+                document.getElementById('tenantPhone').value = data.tenantPhone || '';
+                document.getElementById('tenantEmail').value = data.tenantEmail || '';
+                document.getElementById('tenantAddr').value = data.tenantAddr || '';
+                document.getElementById('rentalType').value = data.rentalType || '';
+                document.getElementById('propAddr').value = data.propAddr || '';
+                document.getElementById('propType').value = data.propType || '';
+                document.getElementById('propSize').value = data.propSize || '';
+                document.getElementById('propState').value = data.propState || '';
+                document.getElementById('maxOccupants').value = data.maxOccupants || '4';
+                document.getElementById('furnitureStatus').value = data.furnitureStatus || '';
+                document.getElementById('leaseStart').value = data.leaseStart || '';
+                document.getElementById('leaseDuration').value = data.leaseDuration || '6';
+                document.getElementById('rent').value = data.rent || '';
+                document.getElementById('depositMonths').value = data.depositMonths || '2';
+                document.getElementById('utilityDeposit').value = data.utilityDeposit || '';
+                document.getElementById('notice').value = data.notice || '';
+                document.getElementById('payment').value = data.payment || '';
+                return data;
+            }
+            return null;
+        }
+
+        function saveFormDataAndRedirect(e) {
+            e.preventDefault();
+            saveFormData();
+            window.location.href = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00';
+        }
+
         function nextStep() {
             if (currentStep < 5) {
+                saveFormData();
                 document.getElementById('step' + currentStep).classList.remove('active');
                 currentStep++;
                 document.getElementById('step' + currentStep).classList.add('active');
@@ -141,6 +214,7 @@
 
         function prevStep() {
             if (currentStep > 1) {
+                saveFormData();
                 document.getElementById('step' + currentStep).classList.remove('active');
                 currentStep--;
                 document.getElementById('step' + currentStep).classList.add('active');
@@ -171,6 +245,7 @@
 
             document.getElementById('totalDepositDiv').innerHTML = `JUMLAH DEPOSIT: RM ${total}`;
             document.getElementById('totalDepositDiv').style.display = 'block';
+            saveFormData();
         }
 
         function initCanvases() {
@@ -226,12 +301,14 @@
             const canvas = document.getElementById('landlordSigCanvas');
             canvas.getContext('2d').fillStyle = '#fff';
             canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height);
+            saveFormData();
         }
 
         function clearTenantSig() {
             const canvas = document.getElementById('tenantSigCanvas');
             canvas.getContext('2d').fillStyle = '#fff';
             canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height);
+            saveFormData();
         }
 
         function updatePayBtn() {
@@ -240,6 +317,7 @@
         }
 
         window.addEventListener('load', () => {
+            loadFormData();
             const params = new URLSearchParams(window.location.search);
             if (params.get('success') === 'true') {
                 document.getElementById('mainForm').classList.add('hidden');
@@ -248,6 +326,12 @@
         });
 
         function downloadFullAgreementPDF() {
+            const data = loadFormData();
+            if (!data) {
+                alert('Error: Form data not found. Please fill the form again.');
+                return;
+            }
+
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF('p', 'mm', 'a4');
             let yPos = 10;
@@ -284,42 +368,28 @@
             yPos += 10;
 
             addTitle('1. PIHAK-PIHAK / PARTIES');
-            const landlordName = document.getElementById('landlordName').value || 'N/A';
-            const landlordId = document.getElementById('landlordId').value || 'N/A';
-            const landlordPhone = document.getElementById('landlordPhone').value || 'N/A';
-            const landlordAddr = document.getElementById('landlordAddr').value || 'N/A';
-            const tenantName = document.getElementById('tenantName').value || 'N/A';
-            const tenantId = document.getElementById('tenantId').value || 'N/A';
-            const tenantPhone = document.getElementById('tenantPhone').value || 'N/A';
-            const tenantAddr = document.getElementById('tenantAddr').value || 'N/A';
-
-            addText(`Pemilik/Landlord: ${landlordName}, ID: ${landlordId}, Telefon: ${landlordPhone}`, 9);
-            addText(`Alamat/Address: ${landlordAddr}`, 9);
+            addText(`Pemilik/Landlord: ${data.landlordName}, ID: ${data.landlordId}, Telefon: ${data.landlordPhone}`, 9);
+            addText(`Alamat/Address: ${data.landlordAddr}`, 9);
             yPos += 2;
-            addText(`Penyewa/Tenant: ${tenantName}, ID: ${tenantId}, Telefon: ${tenantPhone}`, 9);
-            addText(`Alamat/Address: ${tenantAddr}`, 9);
+            addText(`Penyewa/Tenant: ${data.tenantName}, ID: ${data.tenantId}, Telefon: ${data.tenantPhone}`, 9);
+            addText(`Alamat/Address: ${data.tenantAddr}`, 9);
 
             addTitle('2. HARTA YANG DISEWA / PROPERTY');
-            const propAddr = document.getElementById('propAddr').value || 'N/A';
-            const propType = document.getElementById('propType').value;
-            const propSize = document.getElementById('propSize').value || 'N/A';
-            const propState = document.getElementById('propState').value;
-
-            addText(`Alamat/Address: ${propAddr}`, 9);
-            addText(`Jenis Harta/Type: ${propType}, Keluasan/Size: ${propSize}`, 9);
-            addText(`Negeri/State: ${propState}`, 9);
+            addText(`Jenis Sewaan/Rental Type: ${data.rentalType}`, 9);
+            addText(`Alamat/Address: ${data.propAddr}`, 9);
+            addText(`Jenis Harta/Property Type: ${data.propType}, Keluasan/Size: ${data.propSize}`, 9);
+            addText(`Negeri/State: ${data.propState}, Max Penghuni/Max Occupants: ${data.maxOccupants}`, 9);
+            addText(`Status Perabot/Furniture Status: ${data.furnitureStatus}`, 9);
 
             addTitle('3. TERMA SEWAAN / LEASE TERMS');
-            const leaseStart = document.getElementById('leaseStart').value || 'N/A';
-            const leaseDuration = document.getElementById('leaseDuration').value;
-            const rent = parseInt(document.getElementById('rent').value) || 0;
-            const depositMonths = parseInt(document.getElementById('depositMonths').value) || 1;
-            const utilityDeposit = parseInt(document.getElementById('utilityDeposit').value) || 0;
+            const rent = parseInt(data.rent) || 0;
+            const depositMonths = parseInt(data.depositMonths) || 1;
+            const utilityDeposit = parseInt(data.utilityDeposit) || 0;
             const rentalDep = rent * depositMonths;
             const totalDep = rentalDep + utilityDeposit;
 
-            addText(`Tarikh Mula/Start Date: ${leaseStart}`, 9);
-            addText(`Tempoh/Duration: ${leaseDuration} bulan`, 9);
+            addText(`Tarikh Mula/Start Date: ${data.leaseStart}`, 9);
+            addText(`Tempoh/Duration: ${data.leaseDuration} bulan`, 9);
             addText(`Sewa Bulanan/Monthly Rent: RM ${rent}`, 9);
             addText(`Deposit Sewaan/Rental Deposit: RM ${rent} × ${depositMonths} = RM ${rentalDep}`, 9);
             addText(`Deposit Utiliti/Utility Deposit: RM ${utilityDeposit}`, 9);
@@ -344,8 +414,7 @@
             addText('Harta mesti dikembalikan bersih dan dalam keadaan baik. Semua kunci dikembalikan. Pemilik boleh gunakan deposit untuk kerosakan. Harta dalam keadaan asal (normal wear & tear terkecuali).', 8);
 
             addTitle('9. NOTIS PEMBATALAN / TERMINATION');
-            const notice = document.getElementById('notice').value;
-            addText(`Notis Pembatalan: ${notice}. Salah satu pihak boleh tamatkan sewaan dengan memberikan notis tertulis.`, 9);
+            addText(`Notis Pembatalan: ${data.notice}. Salah satu pihak boleh tamatkan sewaan dengan memberikan notis tertulis.`, 9);
 
             addTitle('10. KLAUSA PERLINDUNGAN DATA / PDPA');
             addText('Data peribadi dikumpul hanya untuk tujuan perjanjian ini. Data tidak didedahkan kepada pihak ketiga. Kedua-dua pihak menjaga kerahsiaan maklumat.', 8);
@@ -357,13 +426,14 @@
             addText('Perjanjian ini dibuat pada hari _____ bulan ______________ tahun _____', 9);
             yPos += 8;
 
-            addText(`PEMILIK / LANDLORD: ${landlordName}`, 10, true);
+            addText(`PEMILIK / LANDLORD: ${data.landlordName}`, 10, true);
             yPos += 8;
 
             try {
-                const landlordSigData = document.getElementById('landlordSigCanvas').toDataURL('image/png');
-                doc.addImage(landlordSigData, 'PNG', 15, yPos, 50, 30);
-                yPos += 35;
+                if (data.landlordSig) {
+                    doc.addImage(data.landlordSig, 'PNG', 15, yPos, 50, 30);
+                    yPos += 35;
+                }
             } catch(e) {
                 yPos += 10;
             }
@@ -373,13 +443,14 @@
             addText('Tarikh / Date: _______________________________', 9);
             yPos += 10;
 
-            addText(`PENYEWA / TENANT: ${tenantName}`, 10, true);
+            addText(`PENYEWA / TENANT: ${data.tenantName}`, 10, true);
             yPos += 8;
 
             try {
-                const tenantSigData = document.getElementById('tenantSigCanvas').toDataURL('image/png');
-                doc.addImage(tenantSigData, 'PNG', 15, yPos, 50, 30);
-                yPos += 35;
+                if (data.tenantSig) {
+                    doc.addImage(data.tenantSig, 'PNG', 15, yPos, 50, 30);
+                    yPos += 35;
+                }
             } catch(e) {
                 yPos += 10;
             }
