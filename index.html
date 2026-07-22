@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JANJIsewa - Tenancy Agreement Generator RM19</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:10px}.container{max-width:500px;margin:0 auto;background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 32px rgba(0,0,0,.1)}h1{color:#667eea;text-align:center;margin-bottom:5px}.subtitle{text-align:center;color:#999;font-size:12px;margin-bottom:20px}.btn-lang{padding:8px 12px;margin:0 5px;border:none;border-radius:4px;cursor:pointer;background:#ddd}.btn-lang.active{background:#667eea;color:#fff}.form-group{margin-bottom:12px}label{display:block;font-weight:bold;margin-bottom:4px;font-size:13px}input,select{width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:13px}input:focus,select:focus{outline:0;border-color:#667eea}.section{margin:15px 0;padding:10px 0;border-bottom:1px solid #eee}.section-title{font-weight:bold;color:#667eea;margin-bottom:10px;font-size:14px}.buttons{display:flex;gap:10px;margin-top:20px}button{flex:1;padding:12px;border:none;border-radius:4px;cursor:pointer;font-weight:bold}.btn-prev{background:#999;color:#fff}.btn-next{background:#667eea;color:#fff}.btn-generate{background:#10b981;color:#fff}.hidden{display:none}.success{text-align:center;padding:40px 20px;background:#f0fdf4;border-radius:8px}.success h2{color:#10b981;margin-bottom:10px}.step-indicator{display:flex;justify-content:space-around;margin-bottom:20px}.step-num{width:30px;height:30px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-weight:bold}.step.active .step-num{background:#667eea;color:#fff}.deposit{background:#e0f2fe;padding:10px;border-radius:4px;margin-top:10px;font-size:13px;color:#0369a1}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JANJIsewa</h1>
+        <p class="subtitle">Professional Tenancy Agreement - RM19</p>
+        <div style="text-align:center;margin-bottom:15px"><button class="btn-lang active" onclick="setLang('bm')">Bahasa Malaysia</button><button class="btn-lang" onclick="setLang('en')">English</button></div>
+        <div class="step-indicator"><div class="step active"><div class="step-num">1</div></div><div class="step"><div class="step-num">2</div></div><div class="step"><div class="step-num">3</div></div><div class="step"><div class="step-num">4</div></div></div>
+        <form id="form">
+            <div id="step1">
+                <div class="section-title">Pemilik & Penyewa</div>
+                <div class="section-title" style="font-size:12px;color:#555">LANDLORD</div>
+                <div class="form-group"><label>Nama Penuh</label><input type="text" id="landlordName"></div>
+                <div class="form-group"><label>No. ID</label><input type="text" id="landlordId"></div>
+                <div class="form-group"><label>Telefon</label><input type="tel" id="landlordPhone"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="landlordEmail"></div>
+                <div class="form-group"><label>Alamat</label><input type="text" id="landlordAddr"></div>
+                <div class="section-title" style="font-size:12px;color:#555;margin-top:15px">TENANT</div>
+                <div class="form-group"><label>Nama Penuh</label><input type="text" id="tenantName"></div>
+                <div class="form-group"><label>No. ID</label><input type="text" id="tenantId"></div>
+                <div class="form-group"><label>Telefon</label><input type="tel" id="tenantPhone"></div>
+                <div class="form-group"><label>Email</label><input type="email" id="tenantEmail"></div>
+                <div class="form-group"><label>Alamat</label><input type="text" id="tenantAddr"></div>
+            </div>
+            <div id="step2" class="hidden">
+                <div class="section-title">Maklumat Harta Tanah</div>
+                <div class="form-group"><label>Alamat Harta</label><input type="text" id="propAddr"></div>
+                <div class="form-group"><label>Jenis Harta</label><select id="propType"><option>Apartment</option><option>Rumah</option><option>Kedai</option></select></div>
+                <div class="form-group"><label>Keluasan</label><input type="text" id="propSize" placeholder="e.g. 800 sqft"></div>
+                <div class="form-group"><label>Negeri</label><select id="propState"><option>Selangor</option><option>KL</option><option>Johor</option><option>Penang</option></select></div>
+                <div class="form-group"><label>Bilangan Max Penghuni</label><input type="number" id="maxOccupants" value="4"></div>
+            </div>
+            <div id="step3" class="hidden">
+                <div class="section-title">Terma Perolehan</div>
+                <div class="form-group"><label>Tarikh Mula</label><input type="date" id="leaseStart"></div>
+                <div class="form-group"><label>Tempoh</label><select id="leaseDuration"><option value="6">6 bulan</option><option value="12" selected>12 bulan</option><option value="24">24 bulan</option></select></div>
+                <div class="form-group"><label>Sewa Bulanan (RM)</label><input type="number" id="rent" placeholder="1500" onchange="showDeposit()"></div>
+                <div id="depositDiv" class="deposit" style="display:none"></div>
+                <div class="form-group"><label>Notis Pembatalan</label><select id="notice"><option>1 bulan</option><option>2 bulan</option><option>3 bulan</option></select></div>
+                <div class="form-group"><label>Kaedah Bayar</label><select id="payment"><option>FPX</option><option>Tunai</option><option>E-wallet</option></select></div>
+            </div>
+            <div id="step4" class="hidden">
+                <div class="section-title">Semak & Hasilkan</div>
+                <div style="background:#f0fdf4;padding:15px;border-radius:4px;text-align:center;color:#10b981"><strong>✓ Sedia untuk hasilkan PDF</strong><br>Klik "Hasilkan PDF" di bawah</div>
+            </div>
+            <div class="buttons"><button type="button" class="btn-prev hidden" id="prevBtn" onclick="changeStep(-1)">Sebelumnya</button><button type="button" class="btn-next" id="nextBtn" onclick="changeStep(1)">Seterusnya</button><button type="button" class="btn-generate hidden" id="genBtn" onclick="generatePDF()">Hasilkan PDF</button></div>
+        </form>
+        <div id="success" class="hidden success"><h2>✓ Berjaya!</h2><p>PDF telah dijana dan dimuat turun</p><button type="button" class="btn-next" onclick="reset()">Buat Satu Lagi</button></div>
+        <p style="text-align:center;font-size:11px;color:#999;margin-top:30px">© 2024 JANJIsewa - Impact Analytix | RM19.00</p>
+    </div>
+    <script>
+        let step=1,lang='bm';function setLang(l){lang=l;document.querySelectorAll('.btn-lang').forEach(b=>b.classList.remove('active'));event.target.classList.add('active')}function changeStep(n){document.getElementById('step'+step).classList.add('hidden');document.querySelectorAll('.step')[step-1].classList.remove('active');step+=n;document.getElementById('step'+step).classList.remove('hidden');document.querySelectorAll('.step')[step-1].classList.add('active');document.getElementById('prevBtn').classList.toggle('hidden',step===1);document.getElementById('nextBtn').classList.toggle('hidden',step===4);document.getElementById('genBtn').classList.toggle('hidden',step!==4)}function showDeposit(){const rent=parseInt(document.getElementById('rent').value)||0;const text=lang==='bm'?`Deposit Keselamatan: RM ${rent}`:`Security Deposit: RM ${rent}`;document.getElementById('depositDiv').textContent=text;document.getElementById('depositDiv').style.display=rent?'block':'none'}function generatePDF(){const{jsPDF}=window.jspdf;const doc=new jsPDF();let y=15;doc.setFontSize(16);doc.text(lang==='bm'?'PERJANJIAN PEROLEHAN TENANCY':'TENANCY AGREEMENT',10,y);y+=15;doc.setFontSize(10);const data=[['Landlord:',document.getElementById('landlordName').value],['ID:',document.getElementById('landlordId').value],['Tenant:',document.getElementById('tenantName').value],['ID:',document.getElementById('tenantId').value],['Property:',document.getElementById('propAddr').value],['Rent:','RM '+document.getElementById('rent').value],['Duration:',document.getElementById('leaseDuration').value+' months']];data.forEach(([label,val])=>{doc.text(`${label} ${val}`,10,y);y+=5});y+=10;doc.text('Landlord: ___________________   Tenant: ___________________',10,y);doc.save(`JANJIsewa_${new Date().getTime()}.pdf`);document.getElementById('form').classList.add('hidden');document.getElementById('success').classList.remove('hidden')}function reset(){document.getElementById('form').classList.remove('hidden');document.getElementById('success').classList.add('hidden');document.getElementById('form').reset();step=1;document.querySelectorAll('[id^="step"]').forEach(el=>el.classList.add('hidden'));document.getElementById('step1').classList.remove('hidden');document.querySelectorAll('.step').forEach(el=>el.classList.remove('active'));document.querySelector('.step').classList.add('active');document.getElementById('prevBtn').classList.add('hidden');document.getElementById('nextBtn').classList.remove('hidden');document.getElementById('genBtn').classList.add('hidden')}
+    </script>
+</body>
+</html>
