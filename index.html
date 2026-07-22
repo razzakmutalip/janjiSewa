@@ -6,7 +6,7 @@
     <title>JANJIsewa - Tenancy Agreement Generator RM19</title>
     <meta property="og:title" content="JANJIsewa - Perjanjian Sewaan RM19">
     <meta property="og:description" content="Professional Tenancy Agreement Generator - Bilingual BM/EN with photo uploads, signatures & full PDF">
-    <meta property="og:image" content="https://raw.githubusercontent.com/razakmuttalip/janji-sewa/main/Logo_JANJISewa.png">
+    <meta property="og:image" content="https://raw.githubusercontent.com/razakmuttalip/janji-sewa/main/Logo_JANJISewa_2.png">
     <meta property="og:url" content="https://janji-sewa.vercel.app">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -15,29 +15,29 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 10px; }
         .container { max-width: 700px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 8px 32px rgba(0,0,0,.1); }
-        .header { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-        .logo { width: 50px; height: 50px; margin-right: 15px; }
+        .header { display: flex; align-items: center; justify-content: center; margin-bottom: 20px; gap: 15px; }
+        .logo { width: 60px; height: 60px; object-fit: contain; }
         .header-text { text-align: center; }
-        h1 { color: #667eea; margin: 0; font-size: 28px; }
-        .subtitle { color: #999; font-size: 12px; margin-top: 5px; }
+        h1 { color: #001a4d; margin: 0; font-size: 28px; font-weight: bold; }
+        .subtitle { color: #0066cc; font-size: 13px; margin-top: 3px; font-weight: 500; }
         .lang-toggle { text-align: center; margin-bottom: 15px; }
         .btn-lang { padding: 8px 16px; margin: 0 5px; border: none; border-radius: 4px; cursor: pointer; background: #ddd; font-weight: bold; }
-        .btn-lang.active { background: #667eea; color: #fff; }
+        .btn-lang.active { background: #0066cc; color: #fff; }
         .step-indicator { display: flex; justify-content: space-around; margin-bottom: 20px; gap: 5px; flex-wrap: wrap; }
         .step-num { width: 35px; height: 35px; border-radius: 50%; background: #ddd; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #666; font-size: 12px; }
-        .step.active .step-num { background: #667eea; color: #fff; }
+        .step.active .step-num { background: #0066cc; color: #fff; }
         .form-group { margin-bottom: 12px; }
         label { display: block; font-weight: bold; margin-bottom: 4px; font-size: 13px; color: #333; }
         input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 13px; font-family: Arial; }
-        input:focus, select:focus, textarea:focus { outline: 0; border-color: #667eea; box-shadow: 0 0 5px rgba(102, 126, 234, .3); }
-        .section-title { font-weight: bold; color: #667eea; margin: 15px 0 10px 0; font-size: 14px; border-bottom: 2px solid #667eea; padding-bottom: 5px; }
+        input:focus, select:focus, textarea:focus { outline: 0; border-color: #0066cc; box-shadow: 0 0 5px rgba(0, 102, 204, .3); }
+        .section-title { font-weight: bold; color: #0066cc; margin: 15px 0 10px 0; font-size: 14px; border-bottom: 2px solid #0066cc; padding-bottom: 5px; }
         .hidden { display: none !important; }
         .buttons { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
         button { flex: 1; min-width: 100px; padding: 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; touch-action: manipulation; }
         .btn-prev { background: #999; color: #fff; }
         .btn-prev:hover { background: #777; }
-        .btn-next { background: #667eea; color: #fff; }
-        .btn-next:hover { background: #5568d3; }
+        .btn-next { background: #0066cc; color: #fff; }
+        .btn-next:hover { background: #0052a3; }
         .btn-pay { background: #10b981; color: #fff; font-size: 16px; flex: 1; }
         .btn-pay:hover { background: #059669; }
         .btn-pay:disabled { background: #ccc; cursor: not-allowed; }
@@ -59,32 +59,18 @@
         .footer { text-align: center; font-size: 11px; color: #999; margin-top: 30px; }
         .success-box { background: #d4edda; border: 2px solid #28a745; border-radius: 8px; padding: 20px; text-align: center; }
         .success-box h2 { color: #155724; font-size: 24px; margin-bottom: 10px; }
-        .download-btn { display: block; width: 100%; padding: 12px; margin: 10px 0; background: #4f46e5; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .download-btn:hover { background: #4338ca; }
+        .download-btn { display: block; width: 100%; padding: 12px; margin: 10px 0; background: #0066cc; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .download-btn:hover { background: #0052a3; }
         .file-name { font-size: 11px; color: #666; margin-top: 5px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 120 L50 160 L150 160 L150 120" fill="none" stroke="#0066CC" stroke-width="4"/>
-                <path d="M30 120 L100 50 L170 120" fill="none" stroke="#0066CC" stroke-width="4"/>
-                <rect x="60" y="70" width="15" height="15" fill="#0066CC"/>
-                <rect x="85" y="70" width="15" height="15" fill="#0066CC"/>
-                <rect x="110" y="70" width="15" height="15" fill="#0066CC"/>
-                <rect x="135" y="70" width="15" height="15" fill="#0066CC"/>
-                <rect x="40" y="130" width="50" height="60" fill="none" stroke="#001E66" stroke-width="3" rx="3"/>
-                <line x1="50" y1="145" x2="80" y2="145" stroke="#666" stroke-width="2"/>
-                <line x1="50" y1="155" x2="80" y2="155" stroke="#666" stroke-width="2"/>
-                <line x1="50" y1="165" x2="75" y2="165" stroke="#666" stroke-width="2"/>
-                <path d="M45 172 Q55 168 65 172" fill="none" stroke="#001E66" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="85" cy="170" r="12" fill="#0066CC"/>
-                <path d="M80 170 L83 173 L88 168" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img src="https://raw.githubusercontent.com/razakmuttalip/janji-sewa/main/Logo_JANJISewa_2.png" alt="JANJIsewa Logo" class="logo">
             <div class="header-text">
                 <h1>JANJIsewa</h1>
-                <p class="subtitle">Professional Tenancy Agreement - RM19</p>
+                <p class="subtitle">Online Tenancy Agreement - RM19</p>
             </div>
         </div>
 
@@ -105,7 +91,7 @@
             <h2>✅ Pembayaran Berjaya!</h2>
             <p>Terima kasih! Perjanjian anda sudah siap untuk dimuat turun.</p>
             <button class="download-btn" onclick="downloadFullAgreementPDF()">📥 Muat Turun PDF Perjanjian</button>
-            <button class="download-btn" onclick="resetAndNewForm()" style="background: #667eea">🔄 Buat Perjanjian Baru</button>
+            <button class="download-btn" onclick="resetAndNewForm()" style="background: #0066cc">🔄 Buat Perjanjian Baru</button>
         </div>
 
         <form id="mainForm">
@@ -286,7 +272,8 @@
         function updatePayButtonState() {
             const disclaimerAccepted = document.getElementById('disclaimerAccepted').checked;
             const pdpaConsent = document.getElementById('pdpaConsent').checked;
-            document.getElementById('payBtn').disabled = !(disclaimerAccepted && pdpaConsent);
+            const bothChecked = disclaimerAccepted && pdpaConsent;
+            document.getElementById('payBtn').disabled = !bothChecked;
         }
         function updateFileName(input, displayId) {
             const fileName = input.files[0]?.name || 'Tiada file dipilih';
