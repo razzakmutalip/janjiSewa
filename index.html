@@ -41,6 +41,9 @@
         .important-notice-box { background:#fff3cd;border:3px solid #ff9800;border-radius:8px;padding:15px;margin:15px 0 20px 0;font-size:10px;line-height:1.6;color:#8b6f00; }
         .important-notice-box strong { color: #d97706; display: block; margin-bottom: 8px; font-size: 11px; }
         .important-notice-box p { margin: 6px 0; }
+        .pdpa-consent-box { background:#f0f5ff;border:3px solid #2196f3;border-radius:8px;padding:15px;margin:15px 0;font-size:10px;line-height:1.6;color:#1565c0; }
+        .pdpa-consent-box strong { color: #0d47a1; display: block; margin-bottom: 8px; font-size: 11px; }
+        .pdpa-consent-box p { margin: 6px 0; }
         .tc-box { background:#fff3cd;border:3px solid #ff9800;border-radius:8px;padding:15px;margin:15px 0;font-size:9px;line-height:1.6;max-height:300px;overflow-y:auto; }
         .tc-box p { margin: 8px 0; }
     </style>
@@ -87,6 +90,21 @@
                         <strong style="font-size:10px;margin-top:8px;display:block">ENGLISH:</strong>
                         <p>This form is for ONE-TIME USE only. All your data (name, ID, photos) is stored TEMPORARILY on your device WHILE you fill out this form. After you download the agreement and close this page, ALL data will be PERMANENTLY deleted. No server storage. No login. No way to retrieve old data or agreements. If you need changes, you MUST purchase again and fill out this form from the beginning.</p>
                     </div>
+                </div>
+
+                <div class="pdpa-consent-box">
+                    <strong id="pdpaTitle">📋 PERSONAL DATA PROTECTION ACT (PDPA) CONSENT / PERSETUJUAN AKTA PERLINDUNGAN DATA PERIBADI</strong>
+                    <div id="pdpaContent">
+                        <strong style="font-size:10px">BAHASA MALAYSIA:</strong>
+                        <p>Dengan meneruskan dan melengkapkan borang ini, anda dengan sepenuhnya bersetuju dan memberi kebenaran kepada JANJIsewa untuk mengumpul, memproses, dan menyimpan data peribadi anda termasuk tetapi tidak terhad kepada: nama penuh, nombor pengenalan, alamat, nombor telefon, alamat emel, dan foto dokumentasi, semata-mata untuk tujuan menjana Perjanjian Sewaan Kediaman yang diminta. Data anda akan disimpan secara sementara di peranti anda sahaja untuk proses ini. Anda memahami dan bersetuju bahwa data anda BOLEH juga disimpan dalam rekod kami untuk tujuan compliance, keselamatan, dan pencegahan penipuan, sekiranya diperlukan. Data akan dipadamkan selepas tempoh yang wajar atau apabila tidak lagi diperlukan mengikut kehendak undang-undang. Anda mempunyai hak untuk meminta akses, pembetulan, atau penghapusan data anda dengan menghubungi impactanalytixsdnbhd@gmail.com. Anda juga boleh menolak pemprosesan data, tetapi ini mungkin menjejaskan keupayaan kami untuk menyediakan perkhidmatan.</p>
+                        
+                        <strong style="font-size:10px;margin-top:8px;display:block">ENGLISH:</strong>
+                        <p>By proceeding and completing this form, you fully consent and authorize JANJIsewa to collect, process, and store your personal data including but not limited to: full name, identification number, address, phone number, email address, and documentation photos, solely for the purpose of generating the requested Residential Tenancy Agreement. Your data will be stored temporarily on your device only for this process. You understand and agree that your data MAY also be stored in our records for compliance, security, and fraud prevention purposes, if required. Data will be deleted after a reasonable period or when no longer required under applicable law. You have the right to request access, correction, or deletion of your data by contacting impactanalytixsdnbhd@gmail.com. You may also object to data processing, but this may affect our ability to provide the service.</p>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:10px;margin:15px 0;background:#e3f2fd;padding:12px;border-radius:4px;border-left:4px solid #2196f3;align-items:flex-start">
+                    <input type="checkbox" id="pdpaConsentInitial" onchange="checkInitialConsent()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="pdpaConsentInitial" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="pdpaConsentInitialLabel"><strong>Saya bersetuju / I agree</strong></label>
                 </div>
 
                 <div class="section-title" id="step1Title">Pemilik & Penyewa</div>
@@ -182,13 +200,13 @@
                     <input type="checkbox" id="disclaimerAccepted" onchange="updatePayBtn()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="disclaimerAccepted" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="disclaimerCheckLabel"><strong>Saya memahami dan setuju dengan penafian di atas / I understand and agree with disclaimer</strong></label>
                 </div>
                 <div style="display:flex;gap:10px;margin:10px 0;background:#fff3e0;padding:10px;border-radius:4px;border-left:4px solid #ff9800;align-items:flex-start">
-                    <input type="checkbox" id="pdpaConsent" onchange="updatePayBtn()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="pdpaConsent" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="pdpaCheckLabel"><strong>Saya bersetuju dengan PDPA consent / I consent to PDPA processing</strong></label>
+                    <input type="checkbox" id="pdpaConsent" onchange="updatePayBtn()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="pdpaConsent" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="pdpaCheckLabel"><strong>Saya setuju dengan PDPA consent / I agree to PDPA consent as stated above</strong></label>
                 </div>
             </div>
 
             <div class="buttons">
                 <button type="button" id="prevBtn" class="hidden" onclick="prevStep()" style="background:#999">⬅️ Sebelumnya</button>
-                <button type="button" id="nextBtn" class="btn-next" onclick="nextStep()">Seterusnya ➡️</button>
+                <button type="button" id="nextBtn" class="btn-next" onclick="nextStep()" id="nextBtnStep1">Seterusnya ➡️</button>
                 <a href="#" style="text-decoration:none;flex:1;display:none" id="payBtnWrapper" onclick="saveFormDataAndRedirect(event)">
                     <button type="button" class="btn-pay" id="payBtn" disabled>💳 Bayar RM19</button>
                 </a>
@@ -204,6 +222,7 @@
             bm: {
                 subtitle: 'Online Tenancy Agreement - RM19',
                 importanceTitle: '⚠️ ARAHAN PENTING / IMPORTANT NOTICE',
+                pdpaTitle: '📋 PERSONAL DATA PROTECTION ACT (PDPA) CONSENT / PERSETUJUAN AKTA PERLINDUNGAN DATA PERIBADI',
                 step1Title: 'Pemilik & Penyewa',
                 landlordLabel: 'LANDLORD',
                 landlordNameLabel: 'Nama Penuh',
@@ -248,11 +267,12 @@
                 step5Title: 'Semak & Bayar',
                 priceLabel: 'Harga:',
                 disclaimerCheckLabel: 'Saya memahami dan setuju dengan penafian di atas / I understand and agree with disclaimer',
-                pdpaCheckLabel: 'Saya bersetuju dengan PDPA consent / I consent to PDPA processing'
+                pdpaCheckLabel: 'Saya setuju dengan PDPA consent / I agree to PDPA consent as stated above'
             },
             en: {
                 subtitle: 'Online Tenancy Agreement - RM19',
                 importanceTitle: '⚠️ IMPORTANT NOTICE / ARAHAN PENTING',
+                pdpaTitle: '📋 PERSONAL DATA PROTECTION ACT (PDPA) CONSENT / PERSETUJUAN AKTA PERLINDUNGAN DATA PERIBADI',
                 step1Title: 'Landlord & Tenant',
                 landlordLabel: 'LANDLORD',
                 landlordNameLabel: 'Full Name',
@@ -297,7 +317,7 @@
                 step5Title: 'Review & Pay',
                 priceLabel: 'Price:',
                 disclaimerCheckLabel: 'I understand and agree with disclaimer',
-                pdpaCheckLabel: 'I consent to PDPA processing'
+                pdpaCheckLabel: 'I agree to PDPA consent as stated above'
             }
         };
 
@@ -307,6 +327,7 @@
             
             document.getElementById('subtitle').textContent = t.subtitle;
             document.getElementById('importanceTitle').textContent = t.importanceTitle;
+            document.getElementById('pdpaTitle').textContent = t.pdpaTitle;
             document.getElementById('step1Title').textContent = t.step1Title;
             document.getElementById('landlordLabel').textContent = t.landlordLabel;
             document.getElementById('landlordNameLabel').textContent = t.landlordNameLabel;
@@ -355,6 +376,18 @@
 
             document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
+        }
+
+        function checkInitialConsent() {
+            const ok = document.getElementById('pdpaConsentInitial').checked;
+            document.getElementById('nextBtnStep1').disabled = !ok;
+            if (!ok) {
+                document.getElementById('nextBtnStep1').style.opacity = '0.5';
+                document.getElementById('nextBtnStep1').style.cursor = 'not-allowed';
+            } else {
+                document.getElementById('nextBtnStep1').style.opacity = '1';
+                document.getElementById('nextBtnStep1').style.cursor = 'pointer';
+            }
         }
 
         function onPhotoChange(inputId, displayId) {
@@ -474,6 +507,11 @@
         }
 
         function nextStep() {
+            if (currentStep === 1 && !document.getElementById('pdpaConsentInitial').checked) {
+                alert(lang === 'bm' ? 'Sila setuju dengan PDPA consent untuk meneruskan' : 'Please agree to PDPA consent to proceed');
+                return;
+            }
+            
             if (currentStep < 5) {
                 saveFormData();
                 document.getElementById('step' + currentStep).classList.remove('active');
@@ -611,6 +649,7 @@
         window.addEventListener('load', () => {
             loadFormData();
             updateStepIndicators();
+            checkInitialConsent();
             const params = new URLSearchParams(window.location.search);
             if (params.get('success') === 'true') {
                 document.getElementById('mainForm').classList.add('hidden');
@@ -849,10 +888,12 @@
             for (let i = 2; i <= 5; i++) {
                 document.getElementById('step' + i).classList.remove('active');
             }
+            document.getElementById('pdpaConsentInitial').checked = false;
             document.getElementById('disclaimerAccepted').checked = false;
             document.getElementById('pdpaConsent').checked = false;
             updateStepIndicators();
             updateUI();
+            checkInitialConsent();
         }
     </script>
 </body>
