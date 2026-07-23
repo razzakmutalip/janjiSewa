@@ -103,8 +103,8 @@
                     </div>
                 </div>
 
-                <div style="display:flex;gap:10px;margin:15px 0;background:#e3f2fd;padding:12px;border-radius:4px;border-left:4px solid #2196f3;align-items:flex-start">
-                    <input type="checkbox" id="pdpaConsentInitial" onchange="checkInitialConsent()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="pdpaConsentInitial" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="pdpaConsentInitialLabel"><strong>Saya bersetuju / I agree</strong></label>
+                <div style="display:flex;gap:10px;margin:15px 0;background:#e3f2fd;padding:12px;border-radius:4px;border-left:4px solid #2196f3;align-items:center">
+                    <input type="checkbox" id="pdpaConsentInitial" onchange="checkInitialConsent()" style="flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="pdpaConsentInitial" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="pdpaConsentInitialLabel"><strong>Saya bersetuju / I agree</strong></label>
                 </div>
 
                 <div class="section-title" id="step1Title">Pemilik & Penyewa</div>
@@ -196,11 +196,8 @@
                     </div>
                 </div>
 
-                <div style="display:flex;gap:10px;margin:10px 0;background:#e8f5e9;padding:10px;border-radius:4px;border-left:4px solid #4caf50;align-items:flex-start">
-                    <input type="checkbox" id="disclaimerAccepted" onchange="updatePayBtn()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="disclaimerAccepted" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="disclaimerCheckLabel"><strong>Saya memahami dan setuju dengan penafian di atas / I understand and agree with disclaimer</strong></label>
-                </div>
-                <div style="display:flex;gap:10px;margin:10px 0;background:#fff3e0;padding:10px;border-radius:4px;border-left:4px solid #ff9800;align-items:flex-start">
-                    <input type="checkbox" id="pdpaConsent" onchange="updatePayBtn()" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="pdpaConsent" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="pdpaCheckLabel"><strong>Saya setuju dengan PDPA consent yang dinyatakan di Halaman 1 / I agree to PDPA consent as stated on Page 1</strong></label>
+                <div style="display:flex;gap:10px;margin:10px 0;background:#e8f5e9;padding:10px;border-radius:4px;border-left:4px solid #4caf50;align-items:center">
+                    <input type="checkbox" id="disclaimerAccepted" onchange="updatePayBtn()" style="flex-shrink:0;width:18px;height:18px;cursor:pointer"><label for="disclaimerAccepted" style="font-size:10px;margin:0;font-weight:normal;cursor:pointer" id="disclaimerCheckLabel"><strong>Saya memahami dan setuju dengan penafian di atas / I understand and agree with disclaimer</strong></label>
                 </div>
             </div>
 
@@ -266,8 +263,7 @@
                 btnClearTenantSig: 'Padam',
                 step5Title: 'Semak & Bayar',
                 priceLabel: 'Harga:',
-                disclaimerCheckLabel: 'Saya memahami dan setuju dengan penafian di atas / I understand and agree with disclaimer',
-                pdpaCheckLabel: 'Saya setuju dengan PDPA consent yang dinyatakan di Halaman 1 / I agree to PDPA consent as stated on Page 1'
+                disclaimerCheckLabel: 'Saya memahami dan setuju dengan penafian di atas / I understand and agree with disclaimer'
             },
             en: {
                 subtitle: 'Online Tenancy Agreement - RM19',
@@ -316,8 +312,7 @@
                 btnClearTenantSig: 'Clear',
                 step5Title: 'Review & Pay',
                 priceLabel: 'Price:',
-                disclaimerCheckLabel: 'I understand and agree with disclaimer',
-                pdpaCheckLabel: 'I agree to PDPA consent as stated on Page 1'
+                disclaimerCheckLabel: 'I understand and agree with disclaimer'
             }
         };
 
@@ -372,7 +367,6 @@
             document.getElementById('step5Title').textContent = t.step5Title;
             document.getElementById('priceLabel').textContent = t.priceLabel;
             document.getElementById('disclaimerCheckLabel').textContent = t.disclaimerCheckLabel;
-            document.getElementById('pdpaCheckLabel').textContent = t.pdpaCheckLabel;
 
             document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
@@ -642,7 +636,7 @@
         }
 
         function updatePayBtn() {
-            const ok = document.getElementById('disclaimerAccepted').checked && document.getElementById('pdpaConsent').checked;
+            const ok = document.getElementById('disclaimerAccepted').checked;
             document.getElementById('payBtn').disabled = !ok;
         }
 
@@ -890,7 +884,6 @@
             }
             document.getElementById('pdpaConsentInitial').checked = false;
             document.getElementById('disclaimerAccepted').checked = false;
-            document.getElementById('pdpaConsent').checked = false;
             updateStepIndicators();
             updateUI();
             checkInitialConsent();
