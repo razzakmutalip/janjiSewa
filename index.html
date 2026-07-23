@@ -41,6 +41,12 @@
         .important-notice-box { background:#fff3cd;border:3px solid #ff9800;border-radius:8px;padding:15px;margin:15px 0 20px 0;font-size:10px;line-height:1.6;color:#8b6f00; }
         .important-notice-box strong { color: #d97706; display: block; margin-bottom: 8px; font-size: 11px; }
         .important-notice-box p { margin: 6px 0; }
+        .standard-agreement-box { background:#e8f5e9;border:3px solid #4caf50;border-radius:8px;padding:15px;margin:15px 0 20px 0;font-size:10px;line-height:1.6;color:#2e7d32; }
+        .standard-agreement-box strong { color: #1b5e20; display: block; margin-bottom: 8px; font-size: 11px; }
+        .standard-agreement-box p { margin: 6px 0; }
+        .single-device-box { background:#fce4ec;border:3px solid #e91e63;border-radius:8px;padding:15px;margin:15px 0 20px 0;font-size:10px;line-height:1.6;color:#880e4f; }
+        .single-device-box strong { color: #600e1f; display: block; margin-bottom: 8px; font-size: 11px; }
+        .single-device-box p { margin: 6px 0; }
         .pdpa-consent-box { background:#f0f5ff;border:3px solid #2196f3;border-radius:8px;padding:15px;margin:15px 0;font-size:10px;line-height:1.6;color:#1565c0; }
         .pdpa-consent-box strong { color: #0d47a1; display: block; margin-bottom: 8px; font-size: 11px; }
         .pdpa-consent-box p { margin: 6px 0; }
@@ -89,6 +95,28 @@
                         
                         <strong style="font-size:10px;margin-top:8px;display:block">ENGLISH:</strong>
                         <p>This form is for ONE-TIME USE only. All your data (name, ID, photos) is stored TEMPORARILY on your device WHILE you fill out this form. After you download the agreement and close this page, ALL data will be PERMANENTLY deleted. No server storage. No login. No way to retrieve old data or agreements. If you need changes, you MUST purchase again and fill out this form from the beginning.</p>
+                    </div>
+                </div>
+
+                <div class="standard-agreement-box">
+                    <strong id="standardTitle">📋 PERJANJIAN STANDARD / STANDARD AGREEMENT</strong>
+                    <div id="standardContent">
+                        <strong style="font-size:10px">BAHASA MALAYSIA:</strong>
+                        <p>PERHATIAN: Perjanjian ini adalah PERJANJIAN STANDARD yang lazim digunakan di Malaysia. SEMUA TERMA DAN SYARAT SUDAH TETAP DAN TIDAK BOLEH DIUBAH. Jika anda memerlukan sebarang perubahan, penambahan, atau pengubahsuaian ke atas perjanjian ini, ANDA MESTI BERUNDING DENGAN PEGUAM BERDAFTAR untuk merangka perjanjian baru mengikut keperluan khusus anda. JANJIsewa hanya menyediakan perjanjian standard sahaja dan tidak boleh menerima perubahan khusus.</p>
+                        
+                        <strong style="font-size:10px;margin-top:8px;display:block">ENGLISH:</strong>
+                        <p>ATTENTION: This is a STANDARD AGREEMENT commonly used in Malaysia. ALL TERMS AND CONDITIONS ARE FIXED AND CANNOT BE MODIFIED. If you require any changes, additions, or amendments to this agreement, YOU MUST CONSULT A REGISTERED LAWYER to draft a new agreement according to your specific requirements. JANJIsewa provides standard agreements only and cannot accept custom modifications.</p>
+                    </div>
+                </div>
+
+                <div class="single-device-box">
+                    <strong id="singleDeviceTitle">📱 SATU PERANTI SAHAJA / SINGLE DEVICE ONLY</strong>
+                    <div id="singleDeviceContent">
+                        <strong style="font-size:10px">BAHASA MALAYSIA:</strong>
+                        <p>PENTING: Borang ini MESTI DIISI MENGGUNAKAN SATU PERANTI SAHAJA dari awal hingga akhir. Kedua-dua PEMILIK dan PENYEWA mesti memasukkan butiran mereka, memuat naik foto K.P./Pasport, DAN MENANDATANGANI PADA PERANTI YANG SAMA ini. Jangan guna peranti berlainan kerana data tidak akan tersimpan dengan betul. Pastikan SATU PERANTI, SATU BORANG, SATU UNDUHAN PDF sahaja.</p>
+                        
+                        <strong style="font-size:10px;margin-top:8px;display:block">ENGLISH:</strong>
+                        <p>IMPORTANT: This form MUST BE COMPLETED USING A SINGLE DEVICE from start to finish. Both LANDLORD and TENANT must enter their details, upload ID/Passport photos, AND SIGN ON THIS SAME DEVICE. Do not use different devices as data will not be saved correctly. Ensure ONE DEVICE, ONE FORM, ONE PDF DOWNLOAD only.</p>
                     </div>
                 </div>
 
@@ -219,6 +247,8 @@
             bm: {
                 subtitle: 'Online Tenancy Agreement - RM19',
                 importanceTitle: '⚠️ ARAHAN PENTING / IMPORTANT NOTICE',
+                standardTitle: '📋 PERJANJIAN STANDARD / STANDARD AGREEMENT',
+                singleDeviceTitle: '📱 SATU PERANTI SAHAJA / SINGLE DEVICE ONLY',
                 pdpaTitle: '📋 PERSONAL DATA PROTECTION ACT (PDPA) CONSENT / PERSETUJUAN AKTA PERLINDUNGAN DATA PERIBADI',
                 step1Title: 'Pemilik & Penyewa',
                 landlordLabel: 'LANDLORD / PEMILIK',
@@ -268,6 +298,8 @@
             en: {
                 subtitle: 'Online Tenancy Agreement - RM19',
                 importanceTitle: '⚠️ IMPORTANT NOTICE / ARAHAN PENTING',
+                standardTitle: '📋 STANDARD AGREEMENT / PERJANJIAN STANDARD',
+                singleDeviceTitle: '📱 SINGLE DEVICE ONLY / SATU PERANTI SAHAJA',
                 pdpaTitle: '📋 PERSONAL DATA PROTECTION ACT (PDPA) CONSENT / PERSETUJUAN AKTA PERLINDUNGAN DATA PERIBADI',
                 step1Title: 'Landlord & Tenant',
                 landlordLabel: 'LANDLORD / PEMILIK',
@@ -322,6 +354,8 @@
             
             document.getElementById('subtitle').textContent = t.subtitle;
             document.getElementById('importanceTitle').textContent = t.importanceTitle;
+            document.getElementById('standardTitle').textContent = t.standardTitle;
+            document.getElementById('singleDeviceTitle').textContent = t.singleDeviceTitle;
             document.getElementById('pdpaTitle').textContent = t.pdpaTitle;
             document.getElementById('step1Title').textContent = t.step1Title;
             document.getElementById('landlordLabel').textContent = t.landlordLabel;
