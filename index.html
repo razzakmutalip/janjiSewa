@@ -9,32 +9,39 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f7fa; min-height: 100vh; padding: 12px; }
         .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
+        
         .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 24px 20px; text-align: center; color: #fff; }
         .header img { max-width: 320px; height: auto; margin-bottom: 12px; }
         .header p { font-size: 13px; opacity: 0.95; font-weight: 500; }
+        
         .role-selector { background: rgba(255,255,255,0.1); padding: 14px; border-radius: 8px; margin-top: 14px; backdrop-filter: blur(10px); }
         .role-title { font-size: 11px; opacity: 0.9; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; }
         .role-buttons { display: flex; gap: 8px; }
         .role-btn { flex: 1; padding: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: #fff; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
         .role-btn:hover { background: rgba(255,255,255,0.2); }
         .role-btn.active { background: #fff; color: #667eea; border-color: #fff; }
+        
         .workflow-guide { background: rgba(255,255,255,0.95); border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 11px; line-height: 1.6; color: #1f2937; }
         .workflow-step { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
         .workflow-num { background: #667eea; color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; }
         .workflow-text { flex: 1; }
         .workflow-text strong { color: #667eea; }
         .workflow-guide.hidden { display: none; }
+        
         .step-indicator { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: #f9fafb; gap: 6px; }
         .step-circle { width: 40px; height: 40px; border-radius: 50%; background: #e5e7eb; color: #6b7280; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; transition: all 0.3s; }
         .step-circle.active { background: #667eea; color: #fff; }
         .step-circle.done { background: #10b981; color: #fff; }
         .step-line { flex: 1; height: 2px; background: #e5e7eb; transition: all 0.3s; }
         .step-line.done { background: #10b981; }
+        
         .lang-toggle { display: flex; gap: 6px; justify-content: center; padding: 12px 20px; background: #f9fafb; }
         .btn-lang { padding: 6px 16px; border: 1.5px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .btn-lang.active { background: #667eea; color: #fff; border-color: #667eea; }
+        
         .content { padding: 24px; }
         .section-title { font-size: 15px; font-weight: 700; color: #1f2937; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2.5px solid #667eea; }
+        
         .notice-box { border-radius: 10px; padding: 14px; margin-bottom: 14px; font-size: 12px; line-height: 1.6; }
         .notice-title { font-weight: 700; margin-bottom: 8px; }
         .notice-warning { background: #fff7ed; border: 2px solid #f59e0b; color: #92400e; }
@@ -42,33 +49,48 @@
         .notice-consent { background: #e3f2fd; border: 2px solid #2196f3; color: #0d47a1; }
         .notice-info { background: #f0fdf4; border: 2px solid #86efac; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; line-height: 1.5; }
         .notice-info strong { color: #16a34a; }
+        .notice-expanded { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(0,0,0,0.1); }
+        .notice-expanded.show { display: block; }
+        .read-more-btn { background: none; border: none; color: #667eea; cursor: pointer; font-weight: 600; font-size: 12px; padding: 4px 0; margin-top: 6px; text-decoration: underline; }
+        .read-more-btn:hover { opacity: 0.8; }
+        .disclaimer-box { background: #fef3c7; border: 2.5px solid #f59e0b; border-radius: 10px; padding: 14px; margin: 14px 0; font-size: 12px; line-height: 1.6; color: #92400e; }
+        .disclaimer-title { font-weight: 700; color: #d97706; margin-bottom: 8px; }
+        
         .checkbox-group { display: flex; gap: 10px; align-items: flex-start; background: #f0f9ff; padding: 12px; border-radius: 6px; margin: 12px 0; border-left: 4px solid #0284c7; }
         .checkbox-group input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; }
         .checkbox-group label { font-size: 12px; font-weight: 500; cursor: pointer; }
+        
         .form-group { margin-bottom: 14px; }
         label { display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 12px; }
         input:focus, select:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
+        
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (max-width: 500px) { .two-col { grid-template-columns: 1fr; } }
+        
         .status-box { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 12px; }
         .status-item { margin: 4px 0; font-weight: 600; color: #16a34a; }
         .status-item.pending { color: #ca8a04; }
+        
         .verification-links { background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 11px; }
         .verification-links a { color: #16a34a; text-decoration: none; font-weight: 600; display: inline-block; margin: 4px 0; }
+        
         .sig-container { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 14px; margin: 14px 0; }
         .sig-label { font-size: 13px; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
-        canvas { border: 2px solid #d1d5db; border-radius: 6px; width: 100%; height: 110px; display: block; margin-bottom: 8px; background: #fff; }
+        canvas { border: 2px solid #d1d5db; border-radius: 6px; width: 100% !important; height: 120px !important; display: block !important; margin-bottom: 10px !important; background: #fff !important; cursor: crosshair; }
         .btn-clear { background: #ef4444; color: #fff; padding: 7px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; }
+        
         .session-box { background: #fef3c7; padding: 14px; border-radius: 8px; border: 2px solid #f59e0b; margin: 14px 0; }
         .session-label { font-size: 12px; font-weight: 700; color: #92400e; margin-bottom: 8px; text-transform: uppercase; }
         .session-display { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
         .session-code { background: #fff; padding: 10px 14px; border-radius: 6px; font-weight: 700; font-size: 16px; font-family: monospace; flex: 1; border: 2px solid #f59e0b; }
         .btn-copy { background: #f59e0b; border: none; color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; }
         .btn-copy:hover { background: #d97706; }
+        
         .hidden { display: none !important; }
         .step { display: none; }
         .step.active { display: block; }
+        
         .buttons { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
         button { flex: 1; min-width: 100px; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
         .btn-next { background: #667eea; color: #fff; }
@@ -79,6 +101,7 @@
         .btn-pay { background: #f59e0b; color: #fff; }
         .btn-whatsapp { background: #25d366; color: #fff; }
         .btn-whatsapp:hover { background: #1eaa52; }
+        
         .price-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; text-align: center; margin: 14px 0; }
         .price-box .amount { font-size: 28px; color: #d97706; font-weight: 700; margin: 6px 0; }
     </style>
@@ -88,6 +111,7 @@
         <div class="header">
             <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20JANJISewa%20cropped.PNG" alt="JANJIsewa">
             <p>Perjanjian Sewaan Online • Tenancy Agreement</p>
+            
             <div class="role-selector">
                 <div class="role-title">Pilih Peranan / Select Role</div>
                 <div class="role-buttons">
@@ -95,97 +119,298 @@
                     <button class="role-btn" onclick="setRole('tenant')" id="roleTenant">👨‍🏠 Penyewa / Tenant</button>
                 </div>
             </div>
+            
             <div class="workflow-guide" id="workflowLandlord">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Pemilik / Landlord:</div>
-                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text">Isi maklumat pemilik & harta</div></div>
-                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text">Tandatangan di Langkah 3</div></div>
-                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong>Langkah 4: Dapatkan kod & hantar ke penyewa via WhatsApp</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text">Tunggu penyewa isi & tandatangan</div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text">Bayar RM19 & muat turun</div></div>
+                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Pemilik / Landlord Workflow:</div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong>Isi maklumat pemilik & harta (Langkah 1-2)</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><strong>Tandatangan (Langkah 3)</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong>Dapatkan KOD unik di Langkah 4</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong>HANTAR KOD + LINK ke PENYEWA via WhatsApp</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text">Penyewa isi data & tandatangan menggunakan kod anda</div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text">Penyewa BAYAR RM19 untuk muat turun PDF final</div></div>
             </div>
+            
             <div class="workflow-guide hidden" id="workflowTenant">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Penyewa / Tenant:</div>
-                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text">Buka link dari pemilik (dengan kod)</div></div>
-                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text">Isi maklumat penyewa anda</div></div>
-                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text">Tandatangan di Langkah 3</div></div>
-                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong>Beritahu pemilik via WhatsApp</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text">Pemilik akan bayar & hantar PDF</div></div>
+                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Penyewa / Tenant Workflow:</div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong>Buka link dari pemilik (dengan KOD)</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text">Pilih "Penyewa / Tenant" di atas halaman ini</div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong>Isi maklumat penyewa anda (Langkah 1-2)</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong>Tandatangan di Langkah 3</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><strong>BAYAR RM19 untuk muat turun PDF</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text">Kongsikan PDF dengan pemilik</div></div>
             </div>
         </div>
+
         <div class="step-indicator">
             <div class="step-circle active" id="step1Ind">1</div>
             <div class="step-line" id="line1"></div>
             <div class="step-circle" id="step2Ind">2</div>
             <div class="step-line" id="line2"></div>
             <div class="step-circle" id="step3Ind">3</div>
-            <div class="step-line" id="line3"></div>
-            <div class="step-circle" id="step4Ind">4</div>
         </div>
+
         <div class="lang-toggle">
             <button class="btn-lang active" onclick="setLanguage('bm')">Bahasa Malaysia</button>
             <button class="btn-lang" onclick="setLanguage('en')">English</button>
         </div>
+
         <form id="mainForm">
             <div class="step active" id="step1">
                 <div class="content">
                     <div class="section-title">Maklumat Pihak-Pihak / Party Details</div>
+
                     <div class="notice-info">
-                        <strong id="panduan1BM">💡 Panduan:</strong>
-                        <span id="panduan1TextBM">Pemilik sila isi data anda dan harta. Tandatangan di Langkah 3. Langkah 4 akan menunjukkan kod untuk dikongsi dengan penyewa via WhatsApp.</span>
-                        <span id="panduan1TextEN" class="hidden">Landlord please fill your details and property info. Sign at Step 3. Step 4 will show code to share with tenant via WhatsApp.</span>
+                        <strong id="panduan1BM">💡 Panduan / Guide:</strong>
+                        <div id="panduan1TextBM">
+                            <div>Pemilik sila isi data anda dan harta. Tandatangan di Langkah 3. <button class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
+                            <div class="notice-expanded">
+                                Langkah 4 akan menunjukkan kod unik untuk dikongsi dengan penyewa melalui WhatsApp atau mesej lain. Sebaik sahaja penyewa membuka link dengan kod tersebut, mereka boleh mengisi data mereka sendiri. Pastikan kedua-dua pihak menandatangani borang sebelum memproses pembayaran.
+                            </div>
+                        </div>
+                        <div id="panduan1TextEN" class="hidden">
+                            <div>Landlord please fill your details and property information. Sign at Step 3. <button class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
+                            <div class="notice-expanded">
+                                Step 4 will display a unique code to share with the tenant via WhatsApp or other messaging. Once the tenant opens the link with the code, they can fill in their own details. Ensure both parties sign before processing payment.
+                            </div>
+                        </div>
                     </div>
+
                     <div class="notice-box notice-warning">
                         <div class="notice-title">⚠️ ARAHAN PENTING / IMPORTANT NOTICE</div>
-                        <div id="notice1BM">Borang ini UNTUK satu kali penggunaan. Semua data anda akan DIPADAMKAN apabila anda tutup halaman.</div>
-                        <div id="notice1EN" class="hidden">This form is ONE-TIME USE. All your data will be PERMANENTLY DELETED when you close this page.</div>
+                        <div id="notice1BM">
+                            <div>Borang ini UNTUK satu kali penggunaan. Semua data anda akan DIPADAMKAN apabila anda tutup halaman. <button class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
+                            <div class="notice-expanded">
+                                Tidak ada salinan data tersimpan di pelayan kami. Setelah anda keluar dari laman ini atau tutup tab, SEMUA maklumat akan hilang dan tidak boleh dipulihkan. Salin atau simpan perjanjian PDF sebelum meninggalkan. Sistem kami menggunakan penyimpanan tempatan (localStorage) untuk keadaan sesi sahaja. Untuk keselamatan maksimum, jangan bagikan URL borang ini dengan orang yang tidak dipercaya.
+                            </div>
+                        </div>
+                        <div id="notice1EN" class="hidden">
+                            <div>This form is ONE-TIME USE. All your data will be PERMANENTLY DELETED when you close this page. <button class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
+                            <div class="notice-expanded">
+                                No data copies are stored on our servers. Once you exit this page or close the tab, ALL information will be lost and cannot be recovered. Download and save the agreement PDF before leaving. Our system uses local storage (localStorage) for session state only. For maximum security, do not share the form URL with untrusted parties.
+                            </div>
+                        </div>
                     </div>
+
                     <div class="notice-box notice-standard">
                         <div class="notice-title">📋 PERJANJIAN STANDARD / STANDARD AGREEMENT</div>
-                        <div id="notice2BM">TERMA ADALAH TETAP dan TIDAK BOLEH DIUBAH (ini adalah Standard Agreement yang dipakai di Malaysia). Perlu ubah? Hubungi peguam berdaftar.</div>
-                        <div id="notice2EN" class="hidden">All TERMS ARE FIXED and CANNOT BE MODIFIED. Need changes? Consult a registered lawyer.</div>
+                        <div id="notice2BM">
+                            <div>TERMA ADALAH TETAP dan TIDAK BOLEH DIUBAH (ini adalah Standard Agreement yang dipakai di Malaysia). Perlu ubah? <button class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
+                            <div class="notice-expanded">
+                                Perjanjian ini mengikuti format standard yang diluluskan dan digunakan secara meluas di Malaysia. Ia mengandungi 16 klausa yang menutup semua aspek penting perjanjian sewaan. Setiap klausa telah dirangka dengan cermat untuk melindungi hak kedua-dua pemilik dan penyewa mengikut undang-undang Malaysia. Jika anda perlu mengubah atau menambah syarat khusus, sila berunding dengan peguam berdaftar untuk mendapatkan nasihat undang-undang. Setiap perubahan harus didokumentasikan secara rasmi dan ditandatangani oleh kedua-dua pihak.
+                            </div>
+                        </div>
+                        <div id="notice2EN" class="hidden">
+                            <div>All TERMS ARE FIXED and CANNOT BE MODIFIED. This is a Standard Agreement widely used in Malaysia. <button class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
+                            <div class="notice-expanded">
+                                This agreement follows a standardized format approved and widely used in Malaysia. It contains 16 clauses covering all important aspects of a tenancy. Each clause has been carefully drafted to protect the rights of both landlord and tenant under Malaysian law. If you need to modify or add special terms, please consult with a registered lawyer for legal advice. Any changes must be formally documented and signed by both parties.
+                            </div>
+                        </div>
                     </div>
+
                     <div class="notice-box notice-consent">
                         <div class="notice-title">🔒 PERSETUJUAN DATA PERIBADI / PDPA CONSENT</div>
-                        <div id="notice3BM">Dengan mengisi borang ini, anda bersetuju data anda dikumpul untuk menyediakan perjanjian ini sahaja. Hubungi admin@findlawyer.my untuk permintaan data.</div>
-                        <div id="notice3EN" class="hidden">By proceeding, you consent to your data being collected solely to generate this agreement. Contact admin@findlawyer.my for data requests.</div>
+                        <div id="notice3BM">
+                            <div>Dengan mengisi borang ini, anda bersetuju data anda dikumpul untuk menyediakan perjanjian ini sahaja. <button class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
+                            <div class="notice-expanded">
+                                Data peribadi anda (nama, no. K.P., telefon, dan alamat) disimpan secara tempatan di peranti anda menggunakan localStorage. Data ini TIDAK dihantar ke pelayan kami atau disimpan dalam pangkalan data. Kami tidak menggunakan data anda untuk tujuan pemasaran atau perkongsian dengan pihak ketiga. Untuk maklumat lanjut tentang bagaimana kami mengendalikan data, atau untuk meminta pemadaman data, hubungi admin@findlawyer.my. Persetujuan anda adalah wajib untuk meneruskan dengan perjanjian ini.
+                            </div>
+                        </div>
+                        <div id="notice3EN" class="hidden">
+                            <div>By proceeding, you consent to your data being collected solely to generate this agreement. <button class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
+                            <div class="notice-expanded">
+                                Your personal data (name, IC number, phone, and address) is stored locally on your device using browser localStorage. This data is NOT sent to our servers or stored in any database. We do not use your data for marketing purposes or share it with third parties. For more information about how we handle data, or to request data deletion, contact admin@findlawyer.my. Your consent is required to proceed with this agreement.
+                            </div>
+                        </div>
                     </div>
+
                     <div class="checkbox-group">
                         <input type="checkbox" id="consentCheckbox" onchange="checkConsent()">
                         <label for="consentCheckbox">Saya setuju dengan semua notis di atas / I agree to all the notices above</label>
                     </div>
+
+                    <div class="disclaimer-box">
+                        <div class="disclaimer-title">⚖️ PENAFIAN UNDANG-UNDANG / LEGAL DISCLAIMER</div>
+                        <div id="disclaimerBM">
+                            <div>JANJIsewa hanya menyediakan borang perjanjian standard. <button class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
+                            <div class="notice-expanded">
+                                Kami bukan firma guaman dan tidak memberikan nasihat undang-undang. Perjanjian ini adalah untuk rujukan umum sahaja. Sila konsultasikan dengan peguam berdaftar jika anda memerlukan nasihat undang-undang tertentu. Kami tidak bertanggung jawab atas sebarang kerugian atau kerosakan yang timbul daripada penggunaan borang ini. Kedua-dua pihak bersetuju bahawa penggunaan perjanjian ini adalah atas risiko mereka sendiri. JANJIsewa menyediakan perkhidmatan sebagaimana adanya tanpa jaminan atau waranti.
+                            </div>
+                        </div>
+                        <div id="disclaimerEN" class="hidden">
+                            <div>JANJIsewa only provides a standard agreement form. <button class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
+                            <div class="notice-expanded">
+                                We are not a law firm and do not provide legal advice. This agreement is for general reference only. Please consult with a registered lawyer if you require specific legal advice. We are not responsible for any loss or damage arising from the use of this form. Both parties agree that the use of this agreement is at their own risk. JANJIsewa provides the service as-is without warranty or guarantee.
+                            </div>
+                        </div>
+                    </div>
+
                     <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px;">PEMILIK / LANDLORD</div>
                     <div class="two-col">
-                        <div class="form-group"><label>Nama Penuh / Full Name</label><input type="text" id="landlordName" onchange="saveData()"></div>
-                        <div class="form-group"><label>No. K.P. / IC</label><input type="text" id="landlordIC" maxlength="12" placeholder="880101-12-1234" onchange="saveData()" oninput="formatIC(this)"></div>
+                        <div class="form-group">
+                            <label>Nama Penuh / Full Name</label>
+                            <input type="text" id="landlordName" onchange="saveData()">
+                        </div>
+                        <div class="form-group">
+                            <label>No. K.P. / IC</label>
+                            <input type="text" id="landlordIC" maxlength="12" placeholder="880101-12-1234" onchange="saveData()" oninput="formatIC(this)">
+                        </div>
                     </div>
                     <div class="two-col">
-                        <div class="form-group"><label>Telefon / Phone</label><input type="tel" id="landlordPhone" onchange="saveData()"></div>
-                        <div class="form-group"><label>Email</label><input type="email" id="landlordEmail" onchange="saveData()"></div>
+                        <div class="form-group">
+                            <label>Telefon / Phone</label>
+                            <input type="tel" id="landlordPhone" onchange="saveData()">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="landlordEmail" onchange="saveData()">
+                        </div>
                     </div>
+
                     <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px;">PENYEWA / TENANT</div>
                     <div class="two-col">
-                        <div class="form-group"><label>Nama Penuh / Full Name</label><input type="text" id="tenantName" onchange="saveData()"></div>
-                        <div class="form-group"><label>No. K.P. / IC</label><input type="text" id="tenantIC" maxlength="12" placeholder="950115-12-5678" onchange="saveData()" oninput="formatIC(this)"></div>
+                        <div class="form-group">
+                            <label>Nama Penuh / Full Name</label>
+                            <input type="text" id="tenantName" onchange="saveData()">
+                        </div>
+                        <div class="form-group">
+                            <label>No. K.P. / IC</label>
+                            <input type="text" id="tenantIC" maxlength="12" placeholder="950115-12-5678" onchange="saveData()" oninput="formatIC(this)">
+                        </div>
                     </div>
                     <div class="two-col">
-                        <div class="form-group"><label>Telefon / Phone</label><input type="tel" id="tenantPhone" onchange="saveData()"></div>
-                        <div class="form-group"><label>Email</label><input type="email" id="tenantEmail" onchange="saveData()"></div>
+                        <div class="form-group">
+                            <label>Telefon / Phone</label>
+                            <input type="tel" id="tenantPhone" onchange="saveData()">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="tenantEmail" onchange="saveData()">
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div class="step" id="step2">
                 <div class="content">
                     <div class="section-title">Syarat Sewaan / Lease Terms</div>
-                    <div class="form-group"><label>Alamat Harta / Property Address</label><input type="text" id="propAddr" onchange="saveData()"></div>
-                    <div class="two-col">
-                        <div class="form-group"><label>Jenis / Type</label><select id="propType" onchange="saveData()"><option>Apartment</option><option>Rumah / House</option><option>Kedai / Shop</option></select></div>
-                        <div class="form-group"><label>Negeri / State</label><select id="propState" onchange="saveData()"><option>Selangor</option><option>KL</option><option>Johor</option></select></div>
+                    <div class="form-group">
+                        <label>Alamat Harta / Property Address</label>
+                        <input type="text" id="propAddr" onchange="saveData()">
                     </div>
                     <div class="two-col">
-                        <div class="form-group"><label>Tarikh Mula / Start</label><input type="date" id="leaseStart" onchange="saveData()"></div>
-                        <div class="form-group"><label>Tarikh Tamat / End</label><input type="date" id="leaseEnd" onchange="saveData()"></div>
+                        <div class="form-group">
+                            <label>Jenis Harta / Property Type</label>
+                            <select id="propType" onchange="saveData()">
+                                <option>Landed House / Rumah Teres</option>
+                                <option>Condo / Apartment</option>
+                                <option>Flat / Flat</option>
+                                <option>Shoplot / Kedai</option>
+                                <option>Others / Lain-lain</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Negeri / State</label>
+                            <select id="propState" onchange="saveData()">
+                                <option>Selangor</option>
+                                <option>KL</option>
+                                <option>Johor</option>
+                                <option>Penang</option>
+                                <option>Perak</option>
+                                <option>Pahang</option>
+                                <option>Terengganu</option>
+                                <option>Kelantan</option>
+                                <option>Perlis</option>
+                                <option>Kedah</option>
+                                <option>Negeri Sembilan</option>
+                                <option>Melaka</option>
+                                <option>Sabah</option>
+                                <option>Sarawak</option>
+                                <option>Labuan</option>
+                                <option>Putrajaya</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group"><label>Sewa Bulanan / Monthly Rent (RM)</label><input type="number" id="rent" onchange="saveData()"></div>
+                    
+                    <div class="two-col">
+                        <div class="form-group">
+                            <label>Unit Keseluruhan atau Bilik / Whole Unit or Room</label>
+                            <select id="rentType" onchange="saveData()">
+                                <option>Whole Unit / Keseluruhan Unit</option>
+                                <option>Room Only / Bilik Sahaja</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Furnished Status / Status Perabot</label>
+                            <select id="furnishedStatus" onchange="saveData()">
+                                <option>Fully Furnished / Lengkap</option>
+                                <option>Partially Furnished / Separuh</option>
+                                <option>Not Furnished / Kosong</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="two-col">
+                        <div class="form-group">
+                            <label>Tarikh Mula / Start</label>
+                            <input type="date" id="leaseStart" onchange="saveData()">
+                        </div>
+                        <div class="form-group">
+                            <label>Tarikh Tamat / End</label>
+                            <input type="date" id="leaseEnd" onchange="saveData()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tempoh Notis Pengakhiran / Notice Period for Termination</label>
+                        <select id="noticePeriod" onchange="updateNoticePeriod()" style="margin-bottom: 8px;">
+                            <option value="30">30 Days / 30 Hari</option>
+                            <option value="60">60 Days / 60 Hari</option>
+                            <option value="90">90 Days / 90 Hari</option>
+                            <option value="custom">Custom / Tertentu</option>
+                        </select>
+                        <input type="number" id="noticePeriodCustom" placeholder="Enter days / Masukkan hari (e.g. 45)" onchange="saveData()" style="display: none; margin-top: 8px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Sewa Bulanan / Monthly Rent (RM)</label>
+                        <input type="number" id="rent" onchange="saveData()">
+                    </div>
+
+                    <div class="two-col">
+                        <div class="form-group">
+                            <label>Deposit Keselamatan / Security Deposit</label>
+                            <select id="depositMonths" onchange="saveData()">
+                                <option>1 Month / 1 Bulan</option>
+                                <option>2 Months / 2 Bulan</option>
+                                <option>3 Months / 3 Bulan</option>
+                                <option>Custom Amount / Jumlah Tertentu</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Custom Deposit Amount (RM) / Jumlah Deposit Khusus</label>
+                            <input type="number" id="depositAmount" placeholder="Optional / Opsional" onchange="saveData()">
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="form-group">
+                            <label>Utility Deposit (RM) / Deposit Utiliti</label>
+                            <input type="number" id="utilityDeposit" placeholder="e.g. 500" onchange="saveData()">
+                        </div>
+                        <div class="form-group">
+                            <label>Late Payment Charges (RM/day) / Caj Keterlambatan</label>
+                            <input type="number" id="lateCharges" placeholder="e.g. 50" onchange="saveData()">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mode of Payment / Cara Pembayaran</label>
+                        <select id="paymentMode" onchange="saveData()">
+                            <option>Cash / Tunai</option>
+                            <option>Bank Transfer / Pindahan Bank</option>
+                            <option>FPX</option>
+                            <option>E-Wallet / E-Dompet</option>
+                            <option>Multiple / Pelbagai</option>
+                        </select>
+                    </div>
+
                     <div class="notice-box notice-standard" style="margin-top: 24px; margin-bottom: 20px;">
                         <div class="notice-title">📋 16 KLAUSA STANDARD / 16 STANDARD CLAUSES</div>
                         <div id="clausesBM" style="line-height: 1.8; font-size: 11px;">
@@ -201,11 +426,12 @@
                             <strong>10. TETAMU & KEBISINGAN</strong> - Boleh terima tetamu tapi bertanggung jawab atas mereka. Tiada kebisingan berlebihan.<br><br>
                             <strong>11. PENGUBAHSUAIAN</strong> - Tidak boleh ubah harta tanpa kebenaran bertulis. Buang semua kemasan pada akhir.<br><br>
                             <strong>12. INSURANS & LIABILITI</strong> - Penyewa bertanggung jawab barang diri. Pemilik tidak bertanggung jawab kerugian.<br><br>
-                            <strong>13. PENGAKHIRAN</strong> - Boleh akhiri dengan notis 30 hari. Pengakhiran awal = denda satu bulan sewa.<br><br>
+                            <strong>13. PENGAKHIRAN</strong> - Boleh akhiri dengan notis <span id="clause13DaysBM">30</span> hari. Pengakhiran awal = denda satu bulan sewa.<br><br>
                             <strong>14. PENINGKATAN SEWA</strong> - Notis 60 hari. Kenaikan maksimum 5% setahun.<br><br>
                             <strong>15. AUDIT & INSPEKSI</strong> - Pemilik boleh inspeksi bulanan dengan notis 24 jam. Penyewa benarkan akses pembaikan.<br><br>
                             <strong>16. UNDANG-UNDANG MALAYSIA</strong> - Perjanjian dikawal undang-undang Malaysia. Pertikaian di Mahkamah Kecil/Tinggi Malaysia.
                         </div>
+                        
                         <div id="clausesEN" class="hidden" style="line-height: 1.8; font-size: 11px;">
                             <strong>1. TENANCY DURATION</strong> - Agreement starts and ends on stated dates. Extension requires new written agreement.<br><br>
                             <strong>2. MONTHLY RENT</strong> - Tenant pays on 1st of each month. Late payment incurs penalties.<br><br>
@@ -219,12 +445,13 @@
                             <strong>10. GUESTS & NOISE</strong> - May receive guests but responsible for conduct. No excessive noise.<br><br>
                             <strong>11. ALTERATIONS</strong> - Cannot alter property without written permission. Remove all additions at end.<br><br>
                             <strong>12. INSURANCE & LIABILITY</strong> - Tenant responsible for belongings. Landlord not liable for losses.<br><br>
-                            <strong>13. TERMINATION</strong> - May terminate with 30 days notice. Early termination = one month rent penalty.<br><br>
+                            <strong>13. TERMINATION</strong> - May terminate with <span id="clause13DaysEN">30</span> days notice. Early termination = one month rent penalty.<br><br>
                             <strong>14. RENT INCREMENT</strong> - 60 days notice. Maximum 5% per year.<br><br>
                             <strong>15. AUDIT & INSPECTION</strong> - Landlord may inspect monthly with 24 hours notice. Tenant permits access for repairs.<br><br>
                             <strong>16. MALAYSIAN LAW</strong> - Governed by Malaysian law. Disputes settled at competent Small/High Court.
                         </div>
                     </div>
+                    
                     <div class="checkbox-group">
                         <input type="checkbox" id="clausesCheckbox" onchange="checkClauses()">
                         <label for="clausesCheckbox">Saya faham dan setuju dengan semua 16 klausa / I understand and agree with all 16 clauses</label>
@@ -233,7 +460,7 @@
             </div>
             <div class="step" id="step3">
                 <div class="content">
-                    <div class="section-title">Sahkan & Tandatangan / Verify & Sign</div>
+                    <div class="section-title">Tandatangan & Bayar / Sign & Payment</div>
                     <div class="verification-links">
                         <strong>🛡️ Semak Anti-Penipuan / Anti-Fraud</strong>
                         <p id="verifyBM">Sebelum menandatangani, semak maklumat:</p>
@@ -248,6 +475,7 @@
                         <div id="landlordStatus" class="status-item pending">⏳ Pemilik / Landlord: Menunggu tandatangan</div>
                         <div id="tenantStatus" class="status-item pending">⏳ Penyewa / Tenant: Menunggu tandatangan</div>
                     </div>
+
                     <div class="sig-container">
                         <div class="sig-label">Pemilik Tandatangan / Landlord Signature</div>
                         <canvas id="landlordSigCanvas"></canvas>
@@ -258,31 +486,81 @@
                         <canvas id="tenantSigCanvas"></canvas>
                         <button type="button" class="btn-clear" onclick="clearTenantSig()">Padam / Clear</button>
                     </div>
-                </div>
-            </div>
-            <div class="step" id="step4">
-                <div class="content">
-                    <div class="section-title">Muat Turun & Bayar / Download & Pay</div>
-                    <div class="session-box">
-                        <div class="session-label">🔑 KONGSIKAN KOD INI KE PENYEWA / SHARE THIS CODE TO TENANT</div>
-                        <div class="session-display">
-                            <div class="session-code" id="sessionCode">JS-LOADING</div>
-                            <button type="button" class="btn-copy" onclick="copySession()">Salin</button>
+
+                    <!-- LANDLORD VIEW - DOWNLOAD & PAYMENT -->
+                    <div id="step3Landlord">
+                        <div class="section-title" style="margin-top: 28px;">Muat Turun & Bayar / Download & Pay</div>
+                        <div class="session-box">
+                            <div class="session-label">🔑 KONGSIKAN KOD INI KE PENYEWA / SHARE THIS CODE TO TENANT</div>
+                            <div class="session-display">
+                                <div class="session-code" id="sessionCode">JS-LOADING</div>
+                                <button type="button" class="btn-copy" onclick="copySession()">Salin / Copy</button>
+                            </div>
+                        </div>
+                        <div class="notice-info" style="margin: 16px 0;">
+                            <strong id="landlordInfoBM">📋 Langkah Seterusnya:</strong>
+                            <div id="landlordInfoTextBM" style="margin-top: 8px; line-height: 1.6;">
+                                1. Masukkan nombor telefon penyewa di bawah<br>
+                                2. Tekan tombol "Hantar ke WhatsApp" untuk menghantar kod & link secara automatik<br>
+                                3. Penyewa akan membuka link, memilih "Penyewa" dan mengisi data mereka<br>
+                                4. Penyewa akan tandatangan di halaman yang sama<br>
+                                5. <strong>Penyewa akan BAYAR RM19</strong> untuk muat turun PDF final<br>
+                                6. Anda akan terima notifikasi apabila penyewa telah siap
+                            </div>
+                            <div id="landlordInfoTextEN" class="hidden" style="margin-top: 8px; line-height: 1.6;">
+                                1. Enter tenant's phone number below<br>
+                                2. Press "Send via WhatsApp" to automatically send code & link<br>
+                                3. Tenant will open the link, select "Tenant" and fill their details<br>
+                                4. Tenant will sign on the same page<br>
+                                5. <strong>Tenant will PAY RM19</strong> to download the final PDF<br>
+                                6. You will be notified when tenant is ready
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 16px;">
+                            <label id="tenantPhoneLabelBM">Nombor Telefon Penyewa / Tenant's Phone Number</label>
+                            <label id="tenantPhoneLabelEN" class="hidden">Tenant's Phone Number</label>
+                            <input type="tel" id="tenantPhoneNum" placeholder="601234567890 (atau +601234567890)" style="margin-bottom: 8px;" onchange="saveData()">
+                            <small style="color: #666; font-size: 11px;" id="phoneHelpBM">Format: 60xxxxxxxxxx (tanpa +) atau diawali dengan +60</small>
+                            <small style="color: #666; font-size: 11px;" id="phoneHelpEN" class="hidden">Format: 60xxxxxxxxxx (without +) or start with +60</small>
+                        </div>
+                        
+                        <button type="button" class="btn-whatsapp" onclick="shareToWhatsAppAuto()" style="width: 100%; margin-top: 12px;">💬 Hantar ke WhatsApp / Send via WhatsApp</button>
+                        <div class="notice-box notice-warning" style="margin-top: 14px;">
+                            <div class="notice-title">⏳ Tunggu Penyewa / Waiting for Tenant</div>
+                            <div id="waitTenantBM">Halaman ini menunggu penyewa untuk membuka link dengan KOD yang anda berikan. Sebaik sahaja penyewa tandatangan dan bayar, anda akan dapat muat turun PDF.</div>
+                            <div id="waitTenantEN" class="hidden">This page is waiting for the tenant to open the link with the CODE you provided. Once the tenant signs and pays, you can download the PDF.</div>
                         </div>
                     </div>
-                    <div class="price-box">
-                        <div>Harga / Price</div>
-                        <div class="amount">RM 19.00</div>
+
+                    <!-- TENANT VIEW - PAYMENT -->
+                    <div id="step3Tenant" class="hidden">
+                        <div class="section-title" style="margin-top: 28px;">Muat Turun & Bayar / Download & Pay</div>
+                        <div class="notice-info" style="margin: 16px 0;">
+                            <strong id="tenantInfoBM">💰 Pembayaran / Payment Required:</strong>
+                            <div id="tenantInfoTextBM" style="margin-top: 8px; line-height: 1.6;">
+                                Perjanjian sewaan ini perlu dibayar oleh penyewa sebagai praktik standard. Selepas anda membuat pembayaran, anda dan pemilik boleh muat turun PDF perjanjian yang telah ditandatangani oleh kedua-dua pihak.
+                            </div>
+                            <div id="tenantInfoTextEN" class="hidden" style="margin-top: 8px; line-height: 1.6;">
+                                The tenancy agreement needs to be paid by the tenant as standard practice. After you make the payment, both you and the landlord can download the signed agreement PDF.
+                            </div>
+                        </div>
+                        <div class="price-box">
+                            <div id="priceLabelBM">Harga / Price</div>
+                            <div id="priceLabelEN" class="hidden">Price</div>
+                            <div class="amount">RM 19.00</div>
+                        </div>
+                        <div class="checkbox-group" style="border-left-color: #ef4444; background: #fef2f2;">
+                            <input type="checkbox" id="agreeCheckbox" onchange="updatePayBtn()">
+                            <label id="agreeCheckBM" for="agreeCheckbox">Saya setuju untuk melanjutkan</label>
+                            <label id="agreeCheckEN" for="agreeCheckbox" class="hidden">I agree to proceed</label>
+                        </div>
+                        <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload" disabled>📥 Muat Turun / Download</button>
+                        <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM19 / Pay RM19</button>
                     </div>
-                    <div class="checkbox-group" style="border-left-color: #ef4444; background: #fef2f2;">
-                        <input type="checkbox" id="agreeCheckbox" onchange="updatePayBtn()">
-                        <label for="agreeCheckbox">Saya setuju / I agree to proceed</label>
-                    </div>
-                    <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload" disabled>📥 Muat Turun / Download</button>
-                    <button type="button" class="btn-whatsapp" onclick="shareToWhatsApp()" style="margin-top: 8px; width: 100%;">💬 Kongsikan ke WhatsApp</button>
-                    <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM19 / Pay RM19</button>
                 </div>
             </div>
+
             <div class="content" style="border-top: 1px solid #e5e7eb; padding-top: 16px; margin-top: 16px;">
                 <div class="buttons">
                     <button type="button" class="btn-prev hidden" id="prevBtn" onclick="prevStep()">⬅️ Sebelumnya</button>
@@ -291,34 +569,490 @@
             </div>
         </form>
     </div>
+
     <script>
-        let currentStep = 1, lang = 'bm', sessionID = '', userRole = 'landlord';
-        function safe(fn) { try { return fn && fn(); } catch(e) { console.error(e); } }
-        function setRole(role) { safe(() => { userRole = role; document.getElementById('roleLandlord')?.classList.toggle('active', role === 'landlord'); document.getElementById('roleTenant')?.classList.toggle('active', role === 'tenant'); document.getElementById('workflowLandlord')?.classList.toggle('hidden', role !== 'landlord'); document.getElementById('workflowTenant')?.classList.toggle('hidden', role !== 'tenant'); updateUIForRole(); }); }
-        function updateUIForRole() { safe(() => { if (userRole === 'landlord') { const c = document.getElementById('landlordSigCanvas'); if (c) c.style.display = 'block'; const c2 = document.getElementById('tenantSigCanvas'); if (c2) c2.style.display = 'none'; } else { const c = document.getElementById('landlordSigCanvas'); if (c) c.style.display = 'none'; const c2 = document.getElementById('tenantSigCanvas'); if (c2) c2.style.display = 'block'; } }); }
-        function initSession() { safe(() => { const urlParams = new URLSearchParams(window.location.search); sessionID = urlParams.get('session') || localStorage.getItem('janjiSewa_sessionID') || 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase(); localStorage.setItem('janjiSewa_sessionID', sessionID); const el = document.getElementById('sessionCode'); if (el) el.textContent = sessionID; loadData(); updateStatus(); }); }
-        function copySession() { safe(() => { const url = window.location.href; if (navigator.clipboard?.writeText) { navigator.clipboard.writeText(url).then(() => { const btn = event.target; if (btn) { btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!'; setTimeout(() => btn.textContent = 'Salin', 2000); } }); } }); }
-        function shareToWhatsApp() { safe(() => { const msg = (lang === 'bm' ? `Kod: ${sessionID}\n\n${window.location.href}` : `Code: ${sessionID}\n\n${window.location.href}`); window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }); }
-        function formatIC(elem) { if (!elem) return; let val = elem.value.replace(/\D/g, ''); if (val.length > 6) { val = val.substring(0, 6) + '-' + val.substring(6, 8) + '-' + val.substring(8, 12); } elem.value = val; }
-        function setLanguage(newLang) { safe(() => { lang = newLang; document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active')); document.querySelectorAll('.btn-lang')[newLang === 'bm' ? 0 : 1]?.classList.add('active'); document.querySelectorAll('[id$="EN"]').forEach(e => e.classList.toggle('hidden', newLang !== 'en')); document.querySelectorAll('[id$="BM"]').forEach(e => e.classList.toggle('hidden', newLang === 'en')); }); }
-        function hasSignature(canvas) { if (!canvas || canvas.style.display === 'none') return false; try { const data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data; for (let i = 0; i < data.length; i += 4) if (data[i] !== 255 || data[i+1] !== 255 || data[i+2] !== 255) return true; } catch(e) {} return false; }
-        function updateStatus() { safe(() => { const landlordSigned = hasSignature(document.getElementById('landlordSigCanvas')); const tenantSigned = hasSignature(document.getElementById('tenantSigCanvas')); const ls = document.getElementById('landlordStatus'); if (ls) ls.innerHTML = landlordSigned ? '✓ Pemilik / Landlord: <strong>Tandatangan sah</strong>' : '⏳ Pemilik / Landlord: Menunggu tandatangan'; if (ls) ls.className = 'status-item' + (landlordSigned ? '' : ' pending'); const ts = document.getElementById('tenantStatus'); if (ts) ts.innerHTML = tenantSigned ? '✓ Penyewa / Tenant: <strong>Tandatangan sah</strong>' : '⏳ Penyewa / Tenant: Menunggu tandatangan'; if (ts) ts.className = 'status-item' + (tenantSigned ? '' : ' pending'); }); }
-        function saveData() { safe(() => { const data = { landlordName: document.getElementById('landlordName')?.value || '', landlordIC: document.getElementById('landlordIC')?.value || '', landlordPhone: document.getElementById('landlordPhone')?.value || '', landlordEmail: document.getElementById('landlordEmail')?.value || '', tenantName: document.getElementById('tenantName')?.value || '', tenantIC: document.getElementById('tenantIC')?.value || '', tenantPhone: document.getElementById('tenantPhone')?.value || '', tenantEmail: document.getElementById('tenantEmail')?.value || '', propAddr: document.getElementById('propAddr')?.value || '', propType: document.getElementById('propType')?.value || '', propState: document.getElementById('propState')?.value || '', leaseStart: document.getElementById('leaseStart')?.value || '', leaseEnd: document.getElementById('leaseEnd')?.value || '', rent: document.getElementById('rent')?.value || '', landlordSig: document.getElementById('landlordSigCanvas')?.toDataURL() || '', tenantSig: document.getElementById('tenantSigCanvas')?.toDataURL() || '' }; localStorage.setItem('janjiSewa_' + sessionID, JSON.stringify(data)); updateStatus(); }); }
-        function loadData() { safe(() => { const data = JSON.parse(localStorage.getItem('janjiSewa_' + sessionID) || '{}'); Object.keys(data).forEach(k => { const el = document.getElementById(k); if (el && !k.includes('Sig')) el.value = data[k] || ''; }); }); }
-        function initCanvases() { safe(() => { setTimeout(() => { ['landlordSigCanvas', 'tenantSigCanvas'].forEach(id => { const canvas = document.getElementById(id); if (!canvas) return; if (canvas.style.display === 'none') return; try { canvas.width = canvas.offsetWidth || 300; const ctx = canvas.getContext('2d'); if (!ctx) return; ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height); } catch(e) { return; } let drawing = false; const getCoords = (e) => { const rect = canvas.getBoundingClientRect(); const touch = e.touches?.[0]; return { x: (touch?.clientX || e.clientX || 0) - rect.left, y: (touch?.clientY || e.clientY || 0) - rect.top }; }; canvas.addEventListener('mousedown', (e) => { drawing = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); }); canvas.addEventListener('mousemove', (e) => { if (!drawing) return; const c = getCoords(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineTo(c.x, c.y); ctx.stroke(); }); canvas.addEventListener('mouseup', () => { drawing = false; saveData(); updateStatus(); }); canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); }); canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!drawing) return; const c = getCoords(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineTo(c.x, c.y); ctx.stroke(); }); canvas.addEventListener('touchend', () => { drawing = false; saveData(); updateStatus(); }); }); }, 100); }); }
+        let currentStep = 1;
+        let lang = 'bm';
+        let sessionID = '';
+        let userRole = 'landlord';
+
+        function safe(fn) {
+            try { return fn && fn(); } catch(e) { console.error(e); }
+        }
+
+        function setRole(role) {
+            safe(() => {
+                userRole = role;
+                document.getElementById('roleLandlord')?.classList.toggle('active', role === 'landlord');
+                document.getElementById('roleTenant')?.classList.toggle('active', role === 'tenant');
+                document.getElementById('workflowLandlord')?.classList.toggle('hidden', role !== 'landlord');
+                document.getElementById('workflowTenant')?.classList.toggle('hidden', role !== 'tenant');
+                updateUIForRole();
+            });
+        }
+
+        function updateUIForRole() {
+            safe(() => {
+                if (userRole === 'landlord') {
+                    const c = document.getElementById('landlordSigCanvas');
+                    if (c) c.style.display = 'block';
+                    const c2 = document.getElementById('tenantSigCanvas');
+                    if (c2) c2.style.display = 'none';
+                    const s3l = document.getElementById('step3Landlord');
+                    const s3t = document.getElementById('step3Tenant');
+                    if (s3l) s3l.style.display = 'block';
+                    if (s3t) s3t.style.display = 'none';
+                } else {
+                    const c = document.getElementById('landlordSigCanvas');
+                    if (c) c.style.display = 'none';
+                    const c2 = document.getElementById('tenantSigCanvas');
+                    if (c2) c2.style.display = 'block';
+                    const s3l = document.getElementById('step3Landlord');
+                    const s3t = document.getElementById('step3Tenant');
+                    if (s3l) s3l.style.display = 'none';
+                    if (s3t) s3t.style.display = 'block';
+                }
+            });
+        }
+
+        function initSession() {
+            safe(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                sessionID = urlParams.get('session') || localStorage.getItem('janjiSewa_sessionID') || 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                localStorage.setItem('janjiSewa_sessionID', sessionID);
+                const el = document.getElementById('sessionCode');
+                if (el) el.textContent = sessionID;
+                loadData();
+                updateStatus();
+            });
+        }
+
+        function copySession() {
+            safe(() => {
+                const url = window.location.href;
+                if (navigator.clipboard?.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        const btn = event.target;
+                        if (btn) { btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!'; setTimeout(() => btn.textContent = 'Salin', 2000); }
+                    });
+                }
+            });
+        }
+
+        function shareToWhatsAppAuto() {
+            safe(() => {
+                const phoneInput = document.getElementById('tenantPhoneNum');
+                if (!phoneInput || !phoneInput.value.trim()) {
+                    alert(lang === 'bm' ? 'Sila masukkan nombor telefon penyewa' : 'Please enter tenant phone number');
+                    return;
+                }
+                
+                let phone = phoneInput.value.trim().replace(/[\s\-\(\)]/g, '');
+                
+                if (phone.startsWith('+')) {
+                    phone = phone.substring(1);
+                }
+                if (phone.startsWith('0')) {
+                    phone = '6' + phone;
+                }
+                if (!phone.startsWith('60')) {
+                    phone = '60' + phone;
+                }
+                
+                if (phone.length < 11 || phone.length > 12) {
+                    alert(lang === 'bm' ? 'Sila periksa format nombor telefon (60xxxxxxxxxx)' : 'Please check phone number format (60xxxxxxxxxx)');
+                    return;
+                }
+                
+                const urlWithCode = window.location.origin + window.location.pathname + '?session=' + sessionID;
+                const msg = lang === 'bm' 
+                    ? `Assalamualaikum!\n\nSila tandatangani perjanjian sewaan menggunakan link ini:\n\n${urlWithCode}\n\nKod Anda: ${sessionID}\n\nSelepas tandatangan, sila bayar RM19 untuk muat turun PDF perjanjian.\n\nTerima kasih,\n${document.getElementById('landlordName')?.value || 'Pemilik'}`
+                    : `Hello!\n\nPlease sign the tenancy agreement using this link:\n\n${urlWithCode}\n\nYour Code: ${sessionID}\n\nAfter signing, please pay RM19 to download the agreement PDF.\n\nThank you,\n${document.getElementById('landlordName')?.value || 'Landlord'}`;
+                
+                const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+                window.open(waUrl, '_blank');
+            });
+        }
+
+        function formatIC(elem) {
+            if (!elem) return;
+            let val = elem.value.replace(/\D/g, '');
+            if (val.length > 6) {
+                val = val.substring(0, 6) + '-' + val.substring(6, 8) + '-' + val.substring(8, 12);
+            }
+            elem.value = val;
+        }
+
+        function setLanguage(newLang) {
+            safe(() => {
+                lang = newLang;
+                document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.btn-lang')[newLang === 'bm' ? 0 : 1]?.classList.add('active');
+                document.querySelectorAll('[id$="EN"]').forEach(e => e.classList.toggle('hidden', newLang !== 'en'));
+                document.querySelectorAll('[id$="BM"]').forEach(e => e.classList.toggle('hidden', newLang === 'en'));
+                document.querySelectorAll('.notice-expanded').forEach(e => e.classList.remove('show'));
+                document.querySelectorAll('.read-more-btn').forEach(b => b.textContent = newLang === 'bm' ? 'Baca Selanjutnya...' : 'Read More...');
+            });
+        }
+
+        function hasSignature(canvas) {
+            if (!canvas || canvas.style.display === 'none') return false;
+            try {
+                const data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+                for (let i = 0; i < data.length; i += 4) if (data[i] !== 255 || data[i+1] !== 255 || data[i+2] !== 255) return true;
+            } catch(e) {}
+            return false;
+        }
+
+        function updateStatus() {
+            safe(() => {
+                const landlordSigned = hasSignature(document.getElementById('landlordSigCanvas'));
+                const tenantSigned = hasSignature(document.getElementById('tenantSigCanvas'));
+                
+                const ls = document.getElementById('landlordStatus');
+                if (ls) ls.innerHTML = landlordSigned ? '✓ Pemilik / Landlord: <strong>Tandatangan sah</strong>' : '⏳ Pemilik / Landlord: Menunggu tandatangan';
+                if (ls) ls.className = 'status-item' + (landlordSigned ? '' : ' pending');
+                
+                const ts = document.getElementById('tenantStatus');
+                if (ts) ts.innerHTML = tenantSigned ? '✓ Penyewa / Tenant: <strong>Tandatangan sah</strong>' : '⏳ Penyewa / Tenant: Menunggu tandatangan';
+                if (ts) ts.className = 'status-item' + (tenantSigned ? '' : ' pending');
+            });
+        }
+
+        function saveData() {
+            safe(() => {
+                const data = {
+                    landlordName: document.getElementById('landlordName')?.value || '',
+                    landlordIC: document.getElementById('landlordIC')?.value || '',
+                    landlordPhone: document.getElementById('landlordPhone')?.value || '',
+                    landlordEmail: document.getElementById('landlordEmail')?.value || '',
+                    tenantName: document.getElementById('tenantName')?.value || '',
+                    tenantIC: document.getElementById('tenantIC')?.value || '',
+                    tenantPhone: document.getElementById('tenantPhone')?.value || '',
+                    tenantEmail: document.getElementById('tenantEmail')?.value || '',
+                    tenantPhoneNum: document.getElementById('tenantPhoneNum')?.value || '',
+                    propAddr: document.getElementById('propAddr')?.value || '',
+                    propType: document.getElementById('propType')?.value || '',
+                    propState: document.getElementById('propState')?.value || '',
+                    rentType: document.getElementById('rentType')?.value || '',
+                    furnishedStatus: document.getElementById('furnishedStatus')?.value || '',
+                    leaseStart: document.getElementById('leaseStart')?.value || '',
+                    leaseEnd: document.getElementById('leaseEnd')?.value || '',
+                    rent: document.getElementById('rent')?.value || '',
+                    depositMonths: document.getElementById('depositMonths')?.value || '',
+                    depositAmount: document.getElementById('depositAmount')?.value || '',
+                    utilityDeposit: document.getElementById('utilityDeposit')?.value || '',
+                    lateCharges: document.getElementById('lateCharges')?.value || '',
+                    paymentMode: document.getElementById('paymentMode')?.value || '',
+                    noticePeriod: document.getElementById('noticePeriod')?.value || '',
+                    noticePeriodCustom: document.getElementById('noticePeriodCustom')?.value || '',
+                    landlordSig: document.getElementById('landlordSigCanvas')?.toDataURL() || '',
+                    tenantSig: document.getElementById('tenantSigCanvas')?.toDataURL() || ''
+                };
+                localStorage.setItem('janjiSewa_' + sessionID, JSON.stringify(data));
+                updateStatus();
+            });
+        }
+
+        function loadData() {
+            safe(() => {
+                const data = JSON.parse(localStorage.getItem('janjiSewa_' + sessionID) || '{}');
+                Object.keys(data).forEach(k => {
+                    const el = document.getElementById(k);
+                    if (el && !k.includes('Sig')) el.value = data[k] || '';
+                });
+                updateNoticePeriod();
+            });
+        }
+
+        function initCanvases() {
+            safe(() => {
+                setTimeout(() => {
+                    ['landlordSigCanvas', 'tenantSigCanvas'].forEach(id => {
+                        const canvas = document.getElementById(id);
+                        if (!canvas) return;
+                        if (canvas.style.display === 'none') return;
+                        
+                        try {
+                            canvas.width = canvas.offsetWidth || 400;
+                            canvas.height = 120;
+                            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                            if (!ctx) return;
+                            ctx.fillStyle = '#fff';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        } catch(e) { console.error('Canvas init error:', e); return; }
+                    
+                    let drawing = false;
+                    const getCoords = (e) => {
+                        const rect = canvas.getBoundingClientRect();
+                        const touch = e.touches?.[0];
+                        return { x: (touch?.clientX || e.clientX || 0) - rect.left, y: (touch?.clientY || e.clientY || 0) - rect.top };
+                    };
+                    
+                    canvas.addEventListener('mousedown', (e) => { drawing = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); });
+                    canvas.addEventListener('mousemove', (e) => { if (!drawing) return; const c = getCoords(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineTo(c.x, c.y); ctx.stroke(); });
+                    canvas.addEventListener('mouseup', () => { drawing = false; saveData(); updateStatus(); });
+                    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); });
+                    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!drawing) return; const c = getCoords(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineTo(c.x, c.y); ctx.stroke(); });
+                    canvas.addEventListener('touchend', () => { drawing = false; saveData(); updateStatus(); });
+                        }
+                    });
+                }, 100);
+            });
+        }
+
         function clearLandlordSig() { safe(() => { const c = document.getElementById('landlordSigCanvas'); if (c) c.getContext('2d').fillRect(0, 0, c.width, c.height); saveData(); updateStatus(); }); }
         function clearTenantSig() { safe(() => { const c = document.getElementById('tenantSigCanvas'); if (c) c.getContext('2d').fillRect(0, 0, c.width, c.height); saveData(); updateStatus(); }); }
-        function checkConsent() { safe(() => { const btn = document.getElementById('nextBtn'); if (btn) { if (currentStep === 1) { btn.disabled = !document.getElementById('consentCheckbox')?.checked; } } }); }
-        function checkClauses() { safe(() => { const btn = document.getElementById('nextBtn'); if (btn && currentStep === 2) { btn.disabled = !(document.getElementById('consentCheckbox')?.checked && document.getElementById('clausesCheckbox')?.checked); } }); }
+
+        function checkConsent() { 
+            safe(() => { 
+                const btn = document.getElementById('nextBtn'); 
+                if (btn) {
+                    if (currentStep === 1) {
+                        btn.disabled = !document.getElementById('consentCheckbox')?.checked;
+                    }
+                }
+            }); 
+        }
+        function checkClauses() { 
+            safe(() => { 
+                const btn = document.getElementById('nextBtn'); 
+                if (btn && currentStep === 2) {
+                    btn.disabled = !(document.getElementById('consentCheckbox')?.checked && document.getElementById('clausesCheckbox')?.checked);
+                }
+            }); 
+        }
         function updateSignBtn() { safe(() => { const btn = document.getElementById('nextBtn'); if (btn) btn.disabled = !document.getElementById('verifyCheckbox')?.checked; }); }
         function updatePayBtn() { safe(() => { const ok = document.getElementById('agreeCheckbox')?.checked; const d = document.getElementById('btnDownload'); const p = document.getElementById('btnPay'); if (d) d.disabled = !ok; if (p) p.disabled = !ok; }); }
-        function nextStep() { safe(() => { if (currentStep < 4) { saveData(); document.getElementById('step' + currentStep)?.classList.remove('active'); currentStep++; document.getElementById('step' + currentStep)?.classList.add('active'); updateIndicators(); updateUI(); if (currentStep === 3) initCanvases(); } }); }
+
+        function updateNoticePeriod() {
+            safe(() => {
+                const noticePeriodSelect = document.getElementById('noticePeriod');
+                const noticePeriodCustom = document.getElementById('noticePeriodCustom');
+                const value = noticePeriodSelect?.value;
+                
+                if (value === 'custom') {
+                    if (noticePeriodCustom) noticePeriodCustom.style.display = 'block';
+                } else {
+                    if (noticePeriodCustom) noticePeriodCustom.style.display = 'none';
+                }
+                
+                const days = value === 'custom' ? (noticePeriodCustom?.value || '30') : value;
+                const bm = document.getElementById('clause13DaysBM');
+                const en = document.getElementById('clause13DaysEN');
+                if (bm) bm.textContent = days;
+                if (en) en.textContent = days;
+                
+                saveData();
+            });
+        }
+
+        function nextStep() { safe(() => { if (currentStep < 3) { saveData(); document.getElementById('step' + currentStep)?.classList.remove('active'); currentStep++; document.getElementById('step' + currentStep)?.classList.add('active'); updateIndicators(); updateUI(); if (currentStep === 3) { initCanvases(); updateUIForRole(); } } }); }
         function prevStep() { safe(() => { if (currentStep > 1) { saveData(); document.getElementById('step' + currentStep)?.classList.remove('active'); currentStep--; document.getElementById('step' + currentStep)?.classList.add('active'); updateIndicators(); updateUI(); } }); }
-        function updateIndicators() { safe(() => { for (let i = 1; i <= 4; i++) { const c = document.getElementById('step' + i + 'Ind'); if (c) { c.classList.toggle('done', i < currentStep); c.classList.toggle('active', i === currentStep); } if (i > 1) { const l = document.getElementById('line' + (i-1)); if (l) l.classList.toggle('done', i-1 < currentStep); } } }); }
-        function updateUI() { safe(() => { document.getElementById('prevBtn')?.classList.toggle('hidden', currentStep === 1); document.getElementById('nextBtn')?.classList.toggle('hidden', currentStep === 4); }); }
-        function downloadPDF() { safe(() => { const data = JSON.parse(localStorage.getItem('janjiSewa_' + sessionID) || '{}'); const { jsPDF } = window.jspdf; const doc = new jsPDF('p', 'mm', 'a4'); doc.setFontSize(16); doc.text('PERJANJIAN SEWAAN / TENANCY AGREEMENT', 105, 20, { align: 'center' }); doc.setFontSize(10); doc.text(`Pemilik: ${data.landlordName || '-'}`, 20, 35); doc.text(`Penyewa: ${data.tenantName || '-'}`, 20, 42); doc.text(`Harta: ${data.propAddr || '-'}`, 20, 49); doc.text(`Sewa: RM ${data.rent || '0'}/bulan`, 20, 56); doc.save(`JANJIsewa_${sessionID}.pdf`); }); }
-        function redirectToStripe() { safe(() => { saveData(); window.location.href = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00'; }); }
-        window.addEventListener('DOMContentLoaded', () => { safe(() => { initSession(); updateIndicators(); updateUI(); checkConsent(); updateUIForRole(); }); });
+
+        function updateIndicators() {
+            safe(() => {
+                for (let i = 1; i <= 3; i++) {
+                    const c = document.getElementById('step' + i + 'Ind');
+                    if (c) { c.classList.toggle('done', i < currentStep); c.classList.toggle('active', i === currentStep); }
+                    if (i > 1) { const l = document.getElementById('line' + (i-1)); if (l) l.classList.toggle('done', i-1 < currentStep); }
+                }
+            });
+        }
+
+        function updateUI() {
+            safe(() => {
+                document.getElementById('prevBtn')?.classList.toggle('hidden', currentStep === 1);
+                document.getElementById('nextBtn')?.classList.toggle('hidden', currentStep === 4);
+            });
+        }
+
+        function downloadPDF() {
+            safe(() => {
+                const data = JSON.parse(localStorage.getItem('janjiSewa_' + sessionID) || '{}');
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                let yPos = 15;
+                const margin = 15;
+                const maxWidth = pageWidth - (2 * margin);
+                
+                // Title
+                doc.setFontSize(16);
+                doc.setTextColor(0, 0, 0);
+                doc.text('PERJANJIAN SEWAAN', pageWidth / 2, yPos, { align: 'center' });
+                yPos += 6;
+                doc.text('TENANCY AGREEMENT', pageWidth / 2, yPos, { align: 'center' });
+                yPos += 10;
+                
+                // Party Details
+                doc.setFontSize(11);
+                doc.setFont(undefined, 'bold');
+                doc.text('PIHAK-PIHAK / PARTIES:', margin, yPos);
+                yPos += 6;
+                
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(10);
+                doc.text(`PEMILIK / LANDLORD:`, margin, yPos);
+                yPos += 5;
+                doc.text(`Nama / Name: ${data.landlordName || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`No. K.P. / IC: ${data.landlordIC || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Telefon / Phone: ${data.landlordPhone || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Email: ${data.landlordEmail || '-'}`, margin + 5, yPos);
+                yPos += 7;
+                
+                doc.text(`PENYEWA / TENANT:`, margin, yPos);
+                yPos += 5;
+                doc.text(`Nama / Name: ${data.tenantName || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`No. K.P. / IC: ${data.tenantIC || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Telefon / Phone: ${data.tenantPhone || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Email: ${data.tenantEmail || '-'}`, margin + 5, yPos);
+                yPos += 8;
+                
+                // Property Details
+                doc.setFont(undefined, 'bold');
+                doc.text('HARTA / PROPERTY:', margin, yPos);
+                yPos += 5;
+                
+                doc.setFont(undefined, 'normal');
+                doc.text(`Alamat / Address: ${data.propAddr || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Jenis / Type: ${data.propType || '-'} | ${data.furnishedStatus || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Unit: ${data.rentType || '-'} | Negeri / State: ${data.propState || '-'}`, margin + 5, yPos);
+                yPos += 8;
+                
+                // Lease Terms
+                doc.setFont(undefined, 'bold');
+                doc.text('SYARAT SEWAAN / LEASE TERMS:', margin, yPos);
+                yPos += 5;
+                
+                doc.setFont(undefined, 'normal');
+                doc.text(`Tarikh Mula / Start: ${data.leaseStart || '-'} | Tarikh Tamat / End: ${data.leaseEnd || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Sewa Bulanan / Monthly Rent: RM ${data.rent || '0'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Deposit Keselamatan / Security Deposit: ${data.depositMonths || '-'}${data.depositAmount ? ' / RM ' + data.depositAmount : ''}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Deposit Utiliti / Utility Deposit: RM ${data.utilityDeposit || '0'}`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Caj Keterlambatan / Late Charges: RM ${data.lateCharges || '0'}/hari per day`, margin + 5, yPos);
+                yPos += 4;
+                doc.text(`Cara Pembayaran / Payment Mode: ${data.paymentMode || '-'}`, margin + 5, yPos);
+                yPos += 4;
+                const noticeDays = data.noticePeriod === 'custom' ? data.noticePeriodCustom : data.noticePeriod;
+                doc.text(`Notis Pengakhiran / Notice Period: ${noticeDays || '30'} hari / days`, margin + 5, yPos);
+                yPos += 8;
+                
+                // New page for clauses
+                if (yPos > pageHeight - 40) {
+                    doc.addPage();
+                    yPos = 15;
+                }
+                
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(11);
+                doc.text('16 KLAUSA STANDARD / 16 STANDARD CLAUSES', margin, yPos);
+                yPos += 6;
+                
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(9);
+                
+                const clauses = [
+                    '1. TEMPOH PERJANJIAN / TENANCY DURATION - Perjanjian bermula dan berakhir pada tarikh yang dinyatakan. Pelanjutan memerlukan perjanjian bertulis baru. / Agreement starts and ends on stated dates. Extension requires new written agreement.',
+                    '2. SEWA BULANAN / MONTHLY RENT - Penyewa bayar sewa pada hari pertama setiap bulan. Keterlambatan akan dikenakan denda. / Tenant pays on 1st of each month. Late payment incurs penalties.',
+                    '3. DEPOSIT KESELAMATAN / SECURITY DEPOSIT - Satu bulan sewa sebagai deposit. Dipulangkan dalam 30 hari (tolak kerosakan). / One month rent as deposit. Refunded within 30 days (deducting damages).',
+                    '4. PEMBAYARAN UTILITI / UTILITIES - Penyewa bayar elektrik, air, internet dan utiliti lain. / Tenant pays electricity, water, internet and other utilities.',
+                    '5. PEMELIHARAAN HARTA / MAINTENANCE - Penyewa jaga harta baik. Kerosakan berat ditanggung penyewa. Pembaikan besar adalah pemilik. / Tenant maintains property. Major damages by tenant. Major repairs by landlord.',
+                    '6. LARANGAN MEROKOK & DADAH / NO SMOKING & DRUGS - Dilarang merokok dan dadah. Pelanggaran = penamatan serta-merta. / Prohibited. Violation = immediate termination.',
+                    '7. LARANGAN HAIWAN PELIHARAAN / NO PETS - Tanpa kebenaran pemilik, tidak boleh pelihara haiwan. Denda RM500 setiap kali. / Without landlord permission, no pets allowed. RM500 fine per violation.',
+                    '8. LARANGAN AKTIVITI KOMERSIAL / NO COMMERCIAL USE - Hanya untuk kediaman persendirian. Tiada rental AirBnB atau bisnes. / Residential only. No AirBnB or business.',
+                    '9. KESELAMATAN & KUNCI / SECURITY & KEYS - Kunci semua pintu/tingkap. Pemilik boleh masuk dalam kecemasan. Kembalikan semua kunci pada akhir. / Lock all doors/windows. Landlord may enter in emergencies. Return all keys at end.',
+                    '10. TETAMU & KEBISINGAN / GUESTS & NOISE - Boleh terima tetamu tapi bertanggung jawab atas mereka. Tiada kebisingan berlebihan. / May receive guests but responsible for conduct. No excessive noise.',
+                    '11. PENGUBAHSUAIAN / ALTERATIONS - Tidak boleh ubah harta tanpa kebenaran bertulis. Buang semua kemasan pada akhir. / Cannot alter property without written permission. Remove all additions at end.',
+                    '12. INSURANS & LIABILITI / INSURANCE & LIABILITY - Penyewa bertanggung jawab barang diri. Pemilik tidak bertanggung jawab kerugian. / Tenant responsible for belongings. Landlord not liable for losses.',
+                    `13. PENGAKHIRAN / TERMINATION - Boleh akhiri dengan notis ${noticeDays || '30'} hari. Pengakhiran awal = denda satu bulan sewa. / May terminate with ${noticeDays || '30'} days notice. Early termination = one month rent penalty.`,
+                    '14. PENINGKATAN SEWA / RENT INCREMENT - Notis 60 hari. Kenaikan maksimum 5% setahun. / 60 days notice. Maximum 5% per year.',
+                    '15. AUDIT & INSPEKSI / INSPECTION - Pemilik boleh inspeksi bulanan dengan notis 24 jam. Penyewa benarkan akses pembaikan. / Landlord may inspect monthly with 24 hours notice. Tenant permits access for repairs.',
+                    '16. UNDANG-UNDANG MALAYSIA / MALAYSIAN LAW - Perjanjian dikawal undang-undang Malaysia. Pertikaian di Mahkamah Kecil/Tinggi Malaysia. / Governed by Malaysian law. Disputes settled at competent Small/High Court.'
+                ];
+                
+                clauses.forEach((clause, idx) => {
+                    if (yPos > pageHeight - 20) {
+                        doc.addPage();
+                        yPos = 15;
+                    }
+                    const splitText = doc.splitTextToSize(clause, maxWidth);
+                    doc.text(splitText, margin, yPos);
+                    yPos += (splitText.length * 3.5) + 3;
+                });
+                
+                // Signature page
+                doc.addPage();
+                yPos = 30;
+                
+                doc.setFont(undefined, 'bold');
+                doc.setFontSize(12);
+                doc.text('TANDATANGAN / SIGNATURES', 105, yPos, { align: 'center' });
+                yPos += 15;
+                
+                doc.setFont(undefined, 'normal');
+                doc.setFontSize(10);
+                doc.text('Pemilik / Landlord:', margin, yPos);
+                yPos += 8;
+                doc.text('_________________________', margin, yPos);
+                yPos += 5;
+                doc.text(data.landlordName || '(Tandatangan / Signature)', margin, yPos);
+                yPos += 8;
+                doc.text('Tarikh / Date: ___________', margin, yPos);
+                
+                yPos = 100;
+                doc.text('Penyewa / Tenant:', margin, yPos);
+                yPos += 8;
+                doc.text('_________________________', margin, yPos);
+                yPos += 5;
+                doc.text(data.tenantName || '(Tandatangan / Signature)', margin, yPos);
+                yPos += 8;
+                doc.text('Tarikh / Date: ___________', margin, yPos);
+                
+                doc.save(`JANJIsewa_${sessionID}_${new Date().getTime()}.pdf`);
+            });
+        }
+
+        function redirectToStripe() {
+            safe(() => {
+                saveData();
+                window.location.href = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00';
+            });
+        }
+
+        function toggleExpand(btn) {
+            safe(() => {
+                const expanded = btn.parentElement?.nextElementSibling;
+                if (expanded && expanded.classList.contains('notice-expanded')) {
+                    expanded.classList.toggle('show');
+                    btn.textContent = expanded.classList.contains('show') ? (lang === 'bm' ? 'Tutup' : 'Close') : (lang === 'bm' ? 'Baca Selanjutnya...' : 'Read More...');
+                }
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            safe(() => {
+                initSession();
+                updateIndicators();
+                updateUI();
+                checkConsent();
+                updateUIForRole();
+            });
+        });
     </script>
 </body>
 </html>
