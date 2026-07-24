@@ -14,12 +14,26 @@
         .header img { max-width: 320px; height: auto; margin-bottom: 12px; }
         .header p { font-size: 13px; opacity: 0.95; font-weight: 500; }
         
-        .session-box { background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; margin-top: 14px; backdrop-filter: blur(10px); }
+        .role-selector { background: rgba(255,255,255,0.1); padding: 14px; border-radius: 8px; margin-top: 14px; backdrop-filter: blur(10px); }
+        .role-title { font-size: 11px; opacity: 0.9; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; }
+        .role-buttons { display: flex; gap: 8px; }
+        .role-btn { flex: 1; padding: 10px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); color: #fff; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; transition: all 0.2s; }
+        .role-btn:hover { background: rgba(255,255,255,0.2); }
+        .role-btn.active { background: #fff; color: #667eea; border-color: #fff; }
+        
+        .session-box { background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; margin-top: 12px; backdrop-filter: blur(10px); }
         .session-label { font-size: 11px; opacity: 0.9; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         .session-display { display: flex; gap: 8px; align-items: center; }
         .session-code { background: rgba(255,255,255,0.25); padding: 10px 14px; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: 'Monaco', monospace; flex: 1; }
         .btn-copy { background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s; }
         .btn-copy:hover { background: rgba(255,255,255,0.35); }
+        
+        .workflow-guide { background: rgba(255,255,255,0.95); border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 11px; line-height: 1.6; color: #1f2937; }
+        .workflow-step { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+        .workflow-num { background: #667eea; color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+        .workflow-text { flex: 1; }
+        .workflow-text strong { color: #667eea; }
+        .workflow-guide.hidden { display: none; }
         
         .step-indicator { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: #f9fafb; gap: 6px; }
         .step-circle { width: 40px; height: 40px; border-radius: 50%; background: #e5e7eb; color: #6b7280; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; transition: all 0.3s; }
@@ -48,6 +62,9 @@
         .notice-consent { background: #e3f2fd; border: 2px solid #2196f3; color: #0d47a1; }
         .notice-consent .notice-title { color: #1565c0; }
         
+        .notice-info { background: #f0fdf4; border: 2px solid #86efac; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; line-height: 1.5; }
+        .notice-info strong { color: #16a34a; }
+        
         .checkbox-group { display: flex; gap: 10px; align-items: flex-start; background: #f0f9ff; padding: 12px; border-radius: 6px; margin: 12px 0; border-left: 4px solid #0284c7; }
         .checkbox-group input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
         .checkbox-group label { margin: 0; font-size: 12px; font-weight: 500; cursor: pointer; line-height: 1.4; }
@@ -62,6 +79,10 @@
         
         .summary-box { background: #f3f4f6; border-left: 4px solid #667eea; padding: 12px; border-radius: 6px; font-size: 12px; line-height: 1.6; margin: 14px 0; }
         .summary-box strong { color: #667eea; }
+        
+        .status-box { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 12px; }
+        .status-item { margin: 4px 0; font-weight: 600; color: #16a34a; }
+        .status-item.pending { color: #ca8a04; }
         
         .verification-links { background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 11px; }
         .verification-links strong { color: #15803d; display: block; margin-bottom: 8px; font-size: 12px; }
@@ -93,37 +114,80 @@
         .price-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; text-align: center; margin: 14px 0; }
         .price-box .label { font-size: 12px; color: #92400e; font-weight: 600; }
         .price-box .amount { font-size: 28px; color: #d97706; font-weight: 700; margin: 6px 0; }
-        
-        .guide-card { background: #eff6ff; border: 2px solid #0284c7; border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 11px; line-height: 1.6; color: #0c4a6e; }
-        .guide-card strong { color: #0369a1; display: block; margin-bottom: 8px; font-size: 12px; }
-        .guide-card p { margin: 4px 0; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20JANJISewa%20cropped.PNG" alt="JANJIsewa" style="max-width: 320px; height: auto;">
-            <p id="headerSubtitle">Perjanjian Sewaan Online • Tenancy Agreement</p>
+            <p>Perjanjian Sewaan Online • Tenancy Agreement</p>
+            
+            <!-- ROLE SELECTOR -->
+            <div class="role-selector">
+                <div class="role-title">Pilih Peranan / Select Role</div>
+                <div class="role-buttons">
+                    <button type="button" class="role-btn active" onclick="setRole('landlord')" id="roleLandlord">👨‍💼 Pemilik / Landlord</button>
+                    <button type="button" class="role-btn" onclick="setRole('tenant')" id="roleTenant">👨‍🏠 Penyewa / Tenant</button>
+                </div>
+            </div>
+            
+            <!-- SESSION CODE -->
             <div class="session-box">
-                <div class="session-label" id="sessionLabel">🔑 Kod Sesi / Session Code</div>
+                <div class="session-label">🔑 Kod Sesi / Session Code</div>
                 <div class="session-display">
                     <div class="session-code" id="sessionCode">JS-LOADING</div>
                     <button type="button" class="btn-copy" onclick="copySessionCode()" id="btnCopyCode">Salin / Copy</button>
                 </div>
             </div>
             
-            <!-- PROCESS GUIDE -->
-            <div class="guide-card" style="margin-top: 14px;">
-                <strong id="guideTitleBM">📱 Bagaimana guna kod? / How to use code?</strong>
-                <strong id="guideTitleEN" class="hidden">📱 How to use code? / Bagaimana guna kod?</strong>
-                <p id="guide1BM">1️⃣ Salin kod di atas / Copy code above</p>
-                <p id="guide1EN" class="hidden">1️⃣ Copy code above / Salin kod di atas</p>
-                <p id="guide2BM">2️⃣ Hantar link ke penyewa / Send link to tenant</p>
-                <p id="guide2EN" class="hidden">2️⃣ Send link to tenant / Hantar link ke penyewa</p>
-                <p id="guide3BM">3️⃣ Penyewa buka link yang sama / Tenant opens same link</p>
-                <p id="guide3EN" class="hidden">3️⃣ Tenant opens same link / Penyewa buka link yang sama</p>
-                <p id="guide4BM">4️⃣ Data tersimpan bersama, tandatangan both parties / Data syncs, both sign</p>
-                <p id="guide4EN" class="hidden">4️⃣ Data syncs, both sign / Data tersimpan bersama, tandatangan both parties</p>
+            <!-- WORKFLOW GUIDE - LANDLORD -->
+            <div class="workflow-guide" id="workflowLandlord">
+                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Pemilik / Landlord Process:</div>
+                <div class="workflow-step">
+                    <div class="workflow-num">1</div>
+                    <div class="workflow-text">Isi maklumat pemilik & harta / Fill your details & property info</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">2</div>
+                    <div class="workflow-text">Tandatangan di Langkah 3 / Sign at Step 3</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">3</div>
+                    <div class="workflow-text"><strong>Salin kod di atas & hantar ke penyewa via WhatsApp</strong> / <strong>Copy code above & send to tenant via WhatsApp</strong></div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">4</div>
+                    <div class="workflow-text">Tunggu penyewa isi & tandatangan / Wait for tenant to fill & sign</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">5</div>
+                    <div class="workflow-text">Bayar RM19 & muat turun / Pay RM19 & download PDF</div>
+                </div>
+            </div>
+            
+            <!-- WORKFLOW GUIDE - TENANT -->
+            <div class="workflow-guide hidden" id="workflowTenant">
+                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Penyewa / Tenant Process:</div>
+                <div class="workflow-step">
+                    <div class="workflow-num">1</div>
+                    <div class="workflow-text">Buka link dari pemilik / Open link from landlord</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">2</div>
+                    <div class="workflow-text">Isi maklumat penyewa anda / Fill your details</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">3</div>
+                    <div class="workflow-text">Tandatangan di Langkah 3 / Sign at Step 3</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">4</div>
+                    <div class="workflow-text"><strong>Beritahu pemilik via WhatsApp yang anda sudah siap</strong> / <strong>Tell landlord via WhatsApp you're done</strong></div>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-num">5</div>
+                    <div class="workflow-text">Pemilik akan bayar & hantar PDF / Landlord will pay & send PDF</div>
+                </div>
             </div>
         </div>
 
@@ -147,6 +211,12 @@
             <div class="step active" id="step1">
                 <div class="content">
                     <div class="section-title" id="step1Title">Maklumat Pihak-Pihak / Party Details</div>
+
+                    <div class="notice-info" id="noticeWorkflow">
+                        <strong id="workflowBM">💡 Panduan:</strong>
+                        <span id="workflowTextBM">Pemilik sila isi data anda dan harta. Hantar kod ke penyewa. Penyewa akan isi data mereka. Komunikasi via WhatsApp untuk update.</span>
+                        <span id="workflowTextEN" class="hidden">Landlord please fill your details and property info. Send code to tenant. Tenant will fill their details. Update via WhatsApp.</span>
+                    </div>
 
                     <div class="notice-box notice-warning">
                         <div class="notice-title">⚠️ ARAHAN PENTING / IMPORTANT NOTICE</div>
@@ -179,7 +249,7 @@
                         </div>
                         <div class="form-group">
                             <label id="landlordICLabel">No. K.P. / IC</label>
-                            <input type="text" id="landlordIC" placeholder="880101-12-1234" onchange="saveData()">
+                            <input type="text" id="landlordIC" placeholder="880101-12-1234" maxlength="12" onchange="saveData()" oninput="formatIC(this)">
                         </div>
                     </div>
                     <div class="two-col">
@@ -205,7 +275,7 @@
                         </div>
                         <div class="form-group">
                             <label id="tenantICLabel">No. K.P. / IC</label>
-                            <input type="text" id="tenantIC" placeholder="950115-12-5678" onchange="saveData()">
+                            <input type="text" id="tenantIC" placeholder="950115-12-5678" maxlength="12" onchange="saveData()" oninput="formatIC(this)">
                         </div>
                     </div>
                     <div class="two-col">
@@ -316,7 +386,7 @@
 
                     <div class="verification-links">
                         <strong id="verifyTitle">🛡️ Semak Anti-Penipuan / Anti-Fraud Check</strong>
-                        <a href="https://myinsolvensi.mdi.gov.my" target="_blank">✓ MDI Bankruptcy Check</a><br>
+                        <a href="https://myinsolvensi.mdi.gov.my/en/" target="_blank">✓ MDI Bankruptcy Check</a><br>
                         <a href="https://ccid.rmp.gov.my/semakmule/" target="_blank">✓ Semak Mule (Bank Account)</a><br>
                         <span id="verifyText" style="display: block; margin-top: 6px; font-size: 11px; color: #15803d;">Hubungi majikan / Call employer terus</span>
                         <span id="verifyTextEn" class="hidden" style="display: block; margin-top: 6px; font-size: 11px; color: #15803d;">directly</span>
@@ -325,6 +395,11 @@
                     <div class="checkbox-group">
                         <input type="checkbox" id="verifyCheckbox" onchange="updateSignBtn()">
                         <label for="verifyCheckbox" id="verifyCheckLabel">Saya sudah semak / I've verified</label>
+                    </div>
+
+                    <div class="status-box" id="statusBox">
+                        <div id="landlordStatus" class="status-item pending">⏳ Pemilik / Landlord: Menunggu tandatangan / Awaiting signature</div>
+                        <div id="tenantStatus" class="status-item pending">⏳ Penyewa / Tenant: Menunggu tandatangan / Awaiting signature</div>
                     </div>
 
                     <div class="summary-box" id="summaryBox" style="display: none;">
@@ -353,9 +428,15 @@
             <!-- STEP 4: DOWNLOAD & PAY -->
             <div class="step" id="step4">
                 <div class="content">
-                    <div class="section-title" id="step4Title">Muat Turun / Download</div>
+                    <div class="section-title" id="step4Title">Muat Turun & Bayar / Download & Pay</div>
 
                     <div class="summary-box" id="finalSummary"></div>
+
+                    <div class="status-box" style="background: #e8f5e9; border-color: #4caf50;">
+                        <div style="font-weight: 700; color: #2e7d32; margin-bottom: 8px;">✓ Borang Siap / Form Complete!</div>
+                        <div id="landlordStatusFinal" class="status-item" style="color: #2e7d32;">✓ Pemilik / Landlord: Tandatangan sah / Signed</div>
+                        <div id="tenantStatusFinal" class="status-item" style="color: #2e7d32;">✓ Penyewa / Tenant: Tandatangan sah / Signed</div>
+                    </div>
 
                     <div class="price-box">
                         <div class="label" id="priceLabel">Harga / Price</div>
@@ -385,43 +466,65 @@
         let currentStep = 1;
         let lang = 'bm';
         let sessionID = '';
+        let userRole = 'landlord';
+
+        function setRole(role) {
+            userRole = role;
+            document.getElementById('roleLandlord').classList.toggle('active', role === 'landlord');
+            document.getElementById('roleTenant').classList.toggle('active', role === 'tenant');
+            document.getElementById('workflowLandlord').classList.toggle('hidden', role !== 'landlord');
+            document.getElementById('workflowTenant').classList.toggle('hidden', role !== 'tenant');
+            updateUIForRole();
+        }
+
+        function updateUIForRole() {
+            // Show/hide signature canvases based on role
+            if (userRole === 'landlord') {
+                document.getElementById('landlordSigCanvas').style.display = 'block';
+                document.getElementById('tenantSigCanvas').style.display = 'none';
+            } else {
+                document.getElementById('landlordSigCanvas').style.display = 'none';
+                document.getElementById('tenantSigCanvas').style.display = 'block';
+            }
+        }
 
         function initSession() {
-            // Check URL parameter first
             const urlParams = new URLSearchParams(window.location.search);
             sessionID = urlParams.get('session');
             
-            // If no URL param, check localStorage
             if (!sessionID) {
                 sessionID = localStorage.getItem('janjiSewa_sessionID');
             }
             
-            // If still no session, generate new one
             if (!sessionID) {
                 sessionID = 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
             }
             
-            // Save to localStorage
             localStorage.setItem('janjiSewa_sessionID', sessionID);
-            
-            // Update URL with current session (this makes it shareable)
             const newURL = window.location.pathname + '?session=' + sessionID;
             window.history.replaceState({}, '', newURL);
             
-            // Display session code
             document.getElementById('sessionCode').textContent = sessionID;
-            
-            // Load any existing data for this session
             loadData();
+            updateStatusBox();
         }
 
         function copySessionCode() {
-            // Copy the current URL which should now have session param from replaceState
             navigator.clipboard.writeText(window.location.href).then(() => {
                 const btn = document.getElementById('btnCopyCode');
                 btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!';
                 setTimeout(() => { btn.textContent = lang === 'bm' ? 'Salin / Copy' : 'Copy'; }, 2000);
             });
+        }
+
+        function formatIC(elem) {
+            let value = elem.value.replace(/\D/g, '');
+            if (value.length >= 6) {
+                value = value.substring(0, 6) + '-' + value.substring(6, 8) + '-' + value.substring(8, 12);
+            } else if (value.length > 6) {
+                value = value.substring(0, 6) + '-' + value.substring(6);
+            }
+            elem.value = value;
         }
 
         function setLanguage(newLang) {
@@ -430,10 +533,33 @@
             event.target.classList.add('active');
             document.querySelectorAll('[id$="EN"], [id$="En"]').forEach(el => el.classList.toggle('hidden', newLang !== 'en'));
             document.querySelectorAll('[id$="BM"]').forEach(el => el.classList.toggle('hidden', newLang === 'en'));
-            document.querySelectorAll('[id^="guide"]').forEach(el => {
-                if (el.id.endsWith('BM')) el.classList.toggle('hidden', newLang === 'en');
-                if (el.id.endsWith('EN')) el.classList.toggle('hidden', newLang !== 'en');
-            });
+            document.querySelectorAll('[id$="TextBM"]').forEach(el => el.classList.toggle('hidden', newLang === 'en'));
+            document.querySelectorAll('[id$="TextEN"]').forEach(el => el.classList.toggle('hidden', newLang !== 'en'));
+        }
+
+        function updateStatusBox() {
+            const data = loadData();
+            const landlordSigned = data && data.landlordSig && data.landlordSig.length > 50;
+            const tenantSigned = data && data.tenantSig && data.tenantSig.length > 50;
+            
+            const landlordStatusEl = document.getElementById('landlordStatus');
+            const tenantStatusEl = document.getElementById('tenantStatus');
+            
+            if (landlordSigned) {
+                landlordStatusEl.className = 'status-item';
+                landlordStatusEl.innerHTML = lang === 'bm' ? '✓ Pemilik / Landlord: <strong>Tandatangan sah</strong>' : '✓ Landlord / Pemilik: <strong>Signed</strong>';
+            } else {
+                landlordStatusEl.className = 'status-item pending';
+                landlordStatusEl.innerHTML = lang === 'bm' ? '⏳ Pemilik / Landlord: Menunggu tandatangan' : '⏳ Landlord / Pemilik: Awaiting signature';
+            }
+            
+            if (tenantSigned) {
+                tenantStatusEl.className = 'status-item';
+                tenantStatusEl.innerHTML = lang === 'bm' ? '✓ Penyewa / Tenant: <strong>Tandatangan sah</strong>' : '✓ Tenant / Penyewa: <strong>Signed</strong>';
+            } else {
+                tenantStatusEl.className = 'status-item pending';
+                tenantStatusEl.innerHTML = lang === 'bm' ? '⏳ Penyewa / Tenant: Menunggu tandatangan' : '⏳ Tenant / Penyewa: Awaiting signature';
+            }
         }
 
         function saveData() {
@@ -463,6 +589,7 @@
                 tenantSig: document.getElementById('tenantSigCanvas').toDataURL()
             };
             localStorage.setItem('janjiSewa_' + sessionID, JSON.stringify(data));
+            updateStatusBox();
         }
 
         function loadData() {
@@ -494,6 +621,8 @@
         function initCanvases() {
             ['landlordSigCanvas', 'tenantSigCanvas'].forEach(id => {
                 const canvas = document.getElementById(id);
+                if (canvas.style.display === 'none') return;
+                
                 canvas.width = canvas.offsetWidth;
                 const ctx = canvas.getContext('2d');
                 ctx.fillStyle = '#fff';
@@ -704,6 +833,7 @@
             updateIndicators();
             updateUI();
             checkConsent();
+            updateUIForRole();
         });
     </script>
 </body>
