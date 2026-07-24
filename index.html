@@ -11,7 +11,7 @@
         .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); overflow: hidden; }
         
         .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 24px 20px; text-align: center; color: #fff; }
-        .header img { max-width: 260px; height: auto; margin-bottom: 12px; }
+        .header img { max-width: 320px; height: auto; margin-bottom: 12px; }
         .header p { font-size: 13px; opacity: 0.95; font-weight: 500; }
         
         .session-box { background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; margin-top: 14px; backdrop-filter: blur(10px); }
@@ -93,12 +93,16 @@
         .price-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; text-align: center; margin: 14px 0; }
         .price-box .label { font-size: 12px; color: #92400e; font-weight: 600; }
         .price-box .amount { font-size: 28px; color: #d97706; font-weight: 700; margin: 6px 0; }
+        
+        .guide-card { background: #eff6ff; border: 2px solid #0284c7; border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 11px; line-height: 1.6; color: #0c4a6e; }
+        .guide-card strong { color: #0369a1; display: block; margin-bottom: 8px; font-size: 12px; }
+        .guide-card p { margin: 4px 0; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20JANJISewa.png" alt="JANJIsewa">
+            <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20JANJISewa%20cropped.PNG" alt="JANJIsewa" style="max-width: 320px; height: auto;">
             <p id="headerSubtitle">Perjanjian Sewaan Online • Tenancy Agreement</p>
             <div class="session-box">
                 <div class="session-label" id="sessionLabel">🔑 Kod Sesi / Session Code</div>
@@ -106,6 +110,20 @@
                     <div class="session-code" id="sessionCode">JS-LOADING</div>
                     <button type="button" class="btn-copy" onclick="copySessionCode()" id="btnCopyCode">Salin / Copy</button>
                 </div>
+            </div>
+            
+            <!-- PROCESS GUIDE -->
+            <div class="guide-card" style="margin-top: 14px;">
+                <strong id="guideTitleBM">📱 Bagaimana guna kod? / How to use code?</strong>
+                <strong id="guideTitleEN" class="hidden">📱 How to use code? / Bagaimana guna kod?</strong>
+                <p id="guide1BM">1️⃣ Salin kod di atas / Copy code above</p>
+                <p id="guide1EN" class="hidden">1️⃣ Copy code above / Salin kod di atas</p>
+                <p id="guide2BM">2️⃣ Hantar link ke penyewa / Send link to tenant</p>
+                <p id="guide2EN" class="hidden">2️⃣ Send link to tenant / Hantar link ke penyewa</p>
+                <p id="guide3BM">3️⃣ Penyewa buka link yang sama / Tenant opens same link</p>
+                <p id="guide3EN" class="hidden">3️⃣ Tenant opens same link / Penyewa buka link yang sama</p>
+                <p id="guide4BM">4️⃣ Data tersimpan bersama, tandatangan both parties / Data syncs, both sign</p>
+                <p id="guide4EN" class="hidden">4️⃣ Data syncs, both sign / Data tersimpan bersama, tandatangan both parties</p>
             </div>
         </div>
 
@@ -125,26 +143,23 @@
         </div>
 
         <form id="mainForm">
-            <!-- STEP 1 -->
+            <!-- STEP 1: DETAILS -->
             <div class="step active" id="step1">
                 <div class="content">
                     <div class="section-title" id="step1Title">Maklumat Pihak-Pihak / Party Details</div>
 
-                    <!-- NOTICE 1: ARAHAN PENTING -->
                     <div class="notice-box notice-warning">
                         <div class="notice-title">⚠️ ARAHAN PENTING / IMPORTANT NOTICE</div>
                         <div class="notice-text" id="notice1BM">Borang ini SATU KALI PENGGUNAAN. Semua data anda akan DIPADAMKAN apabila anda tutup halaman.</div>
                         <div class="notice-text" id="notice1EN" class="hidden">This form is ONE-TIME USE. All your data will be PERMANENTLY DELETED when you close this page.</div>
                     </div>
 
-                    <!-- NOTICE 2: PERJANJIAN STANDARD -->
                     <div class="notice-box notice-standard">
                         <div class="notice-title">📋 PERJANJIAN STANDARD / STANDARD AGREEMENT</div>
                         <div class="notice-text" id="notice2BM">Semua TERMA SUDAH TETAP dan TIDAK BOLEH DIUBAH. Perlu ubah? Hubungi peguam berdaftar.</div>
                         <div class="notice-text" id="notice2EN" class="hidden">All TERMS ARE FIXED and CANNOT BE MODIFIED. Need changes? Consult a registered lawyer.</div>
                     </div>
 
-                    <!-- NOTICE 3: PDPA CONSENT -->
                     <div class="notice-box notice-consent">
                         <div class="notice-title">🔒 PERSETUJUAN DATA PERIBADI / PDPA CONSENT</div>
                         <div class="notice-text" id="notice3BM">Dengan meneruskan, anda bersetuju data anda dikumpul untuk menjana perjanjian ini sahaja. Hubungi admin@findlawyer.my untuk permintaan data.</div>
@@ -210,7 +225,7 @@
                 </div>
             </div>
 
-            <!-- STEP 2 -->
+            <!-- STEP 2: LEASE TERMS -->
             <div class="step" id="step2">
                 <div class="content">
                     <div class="section-title" id="step2Title">Syarat Sewaan / Lease Terms</div>
@@ -294,7 +309,7 @@
                 </div>
             </div>
 
-            <!-- STEP 3 -->
+            <!-- STEP 3: VERIFY & SIGN -->
             <div class="step" id="step3">
                 <div class="content">
                     <div class="section-title" id="step3Title">Sahkan & Tandatangan / Verify & Sign</div>
@@ -335,7 +350,7 @@
                 </div>
             </div>
 
-            <!-- STEP 4 -->
+            <!-- STEP 4: DOWNLOAD & PAY -->
             <div class="step" id="step4">
                 <div class="content">
                     <div class="section-title" id="step4Title">Muat Turun / Download</div>
@@ -371,21 +386,17 @@
         let lang = 'bm';
         let sessionID = '';
 
-        // ===== FIXED: REMOVED replaceState() line that caused sandbox error =====
         function initSession() {
             const urlParams = new URLSearchParams(window.location.search);
             sessionID = urlParams.get('session');
             if (!sessionID) {
                 sessionID = 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
-                // URL is not changed here - works in both sandbox and production
             }
             document.getElementById('sessionCode').textContent = sessionID;
             loadData();
         }
 
         function copySessionCode() {
-            const code = document.getElementById('sessionCode').textContent;
-            // Copy full URL including session code
             navigator.clipboard.writeText(window.location.href).then(() => {
                 const btn = document.getElementById('btnCopyCode');
                 btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!';
@@ -399,6 +410,10 @@
             event.target.classList.add('active');
             document.querySelectorAll('[id$="EN"], [id$="En"]').forEach(el => el.classList.toggle('hidden', newLang !== 'en'));
             document.querySelectorAll('[id$="BM"]').forEach(el => el.classList.toggle('hidden', newLang === 'en'));
+            document.querySelectorAll('[id^="guide"]').forEach(el => {
+                if (el.id.endsWith('BM')) el.classList.toggle('hidden', newLang === 'en');
+                if (el.id.endsWith('EN')) el.classList.toggle('hidden', newLang !== 'en');
+            });
         }
 
         function saveData() {
@@ -589,7 +604,6 @@
             const doc = new jsPDF('p', 'mm', 'a4');
             let y = 20;
 
-            // Title
             doc.setFontSize(16);
             doc.text('PERJANJIAN SEWAAN', 105, y, { align: 'center' });
             y += 8;
@@ -597,7 +611,6 @@
             doc.text('TENANCY AGREEMENT', 105, y, { align: 'center' });
             y += 15;
 
-            // Parties
             doc.setFontSize(10);
             doc.text(`Pemilik / Landlord: ${data.landlordName} (${data.landlordIC})`, 20, y);
             y += 6;
@@ -606,7 +619,6 @@
             doc.text(`Harta / Property: ${data.propAddr}, ${data.propState}`, 20, y);
             y += 8;
 
-            // 16 CLAUSES
             const clauses = [
                 { title: '1. PIHAK-PIHAK / PARTIES', text: `Perjanjian antara ${data.landlordName} (Pemilik) dan ${data.tenantName} (Penyewa) bertarikh ${new Date().toLocaleDateString()}.` },
                 { title: '2. BUTIRAN HARTA / PROPERTY DETAILS', text: `Alamat: ${data.propAddr}. Jenis: ${data.propType}. Negeri: ${data.propState}.` },
@@ -641,7 +653,6 @@
                 y += lines.length * 4 + 4;
             });
 
-            // Signatures page
             if (y > 200) doc.addPage();
             y = 20;
             doc.setFontSize(12);
