@@ -150,25 +150,25 @@
 
                     <div class="notice-box notice-warning">
                         <div class="notice-title">⚠️ ARAHAN PENTING / IMPORTANT NOTICE</div>
-                        <div class="notice-text" id="notice1BM">Borang ini SATU KALI PENGGUNAAN. Semua data anda akan DIPADAMKAN apabila anda tutup halaman.</div>
+                        <div class="notice-text" id="notice1BM">Borang ini UNTUK satu kali penggunaan. Semua data anda akan DIPADAMKAN apabila anda tutup halaman.</div>
                         <div class="notice-text" id="notice1EN" class="hidden">This form is ONE-TIME USE. All your data will be PERMANENTLY DELETED when you close this page.</div>
                     </div>
 
                     <div class="notice-box notice-standard">
                         <div class="notice-title">📋 PERJANJIAN STANDARD / STANDARD AGREEMENT</div>
-                        <div class="notice-text" id="notice2BM">Semua TERMA SUDAH TETAP dan TIDAK BOLEH DIUBAH. Perlu ubah? Hubungi peguam berdaftar.</div>
+                        <div class="notice-text" id="notice2BM">TERMA ADALAH TETAP dan TIDAK BOLEH DIUBAH (ini adalah Standard Agreement yang dipakai di Malaysia). Perlu ubah? Hubungi peguam berdaftar.</div>
                         <div class="notice-text" id="notice2EN" class="hidden">All TERMS ARE FIXED and CANNOT BE MODIFIED. Need changes? Consult a registered lawyer.</div>
                     </div>
 
                     <div class="notice-box notice-consent">
                         <div class="notice-title">🔒 PERSETUJUAN DATA PERIBADI / PDPA CONSENT</div>
-                        <div class="notice-text" id="notice3BM">Dengan meneruskan, anda bersetuju data anda dikumpul untuk menjana perjanjian ini sahaja. Hubungi admin@findlawyer.my untuk permintaan data.</div>
+                        <div class="notice-text" id="notice3BM">Dengan mengisi borang ini, anda bersetuju data anda dikumpul untuk menyediakan perjanjian ini sahaja. Hubungi admin@findlawyer.my untuk permintaan data.</div>
                         <div class="notice-text" id="notice3EN" class="hidden">By proceeding, you consent to your data being collected solely to generate this agreement. Contact admin@findlawyer.my for data requests.</div>
                     </div>
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="consentCheckbox" onchange="checkConsent()">
-                        <label for="consentCheckbox" id="consentLabel">Saya setuju dengan notis di atas / I agree to the notices above</label>
+                        <label for="consentCheckbox" id="consentLabel">Saya setuju dengan semua notis di atas / I agree to all the notices above</label>
                     </div>
 
                     <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px; margin-bottom: 12px;" id="landlordLabel">PEMILIK / LANDLORD</div>
@@ -387,22 +387,37 @@
         let sessionID = '';
 
         function initSession() {
+            // Check URL parameter first
             const urlParams = new URLSearchParams(window.location.search);
             sessionID = urlParams.get('session');
+            
+            // If no URL param, check localStorage
+            if (!sessionID) {
+                sessionID = localStorage.getItem('janjiSewa_sessionID');
+            }
+            
+            // If still no session, generate new one
             if (!sessionID) {
                 sessionID = 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
-                // Update browser URL to include session param
-                const newURL = window.location.pathname + '?session=' + sessionID;
-                window.history.replaceState({}, '', newURL);
             }
+            
+            // Save to localStorage
+            localStorage.setItem('janjiSewa_sessionID', sessionID);
+            
+            // Update URL with current session (this makes it shareable)
+            const newURL = window.location.pathname + '?session=' + sessionID;
+            window.history.replaceState({}, '', newURL);
+            
+            // Display session code
             document.getElementById('sessionCode').textContent = sessionID;
+            
+            // Load any existing data for this session
             loadData();
         }
 
         function copySessionCode() {
-            // Build full URL with session parameter
-            const fullURL = window.location.origin + window.location.pathname + '?session=' + sessionID;
-            navigator.clipboard.writeText(fullURL).then(() => {
+            // Copy the current URL which should now have session param from replaceState
+            navigator.clipboard.writeText(window.location.href).then(() => {
                 const btn = document.getElementById('btnCopyCode');
                 btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!';
                 setTimeout(() => { btn.textContent = lang === 'bm' ? 'Salin / Copy' : 'Copy'; }, 2000);
