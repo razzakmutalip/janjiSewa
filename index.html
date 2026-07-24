@@ -21,7 +21,7 @@
         .role-btn:hover { background: rgba(255,255,255,0.2); }
         .role-btn.active { background: #fff; color: #667eea; border-color: #fff; }
         
-        .session-box { background: rgba(255,255,255,0.15); padding: 12px; border-radius: 8px; margin-top: 12px; backdrop-filter: blur(10px); }
+        .session-box { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-top: 12px; backdrop-filter: blur(10px); }
         .session-label { font-size: 11px; opacity: 0.9; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         .session-display { display: flex; gap: 8px; align-items: center; }
         .session-code { background: rgba(255,255,255,0.25); padding: 10px 14px; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: 'Monaco', monospace; flex: 1; }
@@ -84,10 +84,11 @@
         .status-item { margin: 4px 0; font-weight: 600; color: #16a34a; }
         .status-item.pending { color: #ca8a04; }
         
-        .verification-links { background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 11px; }
+        .verification-links { background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 11px; line-height: 1.6; }
         .verification-links strong { color: #15803d; display: block; margin-bottom: 8px; font-size: 12px; }
         .verification-links a { color: #16a34a; text-decoration: none; font-weight: 600; display: inline-block; margin: 4px 0; }
         .verification-links a:hover { text-decoration: underline; }
+        .verification-links p { margin: 6px 0; color: #166534; }
         
         .sig-container { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 14px; margin: 14px 0; }
         .sig-label { font-size: 13px; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
@@ -131,15 +132,6 @@
                 </div>
             </div>
             
-            <!-- SESSION CODE -->
-            <div class="session-box">
-                <div class="session-label">🔑 Kod Sesi / Session Code</div>
-                <div class="session-display">
-                    <div class="session-code" id="sessionCode">JS-LOADING</div>
-                    <button type="button" class="btn-copy" onclick="copySessionCode()" id="btnCopyCode">Salin / Copy</button>
-                </div>
-            </div>
-            
             <!-- WORKFLOW GUIDE - LANDLORD -->
             <div class="workflow-guide" id="workflowLandlord">
                 <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Pemilik / Landlord Process:</div>
@@ -153,7 +145,7 @@
                 </div>
                 <div class="workflow-step">
                     <div class="workflow-num">3</div>
-                    <div class="workflow-text"><strong>Salin kod di atas & hantar ke penyewa via WhatsApp</strong> / <strong>Copy code above & send to tenant via WhatsApp</strong></div>
+                    <div class="workflow-text"><strong>Langkah 4: Dapatkan kod & hantar ke penyewa via WhatsApp</strong> / <strong>Step 4: Get code & send to tenant via WhatsApp</strong></div>
                 </div>
                 <div class="workflow-step">
                     <div class="workflow-num">4</div>
@@ -170,7 +162,7 @@
                 <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Penyewa / Tenant Process:</div>
                 <div class="workflow-step">
                     <div class="workflow-num">1</div>
-                    <div class="workflow-text">Buka link dari pemilik / Open link from landlord</div>
+                    <div class="workflow-text">Buka link dari pemilik (dengan kod) / Open link from landlord (with code)</div>
                 </div>
                 <div class="workflow-step">
                     <div class="workflow-num">2</div>
@@ -214,8 +206,8 @@
 
                     <div class="notice-info" id="noticeWorkflow">
                         <strong id="workflowBM">💡 Panduan:</strong>
-                        <span id="workflowTextBM">Pemilik sila isi data anda dan harta. Hantar kod ke penyewa. Penyewa akan isi data mereka. Komunikasi via WhatsApp untuk update.</span>
-                        <span id="workflowTextEN" class="hidden">Landlord please fill your details and property info. Send code to tenant. Tenant will fill their details. Update via WhatsApp.</span>
+                        <span id="workflowTextBM">Pemilik sila isi data anda dan harta. Tandatangan di Langkah 3. Langkah 4 akan menunjukkan kod untuk dikongsi dengan penyewa via WhatsApp.</span>
+                        <span id="workflowTextEN" class="hidden">Landlord please fill your details and property info. Sign at Step 3. Step 4 will show code to share with tenant via WhatsApp.</span>
                     </div>
 
                     <div class="notice-box notice-warning">
@@ -249,7 +241,7 @@
                         </div>
                         <div class="form-group">
                             <label id="landlordICLabel">No. K.P. / IC</label>
-                            <input type="text" id="landlordIC" placeholder="880101-12-1234" maxlength="12" onchange="saveData()" oninput="formatIC(this)">
+                            <input type="text" id="landlordIC" placeholder="880101-12-1234" maxlength="14" onchange="saveData()" oninput="formatIC(this)">
                         </div>
                     </div>
                     <div class="two-col">
@@ -275,7 +267,7 @@
                         </div>
                         <div class="form-group">
                             <label id="tenantICLabel">No. K.P. / IC</label>
-                            <input type="text" id="tenantIC" placeholder="950115-12-5678" maxlength="12" onchange="saveData()" oninput="formatIC(this)">
+                            <input type="text" id="tenantIC" placeholder="950115-12-5678" maxlength="14" onchange="saveData()" oninput="formatIC(this)">
                         </div>
                     </div>
                     <div class="two-col">
@@ -385,11 +377,12 @@
                     <div class="section-title" id="step3Title">Sahkan & Tandatangan / Verify & Sign</div>
 
                     <div class="verification-links">
-                        <strong id="verifyTitle">🛡️ Semak Anti-Penipuan / Anti-Fraud Check</strong>
-                        <a href="https://myinsolvensi.mdi.gov.my/en/" target="_blank">✓ MDI Bankruptcy Check</a><br>
-                        <a href="https://ccid.rmp.gov.my/semakmule/" target="_blank">✓ Semak Mule (Bank Account)</a><br>
-                        <span id="verifyText" style="display: block; margin-top: 6px; font-size: 11px; color: #15803d;">Hubungi majikan / Call employer terus</span>
-                        <span id="verifyTextEn" class="hidden" style="display: block; margin-top: 6px; font-size: 11px; color: #15803d;">directly</span>
+                        <strong id="verifyTitle">🛡️ Semak Anti-Penipuan / Anti-Fraud Verification</strong>
+                        <p id="verifyBM">Sebelum menandatangani, semak maklumat peminjam:</p>
+                        <p id="verifyEN" class="hidden">Before signing, verify the other party's information:</p>
+                        <a href="https://ccid.rmp.gov.my/semakmule/" target="_blank">✓ Semak Mule / Bank Account Check (RMP)</a>
+                        <p id="verifyManualBM" style="margin-top: 8px; font-size: 10px;">Atau hubungi majikan/bank terus / Or contact employer/bank directly</p>
+                        <p id="verifyManualEN" class="hidden" style="margin-top: 8px; font-size: 10px;">Or contact employer/bank directly</p>
                     </div>
 
                     <div class="checkbox-group">
@@ -438,6 +431,18 @@
                         <div id="tenantStatusFinal" class="status-item" style="color: #2e7d32;">✓ Penyewa / Tenant: Tandatangan sah / Signed</div>
                     </div>
 
+                    <!-- SESSION CODE - APPEARS HERE ON STEP 4 -->
+                    <div class="session-box">
+                        <div class="session-label" id="codeShareLabelBM">🔑 Kongsikan Kod Ini Ke Penyewa / Share This Code To Tenant</div>
+                        <div class="session-label hidden" id="codeShareLabelEN">🔑 Share This Code To Tenant / Kongsikan Kod Ini Ke Penyewa</div>
+                        <div class="session-display">
+                            <div class="session-code" id="sessionCode">JS-LOADING</div>
+                            <button type="button" class="btn-copy" onclick="copySessionCodeStep4()" id="btnCopyCodeStep4">Salin / Copy</button>
+                        </div>
+                        <p style="font-size: 11px; color: #666; margin-top: 8px; font-weight: 500;" id="codeInstructionBM">💬 Hantar kod ini via WhatsApp kepada penyewa</p>
+                        <p style="font-size: 11px; color: #666; margin-top: 8px; font-weight: 500; display: none;" id="codeInstructionEN">💬 Send this code via WhatsApp to tenant</p>
+                    </div>
+
                     <div class="price-box">
                         <div class="label" id="priceLabel">Harga / Price</div>
                         <div class="amount">RM 19.00</div>
@@ -478,7 +483,6 @@
         }
 
         function updateUIForRole() {
-            // Show/hide signature canvases based on role
             if (userRole === 'landlord') {
                 document.getElementById('landlordSigCanvas').style.display = 'block';
                 document.getElementById('tenantSigCanvas').style.display = 'none';
@@ -509,9 +513,9 @@
             updateStatusBox();
         }
 
-        function copySessionCode() {
+        function copySessionCodeStep4() {
             navigator.clipboard.writeText(window.location.href).then(() => {
-                const btn = document.getElementById('btnCopyCode');
+                const btn = document.getElementById('btnCopyCodeStep4');
                 btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!';
                 setTimeout(() => { btn.textContent = lang === 'bm' ? 'Salin / Copy' : 'Copy'; }, 2000);
             });
