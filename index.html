@@ -391,13 +391,18 @@
             sessionID = urlParams.get('session');
             if (!sessionID) {
                 sessionID = 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                // Update browser URL to include session param
+                const newURL = window.location.pathname + '?session=' + sessionID;
+                window.history.replaceState({}, '', newURL);
             }
             document.getElementById('sessionCode').textContent = sessionID;
             loadData();
         }
 
         function copySessionCode() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
+            // Build full URL with session parameter
+            const fullURL = window.location.origin + window.location.pathname + '?session=' + sessionID;
+            navigator.clipboard.writeText(fullURL).then(() => {
                 const btn = document.getElementById('btnCopyCode');
                 btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!';
                 setTimeout(() => { btn.textContent = lang === 'bm' ? 'Salin / Copy' : 'Copy'; }, 2000);
