@@ -21,165 +21,113 @@
         .role-btn:hover { background: rgba(255,255,255,0.2); }
         .role-btn.active { background: #fff; color: #667eea; border-color: #fff; }
         
-        .session-box { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-top: 12px; backdrop-filter: blur(10px); }
-        .session-label { font-size: 11px; opacity: 0.9; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .session-display { display: flex; gap: 8px; align-items: center; }
-        .session-code { background: rgba(255,255,255,0.25); padding: 10px 14px; border-radius: 6px; font-weight: 700; font-size: 14px; font-family: 'Monaco', monospace; flex: 1; }
-        .btn-copy { background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.4); color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s; }
-        .btn-copy:hover { background: rgba(255,255,255,0.35); }
-        
         .workflow-guide { background: rgba(255,255,255,0.95); border-radius: 8px; padding: 12px; margin-top: 12px; font-size: 11px; line-height: 1.6; color: #1f2937; }
         .workflow-step { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
-        .workflow-num { background: #667eea; color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; margin-top: 1px; }
+        .workflow-num { background: #667eea; color: #fff; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; flex-shrink: 0; }
         .workflow-text { flex: 1; }
         .workflow-text strong { color: #667eea; }
         .workflow-guide.hidden { display: none; }
         
         .step-indicator { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: #f9fafb; gap: 6px; }
         .step-circle { width: 40px; height: 40px; border-radius: 50%; background: #e5e7eb; color: #6b7280; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; transition: all 0.3s; }
-        .step-circle.active { background: #667eea; color: #fff; box-shadow: 0 3px 12px rgba(102,126,234,0.3); }
+        .step-circle.active { background: #667eea; color: #fff; }
         .step-circle.done { background: #10b981; color: #fff; }
         .step-line { flex: 1; height: 2px; background: #e5e7eb; transition: all 0.3s; }
         .step-line.done { background: #10b981; }
         
-        .lang-toggle { display: flex; gap: 6px; justify-content: center; padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
-        .btn-lang { padding: 6px 16px; border: 1.5px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all 0.2s; }
+        .lang-toggle { display: flex; gap: 6px; justify-content: center; padding: 12px 20px; background: #f9fafb; }
+        .btn-lang { padding: 6px 16px; border: 1.5px solid #d1d5db; background: #fff; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
         .btn-lang.active { background: #667eea; color: #fff; border-color: #667eea; }
         
         .content { padding: 24px; }
         .section-title { font-size: 15px; font-weight: 700; color: #1f2937; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 2.5px solid #667eea; }
         
         .notice-box { border-radius: 10px; padding: 14px; margin-bottom: 14px; font-size: 12px; line-height: 1.6; }
-        .notice-title { font-weight: 700; margin-bottom: 8px; font-size: 13px; }
-        .notice-text { margin: 6px 0; }
-        
+        .notice-title { font-weight: 700; margin-bottom: 8px; }
         .notice-warning { background: #fff7ed; border: 2px solid #f59e0b; color: #92400e; }
-        .notice-warning .notice-title { color: #d97706; }
-        
         .notice-standard { background: #e8f5e9; border: 2px solid #4caf50; color: #1b5e20; }
-        .notice-standard .notice-title { color: #2e7d32; }
-        
         .notice-consent { background: #e3f2fd; border: 2px solid #2196f3; color: #0d47a1; }
-        .notice-consent .notice-title { color: #1565c0; }
-        
-        .notice-info { background: #f0fdf4; border: 2px solid #86efac; color: #166534; padding: 12px; border-radius: 8px; margin-bottom: 14px; font-size: 12px; line-height: 1.5; }
-        .notice-info strong { color: #16a34a; }
         
         .checkbox-group { display: flex; gap: 10px; align-items: flex-start; background: #f0f9ff; padding: 12px; border-radius: 6px; margin: 12px 0; border-left: 4px solid #0284c7; }
-        .checkbox-group input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; cursor: pointer; }
-        .checkbox-group label { margin: 0; font-size: 12px; font-weight: 500; cursor: pointer; line-height: 1.4; }
+        .checkbox-group input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; }
+        .checkbox-group label { font-size: 12px; font-weight: 500; cursor: pointer; }
         
         .form-group { margin-bottom: 14px; }
         label { display: block; font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 10px; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 12px; font-family: inherit; }
+        input, select { width: 100%; padding: 10px; border: 1.5px solid #d1d5db; border-radius: 6px; font-size: 12px; }
         input:focus, select:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
         
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         @media (max-width: 500px) { .two-col { grid-template-columns: 1fr; } }
         
-        .summary-box { background: #f3f4f6; border-left: 4px solid #667eea; padding: 12px; border-radius: 6px; font-size: 12px; line-height: 1.6; margin: 14px 0; }
-        .summary-box strong { color: #667eea; }
-        
         .status-box { background: #f0fdf4; border: 2px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 12px; }
         .status-item { margin: 4px 0; font-weight: 600; color: #16a34a; }
         .status-item.pending { color: #ca8a04; }
         
-        .verification-links { background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 11px; line-height: 1.6; }
-        .verification-links strong { color: #15803d; display: block; margin-bottom: 8px; font-size: 12px; }
+        .verification-links { background: #f0fdf4; border: 1.5px solid #22c55e; border-radius: 8px; padding: 12px; margin: 14px 0; font-size: 11px; }
         .verification-links a { color: #16a34a; text-decoration: none; font-weight: 600; display: inline-block; margin: 4px 0; }
-        .verification-links a:hover { text-decoration: underline; }
-        .verification-links p { margin: 6px 0; color: #166534; }
         
         .sig-container { background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 14px; margin: 14px 0; }
         .sig-label { font-size: 13px; font-weight: 700; color: #1f2937; margin-bottom: 4px; }
-        .sig-name { font-size: 12px; color: #6b7280; margin-bottom: 8px; }
-        canvas { border: 2px solid #d1d5db; border-radius: 6px; width: 100%; height: 110px; display: block; margin-bottom: 8px; cursor: crosshair; background: #fff; }
+        canvas { border: 2px solid #d1d5db; border-radius: 6px; width: 100%; height: 110px; display: block; margin-bottom: 8px; background: #fff; }
         .btn-clear { background: #ef4444; color: #fff; padding: 7px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; }
+        
+        .session-box { background: #fef3c7; padding: 14px; border-radius: 8px; border: 2px solid #f59e0b; margin: 14px 0; }
+        .session-label { font-size: 12px; font-weight: 700; color: #92400e; margin-bottom: 8px; text-transform: uppercase; }
+        .session-display { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+        .session-code { background: #fff; padding: 10px 14px; border-radius: 6px; font-weight: 700; font-size: 16px; font-family: monospace; flex: 1; border: 2px solid #f59e0b; }
+        .btn-copy { background: #f59e0b; border: none; color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 600; }
+        .btn-copy:hover { background: #d97706; }
         
         .hidden { display: none !important; }
         .step { display: none; }
         .step.active { display: block; }
         
         .buttons { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-        button { flex: 1; min-width: 100px; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s; }
+        button { flex: 1; min-width: 100px; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
         .btn-next { background: #667eea; color: #fff; }
         .btn-next:hover { background: #5568d3; }
         .btn-next:disabled { background: #d1d5db; cursor: not-allowed; }
         .btn-prev { background: #e5e7eb; color: #374151; }
-        .btn-prev:hover { background: #d1d5db; }
         .btn-download { background: #10b981; color: #fff; }
-        .btn-download:hover { background: #059669; }
         .btn-pay { background: #f59e0b; color: #fff; }
-        .btn-pay:hover { background: #d97706; }
+        .btn-whatsapp { background: #25d366; color: #fff; }
+        .btn-whatsapp:hover { background: #1eaa52; }
         
         .price-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; text-align: center; margin: 14px 0; }
-        .price-box .label { font-size: 12px; color: #92400e; font-weight: 600; }
         .price-box .amount { font-size: 28px; color: #d97706; font-weight: 700; margin: 6px 0; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20JANJISewa%20cropped.PNG" alt="JANJIsewa" style="max-width: 320px; height: auto;">
+            <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20JANJISewa%20cropped.PNG" alt="JANJIsewa">
             <p>Perjanjian Sewaan Online • Tenancy Agreement</p>
             
-            <!-- ROLE SELECTOR -->
             <div class="role-selector">
                 <div class="role-title">Pilih Peranan / Select Role</div>
                 <div class="role-buttons">
-                    <button type="button" class="role-btn active" onclick="setRole('landlord')" id="roleLandlord">👨‍💼 Pemilik / Landlord</button>
-                    <button type="button" class="role-btn" onclick="setRole('tenant')" id="roleTenant">👨‍🏠 Penyewa / Tenant</button>
+                    <button class="role-btn active" onclick="setRole('landlord')" id="roleLandlord">👨‍💼 Pemilik / Landlord</button>
+                    <button class="role-btn" onclick="setRole('tenant')" id="roleTenant">👨‍🏠 Penyewa / Tenant</button>
                 </div>
             </div>
             
-            <!-- WORKFLOW GUIDE - LANDLORD -->
             <div class="workflow-guide" id="workflowLandlord">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Pemilik / Landlord Process:</div>
-                <div class="workflow-step">
-                    <div class="workflow-num">1</div>
-                    <div class="workflow-text">Isi maklumat pemilik & harta / Fill your details & property info</div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">2</div>
-                    <div class="workflow-text">Tandatangan di Langkah 3 / Sign at Step 3</div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">3</div>
-                    <div class="workflow-text"><strong>Langkah 4: Dapatkan kod & hantar ke penyewa via WhatsApp</strong> / <strong>Step 4: Get code & send to tenant via WhatsApp</strong></div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">4</div>
-                    <div class="workflow-text">Tunggu penyewa isi & tandatangan / Wait for tenant to fill & sign</div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">5</div>
-                    <div class="workflow-text">Bayar RM19 & muat turun / Pay RM19 & download PDF</div>
-                </div>
+                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Pemilik / Landlord:</div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text">Isi maklumat pemilik & harta</div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text">Tandatangan di Langkah 3</div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong>Langkah 4: Dapatkan kod & hantar ke penyewa via WhatsApp</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text">Tunggu penyewa isi & tandatangan</div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text">Bayar RM19 & muat turun</div></div>
             </div>
             
-            <!-- WORKFLOW GUIDE - TENANT -->
             <div class="workflow-guide hidden" id="workflowTenant">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Penyewa / Tenant Process:</div>
-                <div class="workflow-step">
-                    <div class="workflow-num">1</div>
-                    <div class="workflow-text">Buka link dari pemilik (dengan kod) / Open link from landlord (with code)</div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">2</div>
-                    <div class="workflow-text">Isi maklumat penyewa anda / Fill your details</div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">3</div>
-                    <div class="workflow-text">Tandatangan di Langkah 3 / Sign at Step 3</div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">4</div>
-                    <div class="workflow-text"><strong>Beritahu pemilik via WhatsApp yang anda sudah siap</strong> / <strong>Tell landlord via WhatsApp you're done</strong></div>
-                </div>
-                <div class="workflow-step">
-                    <div class="workflow-num">5</div>
-                    <div class="workflow-text">Pemilik akan bayar & hantar PDF / Landlord will pay & send PDF</div>
-                </div>
+                <div style="font-weight: 700; margin-bottom: 10px; color: #667eea;">📋 Proses Penyewa / Tenant:</div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text">Buka link dari pemilik (dengan kod)</div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text">Isi maklumat penyewa anda</div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text">Tandatangan di Langkah 3</div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong>Beritahu pemilik via WhatsApp</strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text">Pemilik akan bayar & hantar PDF</div></div>
             </div>
         </div>
 
@@ -199,262 +147,159 @@
         </div>
 
         <form id="mainForm">
-            <!-- STEP 1: DETAILS -->
             <div class="step active" id="step1">
                 <div class="content">
-                    <div class="section-title" id="step1Title">Maklumat Pihak-Pihak / Party Details</div>
-
-                    <div class="notice-info" id="noticeWorkflow">
-                        <strong id="workflowBM">💡 Panduan:</strong>
-                        <span id="workflowTextBM">Pemilik sila isi data anda dan harta. Tandatangan di Langkah 3. Langkah 4 akan menunjukkan kod untuk dikongsi dengan penyewa via WhatsApp.</span>
-                        <span id="workflowTextEN" class="hidden">Landlord please fill your details and property info. Sign at Step 3. Step 4 will show code to share with tenant via WhatsApp.</span>
-                    </div>
-
+                    <div class="section-title">Maklumat Pihak-Pihak / Party Details</div>
                     <div class="notice-box notice-warning">
-                        <div class="notice-title">⚠️ ARAHAN PENTING / IMPORTANT NOTICE</div>
-                        <div class="notice-text" id="notice1BM">Borang ini UNTUK satu kali penggunaan. Semua data anda akan DIPADAMKAN apabila anda tutup halaman.</div>
-                        <div class="notice-text" id="notice1EN" class="hidden">This form is ONE-TIME USE. All your data will be PERMANENTLY DELETED when you close this page.</div>
+                        <div class="notice-title">⚠️ ARAHAN PENTING</div>
+                        <div id="notice1BM">Borang ini UNTUK satu kali penggunaan. Semua data akan DIPADAMKAN apabila anda tutup halaman.</div>
+                        <div id="notice1EN" class="hidden">This form is ONE-TIME USE. All data will be DELETED when you close this page.</div>
                     </div>
-
-                    <div class="notice-box notice-standard">
-                        <div class="notice-title">📋 PERJANJIAN STANDARD / STANDARD AGREEMENT</div>
-                        <div class="notice-text" id="notice2BM">TERMA ADALAH TETAP dan TIDAK BOLEH DIUBAH (ini adalah Standard Agreement yang dipakai di Malaysia). Perlu ubah? Hubungi peguam berdaftar.</div>
-                        <div class="notice-text" id="notice2EN" class="hidden">All TERMS ARE FIXED and CANNOT BE MODIFIED. Need changes? Consult a registered lawyer.</div>
-                    </div>
-
-                    <div class="notice-box notice-consent">
-                        <div class="notice-title">🔒 PERSETUJUAN DATA PERIBADI / PDPA CONSENT</div>
-                        <div class="notice-text" id="notice3BM">Dengan mengisi borang ini, anda bersetuju data anda dikumpul untuk menyediakan perjanjian ini sahaja. Hubungi admin@findlawyer.my untuk permintaan data.</div>
-                        <div class="notice-text" id="notice3EN" class="hidden">By proceeding, you consent to your data being collected solely to generate this agreement. Contact admin@findlawyer.my for data requests.</div>
-                    </div>
-
                     <div class="checkbox-group">
                         <input type="checkbox" id="consentCheckbox" onchange="checkConsent()">
-                        <label for="consentCheckbox" id="consentLabel">Saya setuju dengan semua notis di atas / I agree to all the notices above</label>
+                        <label for="consentCheckbox">Saya setuju / I agree</label>
                     </div>
 
-                    <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px; margin-bottom: 12px;" id="landlordLabel">PEMILIK / LANDLORD</div>
+                    <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px;">PEMILIK / LANDLORD</div>
                     <div class="two-col">
                         <div class="form-group">
-                            <label id="landlordNameLabel">Nama Penuh / Full Name</label>
+                            <label>Nama Penuh / Full Name</label>
                             <input type="text" id="landlordName" onchange="saveData()">
                         </div>
                         <div class="form-group">
-                            <label id="landlordICLabel">No. K.P. / IC</label>
-                            <input type="text" id="landlordIC" placeholder="880101-12-1234" maxlength="14" onchange="saveData()" oninput="formatIC(this)">
+                            <label>No. K.P. / IC</label>
+                            <input type="text" id="landlordIC" maxlength="14" onchange="saveData()" oninput="formatIC(this)">
                         </div>
                     </div>
                     <div class="two-col">
                         <div class="form-group">
-                            <label id="landlordPhoneLabel">Telefon / Phone</label>
+                            <label>Telefon / Phone</label>
                             <input type="tel" id="landlordPhone" onchange="saveData()">
                         </div>
                         <div class="form-group">
-                            <label id="landlordEmailLabel">Email</label>
+                            <label>Email</label>
                             <input type="email" id="landlordEmail" onchange="saveData()">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label id="landlordAddrLabel">Alamat / Address</label>
-                        <input type="text" id="landlordAddr" onchange="saveData()">
-                    </div>
 
-                    <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px; margin-bottom: 12px;" id="tenantLabel">PENYEWA / TENANT</div>
+                    <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px;">PENYEWA / TENANT</div>
                     <div class="two-col">
                         <div class="form-group">
-                            <label id="tenantNameLabel">Nama Penuh / Full Name</label>
+                            <label>Nama Penuh / Full Name</label>
                             <input type="text" id="tenantName" onchange="saveData()">
                         </div>
                         <div class="form-group">
-                            <label id="tenantICLabel">No. K.P. / IC</label>
-                            <input type="text" id="tenantIC" placeholder="950115-12-5678" maxlength="14" onchange="saveData()" oninput="formatIC(this)">
+                            <label>No. K.P. / IC</label>
+                            <input type="text" id="tenantIC" maxlength="14" onchange="saveData()" oninput="formatIC(this)">
                         </div>
                     </div>
                     <div class="two-col">
                         <div class="form-group">
-                            <label id="tenantPhoneLabel">Telefon / Phone</label>
+                            <label>Telefon / Phone</label>
                             <input type="tel" id="tenantPhone" onchange="saveData()">
                         </div>
                         <div class="form-group">
-                            <label id="tenantEmailLabel">Email</label>
+                            <label>Email</label>
                             <input type="email" id="tenantEmail" onchange="saveData()">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label id="tenantAddrLabel">Alamat / Address</label>
-                        <input type="text" id="tenantAddr" onchange="saveData()">
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 2: LEASE TERMS -->
             <div class="step" id="step2">
                 <div class="content">
-                    <div class="section-title" id="step2Title">Syarat Sewaan / Lease Terms</div>
-
+                    <div class="section-title">Syarat Sewaan / Lease Terms</div>
                     <div class="form-group">
-                        <label id="propAddrLabel">Alamat Harta / Property Address</label>
+                        <label>Alamat Harta / Property Address</label>
                         <input type="text" id="propAddr" onchange="saveData()">
                     </div>
                     <div class="two-col">
                         <div class="form-group">
-                            <label id="propTypeLabel">Jenis / Type</label>
+                            <label>Jenis / Type</label>
                             <select id="propType" onchange="saveData()">
                                 <option>Apartment</option>
                                 <option>Rumah / House</option>
                                 <option>Kedai / Shop</option>
-                                <option>Bilik / Room</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label id="propStateLabel">Negeri / State</label>
+                            <label>Negeri / State</label>
                             <select id="propState" onchange="saveData()">
                                 <option>Selangor</option>
                                 <option>KL</option>
                                 <option>Johor</option>
-                                <option>Penang</option>
-                                <option>Other</option>
                             </select>
                         </div>
                     </div>
                     <div class="two-col">
                         <div class="form-group">
-                            <label id="leaseStartLabel">Tarikh Mula / Start</label>
+                            <label>Tarikh Mula / Start</label>
                             <input type="date" id="leaseStart" onchange="saveData()">
                         </div>
                         <div class="form-group">
-                            <label id="leaseEndLabel">Tarikh Tamat / End</label>
+                            <label>Tarikh Tamat / End</label>
                             <input type="date" id="leaseEnd" onchange="saveData()">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label id="rentLabel">Sewa Bulanan / Monthly Rent (RM)</label>
-                        <input type="number" id="rent" placeholder="1500" onchange="calcDeposits()">
-                    </div>
-                    <div class="two-col">
-                        <div class="form-group">
-                            <label id="depositMonthsLabel">Deposit Keselamatan / Security</label>
-                            <select id="depositMonths" onchange="calcDeposits()">
-                                <option value="1">1 bulan/month</option>
-                                <option value="2" selected>2 bulan/months</option>
-                                <option value="3">3 bulan/months</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label id="utilityDepositLabel">Deposit Utiliti / Utility</label>
-                            <input type="number" id="utilityDeposit" placeholder="0" onchange="calcDeposits()">
-                        </div>
-                    </div>
-                    <div id="depositDisplay" class="summary-box" style="display: none;"></div>
-                    <div class="two-col">
-                        <div class="form-group">
-                            <label id="lateChargeLabel">Caj Lewat / Late Charge (RM)</label>
-                            <input type="number" id="lateCharge" placeholder="50" onchange="saveData()">
-                        </div>
-                        <div class="form-group">
-                            <label id="noticeLabel">Notis Pembatalan / Notice Period</label>
-                            <select id="notice" onchange="saveData()">
-                                <option>1 bulan / month</option>
-                                <option>2 bulan / months</option>
-                                <option>3 bulan / months</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label id="paymentLabel">Kaedah Bayar / Payment</label>
-                        <select id="payment" onchange="saveData()">
-                            <option>FPX</option>
-                            <option>Tunai / Cash</option>
-                            <option>Bank Transfer</option>
-                        </select>
+                        <label>Sewa Bulanan / Monthly Rent (RM)</label>
+                        <input type="number" id="rent" onchange="saveData()">
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 3: VERIFY & SIGN -->
             <div class="step" id="step3">
                 <div class="content">
-                    <div class="section-title" id="step3Title">Sahkan & Tandatangan / Verify & Sign</div>
-
+                    <div class="section-title">Sahkan & Tandatangan / Verify & Sign</div>
                     <div class="verification-links">
-                        <strong id="verifyTitle">🛡️ Semak Anti-Penipuan / Anti-Fraud Verification</strong>
-                        <p id="verifyBM">Sebelum menandatangani, semak maklumat peminjam:</p>
-                        <p id="verifyEN" class="hidden">Before signing, verify the other party's information:</p>
+                        <strong>🛡️ Semak Anti-Penipuan / Anti-Fraud</strong>
+                        <p id="verifyBM">Sebelum menandatangani, semak maklumat:</p>
+                        <p id="verifyEN" class="hidden">Before signing, verify information:</p>
                         <a href="https://ccid.rmp.gov.my/semakmule/" target="_blank">✓ Semak Mule / Bank Account Check (RMP)</a>
-                        <p id="verifyManualBM" style="margin-top: 8px; font-size: 10px;">Atau hubungi majikan/bank terus / Or contact employer/bank directly</p>
-                        <p id="verifyManualEN" class="hidden" style="margin-top: 8px; font-size: 10px;">Or contact employer/bank directly</p>
                     </div>
-
                     <div class="checkbox-group">
                         <input type="checkbox" id="verifyCheckbox" onchange="updateSignBtn()">
-                        <label for="verifyCheckbox" id="verifyCheckLabel">Saya sudah semak / I've verified</label>
+                        <label for="verifyCheckbox">Saya sudah semak / I've verified</label>
                     </div>
-
                     <div class="status-box" id="statusBox">
-                        <div id="landlordStatus" class="status-item pending">⏳ Pemilik / Landlord: Menunggu tandatangan / Awaiting signature</div>
-                        <div id="tenantStatus" class="status-item pending">⏳ Penyewa / Tenant: Menunggu tandatangan / Awaiting signature</div>
+                        <div id="landlordStatus" class="status-item pending">⏳ Pemilik / Landlord: Menunggu tandatangan</div>
+                        <div id="tenantStatus" class="status-item pending">⏳ Penyewa / Tenant: Menunggu tandatangan</div>
                     </div>
 
-                    <div class="summary-box" id="summaryBox" style="display: none;">
-                        <strong>📋 Ringkasan / Summary:</strong><br>
-                        <span id="summaryText"></span>
+                    <div class="sig-container">
+                        <div class="sig-label">Pemilik Tandatangan / Landlord Signature</div>
+                        <canvas id="landlordSigCanvas"></canvas>
+                        <button type="button" class="btn-clear" onclick="clearLandlordSig()">Padam / Clear</button>
                     </div>
-
-                    <div style="margin-top: 16px;">
-                        <div class="sig-container">
-                            <div class="sig-label" id="landlordSigLabel">Pemilik Tandatangan / Landlord Signature</div>
-                            <div class="sig-name" id="landlordDisplay">-</div>
-                            <canvas id="landlordSigCanvas"></canvas>
-                            <button type="button" class="btn-clear" onclick="clearLandlordSig()">Padam / Clear</button>
-                        </div>
-
-                        <div class="sig-container">
-                            <div class="sig-label" id="tenantSigLabel">Penyewa Tandatangan / Tenant Signature</div>
-                            <div class="sig-name" id="tenantDisplay">-</div>
-                            <canvas id="tenantSigCanvas"></canvas>
-                            <button type="button" class="btn-clear" onclick="clearTenantSig()">Padam / Clear</button>
-                        </div>
+                    <div class="sig-container">
+                        <div class="sig-label">Penyewa Tandatangan / Tenant Signature</div>
+                        <canvas id="tenantSigCanvas"></canvas>
+                        <button type="button" class="btn-clear" onclick="clearTenantSig()">Padam / Clear</button>
                     </div>
                 </div>
             </div>
 
-            <!-- STEP 4: DOWNLOAD & PAY -->
             <div class="step" id="step4">
                 <div class="content">
-                    <div class="section-title" id="step4Title">Muat Turun & Bayar / Download & Pay</div>
-
-                    <div class="summary-box" id="finalSummary"></div>
-
-                    <div class="status-box" style="background: #e8f5e9; border-color: #4caf50;">
-                        <div style="font-weight: 700; color: #2e7d32; margin-bottom: 8px;">✓ Borang Siap / Form Complete!</div>
-                        <div id="landlordStatusFinal" class="status-item" style="color: #2e7d32;">✓ Pemilik / Landlord: Tandatangan sah / Signed</div>
-                        <div id="tenantStatusFinal" class="status-item" style="color: #2e7d32;">✓ Penyewa / Tenant: Tandatangan sah / Signed</div>
-                    </div>
-
-                    <!-- SESSION CODE - APPEARS HERE ON STEP 4 -->
+                    <div class="section-title">Muat Turun & Bayar / Download & Pay</div>
                     <div class="session-box">
-                        <div class="session-label" id="codeShareLabelBM">🔑 Kongsikan Kod Ini Ke Penyewa / Share This Code To Tenant</div>
-                        <div class="session-label hidden" id="codeShareLabelEN">🔑 Share This Code To Tenant / Kongsikan Kod Ini Ke Penyewa</div>
+                        <div class="session-label">🔑 KONGSIKAN KOD INI KE PENYEWA</div>
                         <div class="session-display">
                             <div class="session-code" id="sessionCode">JS-LOADING</div>
-                            <button type="button" class="btn-copy" onclick="copySessionCodeStep4()" id="btnCopyCodeStep4">Salin / Copy</button>
+                            <button type="button" class="btn-copy" onclick="copySession()">Salin</button>
                         </div>
-                        <p style="font-size: 11px; color: #666; margin-top: 8px; font-weight: 500;" id="codeInstructionBM">💬 Hantar kod ini via WhatsApp kepada penyewa</p>
-                        <p style="font-size: 11px; color: #666; margin-top: 8px; font-weight: 500; display: none;" id="codeInstructionEN">💬 Send this code via WhatsApp to tenant</p>
                     </div>
-
                     <div class="price-box">
-                        <div class="label" id="priceLabel">Harga / Price</div>
+                        <div>Harga / Price</div>
                         <div class="amount">RM 19.00</div>
                     </div>
-
                     <div class="checkbox-group" style="border-left-color: #ef4444; background: #fef2f2;">
                         <input type="checkbox" id="agreeCheckbox" onchange="updatePayBtn()">
-                        <label for="agreeCheckbox" id="agreeLabel">Saya setuju / I agree to proceed</label>
+                        <label for="agreeCheckbox">Saya setuju / I agree</label>
                     </div>
-
-                    <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload">📥 Muat Turun / Download</button>
-                    <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM19 / Pay RM19</button>
+                    <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload" disabled>📥 Muat Turun / Download</button>
+                    <button type="button" class="btn-whatsapp" onclick="shareToWhatsApp()" style="margin-top: 8px; width: 100%;">💬 Kongsikan ke WhatsApp</button>
+                    <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM19</button>
                 </div>
             </div>
 
@@ -473,371 +318,238 @@
         let sessionID = '';
         let userRole = 'landlord';
 
+        function safe(fn) {
+            try { return fn && fn(); } catch(e) { console.error(e); }
+        }
+
         function setRole(role) {
-            userRole = role;
-            document.getElementById('roleLandlord').classList.toggle('active', role === 'landlord');
-            document.getElementById('roleTenant').classList.toggle('active', role === 'tenant');
-            document.getElementById('workflowLandlord').classList.toggle('hidden', role !== 'landlord');
-            document.getElementById('workflowTenant').classList.toggle('hidden', role !== 'tenant');
-            updateUIForRole();
+            safe(() => {
+                userRole = role;
+                document.getElementById('roleLandlord')?.classList.toggle('active', role === 'landlord');
+                document.getElementById('roleTenant')?.classList.toggle('active', role === 'tenant');
+                document.getElementById('workflowLandlord')?.classList.toggle('hidden', role !== 'landlord');
+                document.getElementById('workflowTenant')?.classList.toggle('hidden', role !== 'tenant');
+                updateUIForRole();
+            });
         }
 
         function updateUIForRole() {
-            if (userRole === 'landlord') {
-                document.getElementById('landlordSigCanvas').style.display = 'block';
-                document.getElementById('tenantSigCanvas').style.display = 'none';
-            } else {
-                document.getElementById('landlordSigCanvas').style.display = 'none';
-                document.getElementById('tenantSigCanvas').style.display = 'block';
-            }
+            safe(() => {
+                if (userRole === 'landlord') {
+                    const c = document.getElementById('landlordSigCanvas');
+                    if (c) c.style.display = 'block';
+                    const c2 = document.getElementById('tenantSigCanvas');
+                    if (c2) c2.style.display = 'none';
+                } else {
+                    const c = document.getElementById('landlordSigCanvas');
+                    if (c) c.style.display = 'none';
+                    const c2 = document.getElementById('tenantSigCanvas');
+                    if (c2) c2.style.display = 'block';
+                }
+            });
         }
 
         function initSession() {
-            const urlParams = new URLSearchParams(window.location.search);
-            sessionID = urlParams.get('session');
-            
-            if (!sessionID) {
-                sessionID = localStorage.getItem('janjiSewa_sessionID');
-            }
-            
-            if (!sessionID) {
-                sessionID = 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
-            }
-            
-            localStorage.setItem('janjiSewa_sessionID', sessionID);
-            const newURL = window.location.pathname + '?session=' + sessionID;
-            window.history.replaceState({}, '', newURL);
-            
-            document.getElementById('sessionCode').textContent = sessionID;
-            loadData();
-            updateStatusBox();
+            safe(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                sessionID = urlParams.get('session') || localStorage.getItem('janjiSewa_sessionID') || 'JS-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                localStorage.setItem('janjiSewa_sessionID', sessionID);
+                const el = document.getElementById('sessionCode');
+                if (el) el.textContent = sessionID;
+                loadData();
+                updateStatus();
+            });
         }
 
-        function copySessionCodeStep4() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                const btn = document.getElementById('btnCopyCodeStep4');
-                btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!';
-                setTimeout(() => { btn.textContent = lang === 'bm' ? 'Salin / Copy' : 'Copy'; }, 2000);
+        function copySession() {
+            safe(() => {
+                const url = window.location.href;
+                if (navigator.clipboard?.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        const btn = event.target;
+                        if (btn) { btn.textContent = lang === 'bm' ? 'Disalin!' : 'Copied!'; setTimeout(() => btn.textContent = 'Salin', 2000); }
+                    });
+                }
+            });
+        }
+
+        function shareToWhatsApp() {
+            safe(() => {
+                const msg = (lang === 'bm' ? `Kod: ${sessionID}\n\n${window.location.href}` : `Code: ${sessionID}\n\n${window.location.href}`);
+                window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
             });
         }
 
         function formatIC(elem) {
-            let value = elem.value.replace(/\D/g, '');
-            if (value.length >= 6) {
-                value = value.substring(0, 6) + '-' + value.substring(6, 8) + '-' + value.substring(8, 12);
-            } else if (value.length > 6) {
-                value = value.substring(0, 6) + '-' + value.substring(6);
-            }
-            elem.value = value;
+            if (!elem) return;
+            let val = elem.value.replace(/\D/g, '');
+            if (val.length >= 6) val = val.substring(0, 6) + '-' + val.substring(6, 8) + '-' + val.substring(8, 12);
+            else if (val.length > 6) val = val.substring(0, 6) + '-' + val.substring(6);
+            elem.value = val;
         }
 
         function setLanguage(newLang) {
-            lang = newLang;
-            document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            document.querySelectorAll('[id$="EN"], [id$="En"]').forEach(el => el.classList.toggle('hidden', newLang !== 'en'));
-            document.querySelectorAll('[id$="BM"]').forEach(el => el.classList.toggle('hidden', newLang === 'en'));
-            document.querySelectorAll('[id$="TextBM"]').forEach(el => el.classList.toggle('hidden', newLang === 'en'));
-            document.querySelectorAll('[id$="TextEN"]').forEach(el => el.classList.toggle('hidden', newLang !== 'en'));
+            safe(() => {
+                lang = newLang;
+                document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.btn-lang')[newLang === 'bm' ? 0 : 1]?.classList.add('active');
+                document.querySelectorAll('[id$="EN"]').forEach(e => e.classList.toggle('hidden', newLang !== 'en'));
+                document.querySelectorAll('[id$="BM"]').forEach(e => e.classList.toggle('hidden', newLang === 'en'));
+            });
         }
 
-        function updateStatusBox() {
-            const data = loadData();
-            const landlordSigned = data && data.landlordSig && data.landlordSig.length > 50;
-            const tenantSigned = data && data.tenantSig && data.tenantSig.length > 50;
-            
-            const landlordStatusEl = document.getElementById('landlordStatus');
-            const tenantStatusEl = document.getElementById('tenantStatus');
-            
-            if (landlordSigned) {
-                landlordStatusEl.className = 'status-item';
-                landlordStatusEl.innerHTML = lang === 'bm' ? '✓ Pemilik / Landlord: <strong>Tandatangan sah</strong>' : '✓ Landlord / Pemilik: <strong>Signed</strong>';
-            } else {
-                landlordStatusEl.className = 'status-item pending';
-                landlordStatusEl.innerHTML = lang === 'bm' ? '⏳ Pemilik / Landlord: Menunggu tandatangan' : '⏳ Landlord / Pemilik: Awaiting signature';
-            }
-            
-            if (tenantSigned) {
-                tenantStatusEl.className = 'status-item';
-                tenantStatusEl.innerHTML = lang === 'bm' ? '✓ Penyewa / Tenant: <strong>Tandatangan sah</strong>' : '✓ Tenant / Penyewa: <strong>Signed</strong>';
-            } else {
-                tenantStatusEl.className = 'status-item pending';
-                tenantStatusEl.innerHTML = lang === 'bm' ? '⏳ Penyewa / Tenant: Menunggu tandatangan' : '⏳ Tenant / Penyewa: Awaiting signature';
-            }
+        function hasSignature(canvas) {
+            if (!canvas || canvas.style.display === 'none') return false;
+            try {
+                const data = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+                for (let i = 0; i < data.length; i += 4) if (data[i] !== 255 || data[i+1] !== 255 || data[i+2] !== 255) return true;
+            } catch(e) {}
+            return false;
+        }
+
+        function updateStatus() {
+            safe(() => {
+                const landlordSigned = hasSignature(document.getElementById('landlordSigCanvas'));
+                const tenantSigned = hasSignature(document.getElementById('tenantSigCanvas'));
+                
+                const ls = document.getElementById('landlordStatus');
+                if (ls) ls.innerHTML = landlordSigned ? '✓ Pemilik / Landlord: <strong>Tandatangan sah</strong>' : '⏳ Pemilik / Landlord: Menunggu tandatangan';
+                if (ls) ls.className = 'status-item' + (landlordSigned ? '' : ' pending');
+                
+                const ts = document.getElementById('tenantStatus');
+                if (ts) ts.innerHTML = tenantSigned ? '✓ Penyewa / Tenant: <strong>Tandatangan sah</strong>' : '⏳ Penyewa / Tenant: Menunggu tandatangan';
+                if (ts) ts.className = 'status-item' + (tenantSigned ? '' : ' pending');
+            });
         }
 
         function saveData() {
-            const data = {
-                landlordName: document.getElementById('landlordName').value,
-                landlordIC: document.getElementById('landlordIC').value,
-                landlordPhone: document.getElementById('landlordPhone').value,
-                landlordEmail: document.getElementById('landlordEmail').value,
-                landlordAddr: document.getElementById('landlordAddr').value,
-                tenantName: document.getElementById('tenantName').value,
-                tenantIC: document.getElementById('tenantIC').value,
-                tenantPhone: document.getElementById('tenantPhone').value,
-                tenantEmail: document.getElementById('tenantEmail').value,
-                tenantAddr: document.getElementById('tenantAddr').value,
-                propAddr: document.getElementById('propAddr').value,
-                propType: document.getElementById('propType').value,
-                propState: document.getElementById('propState').value,
-                leaseStart: document.getElementById('leaseStart').value,
-                leaseEnd: document.getElementById('leaseEnd').value,
-                rent: document.getElementById('rent').value,
-                depositMonths: document.getElementById('depositMonths').value,
-                utilityDeposit: document.getElementById('utilityDeposit').value,
-                lateCharge: document.getElementById('lateCharge').value,
-                notice: document.getElementById('notice').value,
-                payment: document.getElementById('payment').value,
-                landlordSig: document.getElementById('landlordSigCanvas').toDataURL(),
-                tenantSig: document.getElementById('tenantSigCanvas').toDataURL()
-            };
-            localStorage.setItem('janjiSewa_' + sessionID, JSON.stringify(data));
-            updateStatusBox();
+            safe(() => {
+                const data = {
+                    landlordName: document.getElementById('landlordName')?.value || '',
+                    landlordIC: document.getElementById('landlordIC')?.value || '',
+                    landlordPhone: document.getElementById('landlordPhone')?.value || '',
+                    landlordEmail: document.getElementById('landlordEmail')?.value || '',
+                    tenantName: document.getElementById('tenantName')?.value || '',
+                    tenantIC: document.getElementById('tenantIC')?.value || '',
+                    tenantPhone: document.getElementById('tenantPhone')?.value || '',
+                    tenantEmail: document.getElementById('tenantEmail')?.value || '',
+                    propAddr: document.getElementById('propAddr')?.value || '',
+                    propType: document.getElementById('propType')?.value || '',
+                    propState: document.getElementById('propState')?.value || '',
+                    leaseStart: document.getElementById('leaseStart')?.value || '',
+                    leaseEnd: document.getElementById('leaseEnd')?.value || '',
+                    rent: document.getElementById('rent')?.value || '',
+                    landlordSig: document.getElementById('landlordSigCanvas')?.toDataURL() || '',
+                    tenantSig: document.getElementById('tenantSigCanvas')?.toDataURL() || ''
+                };
+                localStorage.setItem('janjiSewa_' + sessionID, JSON.stringify(data));
+                updateStatus();
+            });
         }
 
         function loadData() {
-            const saved = localStorage.getItem('janjiSewa_' + sessionID);
-            if (saved) {
-                const data = JSON.parse(saved);
-                Object.keys(data).forEach(key => {
-                    const elem = document.getElementById(key);
-                    if (elem && key !== 'landlordSig' && key !== 'tenantSig') {
-                        elem.value = data[key] || '';
-                    }
+            safe(() => {
+                const data = JSON.parse(localStorage.getItem('janjiSewa_' + sessionID) || '{}');
+                Object.keys(data).forEach(k => {
+                    const el = document.getElementById(k);
+                    if (el && !k.includes('Sig')) el.value = data[k] || '';
                 });
-                return data;
-            }
-            return null;
-        }
-
-        function calcDeposits() {
-            const rent = parseInt(document.getElementById('rent').value) || 0;
-            const months = parseInt(document.getElementById('depositMonths').value) || 1;
-            const utility = parseInt(document.getElementById('utilityDeposit').value) || 0;
-            const sec = rent * months;
-            const total = sec + utility;
-            document.getElementById('depositDisplay').innerHTML = `Deposit: RM ${sec} + RM ${utility} = <strong>RM ${total}</strong>`;
-            document.getElementById('depositDisplay').style.display = 'block';
-            saveData();
+            });
         }
 
         function initCanvases() {
-            ['landlordSigCanvas', 'tenantSigCanvas'].forEach(id => {
-                const canvas = document.getElementById(id);
-                if (canvas.style.display === 'none') return;
-                
-                canvas.width = canvas.offsetWidth;
-                const ctx = canvas.getContext('2d');
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                let drawing = false;
-                
-                function startDraw(e) {
-                    drawing = true;
-                    const rect = canvas.getBoundingClientRect();
-                    const x = (e.clientX || e.touches?.[0].clientX) - rect.left;
-                    const y = (e.clientY || e.touches?.[0].clientY) - rect.top;
-                    ctx.beginPath();
-                    ctx.moveTo(x, y);
-                }
-                
-                function draw(e) {
-                    if (!drawing) return;
-                    const rect = canvas.getBoundingClientRect();
-                    const x = (e.clientX || e.touches?.[0].clientX) - rect.left;
-                    const y = (e.clientY || e.touches?.[0].clientY) - rect.top;
-                    ctx.lineWidth = 2;
-                    ctx.lineCap = 'round';
-                    ctx.lineTo(x, y);
-                    ctx.stroke();
-                }
-                
-                function endDraw() {
-                    drawing = false;
-                    saveData();
-                }
-                
-                canvas.addEventListener('mousedown', startDraw);
-                canvas.addEventListener('mousemove', draw);
-                canvas.addEventListener('mouseup', endDraw);
-                canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startDraw(e); });
-                canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
-                canvas.addEventListener('touchend', endDraw);
+            safe(() => {
+                setTimeout(() => {
+                    ['landlordSigCanvas', 'tenantSigCanvas'].forEach(id => {
+                        const canvas = document.getElementById(id);
+                        if (!canvas) return;
+                        if (canvas.style.display === 'none') return;
+                        
+                        try {
+                            canvas.width = canvas.offsetWidth || 300;
+                            const ctx = canvas.getContext('2d');
+                            if (!ctx) return;
+                            ctx.fillStyle = '#fff';
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        } catch(e) { console.error('Canvas error:', e); return; }
+                    
+                    let drawing = false;
+                    const getCoords = (e) => {
+                        const rect = canvas.getBoundingClientRect();
+                        const touch = e.touches?.[0];
+                        return { x: (touch?.clientX || e.clientX || 0) - rect.left, y: (touch?.clientY || e.clientY || 0) - rect.top };
+                    };
+                    
+                    canvas.addEventListener('mousedown', (e) => { drawing = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); });
+                    canvas.addEventListener('mousemove', (e) => { if (!drawing) return; const c = getCoords(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineTo(c.x, c.y); ctx.stroke(); });
+                    canvas.addEventListener('mouseup', () => { drawing = false; saveData(); updateStatus(); });
+                    canvas.addEventListener('touchstart', (e) => { e.preventDefault(); drawing = true; const c = getCoords(e); ctx.beginPath(); ctx.moveTo(c.x, c.y); });
+                    canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if (!drawing) return; const c = getCoords(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineTo(c.x, c.y); ctx.stroke(); });
+                        canvas.addEventListener('touchend', () => { drawing = false; saveData(); updateStatus(); });
+                        }
+                    });
+                }, 100);
             });
         }
 
-        function clearLandlordSig() {
-            const canvas = document.getElementById('landlordSigCanvas');
-            canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height);
-            saveData();
-        }
+        function clearLandlordSig() { safe(() => { const c = document.getElementById('landlordSigCanvas'); if (c) c.getContext('2d').fillRect(0, 0, c.width, c.height); saveData(); updateStatus(); }); }
+        function clearTenantSig() { safe(() => { const c = document.getElementById('tenantSigCanvas'); if (c) c.getContext('2d').fillRect(0, 0, c.width, c.height); saveData(); updateStatus(); }); }
 
-        function clearTenantSig() {
-            const canvas = document.getElementById('tenantSigCanvas');
-            canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height);
-            saveData();
-        }
+        function checkConsent() { safe(() => { const btn = document.getElementById('nextBtn'); if (btn) btn.disabled = !document.getElementById('consentCheckbox')?.checked; }); }
+        function updateSignBtn() { safe(() => { const btn = document.getElementById('nextBtn'); if (btn) btn.disabled = !document.getElementById('verifyCheckbox')?.checked; }); }
+        function updatePayBtn() { safe(() => { const ok = document.getElementById('agreeCheckbox')?.checked; const d = document.getElementById('btnDownload'); const p = document.getElementById('btnPay'); if (d) d.disabled = !ok; if (p) p.disabled = !ok; }); }
 
-        function checkConsent() {
-            document.getElementById('nextBtn').disabled = !document.getElementById('consentCheckbox').checked;
-        }
-
-        function updateSignBtn() {
-            document.getElementById('nextBtn').disabled = !document.getElementById('verifyCheckbox').checked;
-        }
-
-        function updatePayBtn() {
-            const ok = document.getElementById('agreeCheckbox').checked;
-            document.getElementById('btnDownload').disabled = !ok;
-            document.getElementById('btnPay').disabled = !ok;
-        }
-
-        function nextStep() {
-            if (currentStep === 1 && !document.getElementById('landlordName').value) {
-                alert('Please fill landlord & tenant names');
-                return;
-            }
-            if (currentStep < 4) {
-                saveData();
-                document.getElementById('step' + currentStep).classList.remove('active');
-                currentStep++;
-                document.getElementById('step' + currentStep).classList.add('active');
-                updateIndicators();
-                updateUI();
-                if (currentStep === 3) {
-                    document.getElementById('landlordDisplay').textContent = document.getElementById('landlordName').value || '-';
-                    document.getElementById('tenantDisplay').textContent = document.getElementById('tenantName').value || '-';
-                    updateSummary();
-                    setTimeout(initCanvases, 100);
-                }
-                if (currentStep === 4) updateFinalSummary();
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 1) {
-                saveData();
-                document.getElementById('step' + currentStep).classList.remove('active');
-                currentStep--;
-                document.getElementById('step' + currentStep).classList.add('active');
-                updateIndicators();
-                updateUI();
-            }
-        }
+        function nextStep() { safe(() => { if (currentStep < 4) { saveData(); document.getElementById('step' + currentStep)?.classList.remove('active'); currentStep++; document.getElementById('step' + currentStep)?.classList.add('active'); updateIndicators(); updateUI(); if (currentStep === 3) initCanvases(); } }); }
+        function prevStep() { safe(() => { if (currentStep > 1) { saveData(); document.getElementById('step' + currentStep)?.classList.remove('active'); currentStep--; document.getElementById('step' + currentStep)?.classList.add('active'); updateIndicators(); updateUI(); } }); }
 
         function updateIndicators() {
-            for (let i = 1; i <= 4; i++) {
-                const circle = document.getElementById('step' + i + 'Ind');
-                if (i < currentStep) circle.classList.add('done');
-                else circle.classList.remove('done');
-                if (i === currentStep) circle.classList.add('active');
-                else circle.classList.remove('active');
-                if (i > 1 && i - 1 < currentStep) document.getElementById('line' + (i - 1)).classList.add('done');
-            }
+            safe(() => {
+                for (let i = 1; i <= 4; i++) {
+                    const c = document.getElementById('step' + i + 'Ind');
+                    if (c) { c.classList.toggle('done', i < currentStep); c.classList.toggle('active', i === currentStep); }
+                    if (i > 1) { const l = document.getElementById('line' + (i-1)); if (l) l.classList.toggle('done', i-1 < currentStep); }
+                }
+            });
         }
 
         function updateUI() {
-            document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
-            document.getElementById('nextBtn').classList.toggle('hidden', currentStep === 4);
-        }
-
-        function updateSummary() {
-            document.getElementById('summaryText').innerHTML = `${document.getElementById('landlordName').value} & ${document.getElementById('tenantName').value}<br>${document.getElementById('propAddr').value}<br>RM ${document.getElementById('rent').value}/bln`;
-            document.getElementById('summaryBox').style.display = 'block';
-        }
-
-        function updateFinalSummary() {
-            document.getElementById('finalSummary').innerHTML = `<strong>${document.getElementById('landlordName').value}</strong> & <strong>${document.getElementById('tenantName').value}</strong><br><strong>Harta:</strong> ${document.getElementById('propAddr').value}<br><strong>Sewa:</strong> RM ${document.getElementById('rent').value}`;
+            safe(() => {
+                document.getElementById('prevBtn')?.classList.toggle('hidden', currentStep === 1);
+                document.getElementById('nextBtn')?.classList.toggle('hidden', currentStep === 4);
+            });
         }
 
         function downloadPDF() {
-            const data = loadData();
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
-            let y = 20;
-
-            doc.setFontSize(16);
-            doc.text('PERJANJIAN SEWAAN', 105, y, { align: 'center' });
-            y += 8;
-            doc.setFontSize(14);
-            doc.text('TENANCY AGREEMENT', 105, y, { align: 'center' });
-            y += 15;
-
-            doc.setFontSize(10);
-            doc.text(`Pemilik / Landlord: ${data.landlordName} (${data.landlordIC})`, 20, y);
-            y += 6;
-            doc.text(`Penyewa / Tenant: ${data.tenantName} (${data.tenantIC})`, 20, y);
-            y += 6;
-            doc.text(`Harta / Property: ${data.propAddr}, ${data.propState}`, 20, y);
-            y += 8;
-
-            const clauses = [
-                { title: '1. PIHAK-PIHAK / PARTIES', text: `Perjanjian antara ${data.landlordName} (Pemilik) dan ${data.tenantName} (Penyewa) bertarikh ${new Date().toLocaleDateString()}.` },
-                { title: '2. BUTIRAN HARTA / PROPERTY DETAILS', text: `Alamat: ${data.propAddr}. Jenis: ${data.propType}. Negeri: ${data.propState}.` },
-                { title: '3. TEMPOH SEWAAN / LEASE TERM', text: `Dari ${data.leaseStart} hingga ${data.leaseEnd}.` },
-                { title: '4. PEMBAYARAN SEWA / RENTAL PAYMENT', text: `RM ${data.rent} per bulan, bayar melalui ${data.payment}.` },
-                { title: '5. DEPOSIT / DEPOSITS', text: `Deposit Keselamatan: RM ${data.rent * data.depositMonths}. Deposit Utiliti: RM ${data.utilityDeposit}.` },
-                { title: '6. KEWAJIPAN PENYEWA / TENANT OBLIGATIONS', text: 'Penyewa wajib membayar sewa tepat waktu, menjaga harta, dan mematuhi semua undang-undang.' },
-                { title: '7. KEWAJIPAN PEMILIK / LANDLORD OBLIGATIONS', text: 'Pemilik wajib menyediakan harta dalam keadaan baik dan memeliharanya.' },
-                { title: '8. PENYELENGGARAAN / MAINTENANCE', text: 'Pemeliharaan rutin tanggungjawab Penyewa. Pembaikan besar tanggungjawab Pemilik.' },
-                { title: '9. PENGUBAHSUAIAN / ALTERATIONS', text: 'Penyewa tidak boleh membuat perubahan tanpa kebenaran bertulis Pemilik.' },
-                { title: '10. SUBLETTING DILARANG / NO SUBLETTING', text: 'Penyewa tidak boleh menyublet harta tanpa kebenaran bertulis Pemilik.' },
-                { title: '11. PEMBATALAN / TERMINATION', text: `Notis pembatalan: ${data.notice}. Deposit akan dikembalikan dalam 21 hari selepas tamat sewa.` },
-                { title: '12. INVENTORI / INVENTORY', text: 'Inventori harta akan disediakan semasa permulaan sewaan dan disahkan semasa tamat.' },
-                { title: '13. PERLINDUNGAN DATA PERIBADI / PDPA', text: 'Kedua-dua pihak bersetuju maklumat pribadi dapat disimpan untuk tujuan kontrak dan kepatuhan.' },
-                { title: '14. KEPERLUAN SETEM / STAMPING', text: 'Perjanjian ini mesti disetem di LHDN dalam 30 hari dari tarikh tandatangan.' },
-                { title: '15. KLAUSA UMUM / GENERAL', text: 'Perjanjian ini dikawal oleh undang-undang Malaysia. Sebarang pertikaian akan diselesaikan melalui mahkamah Malaysia.' },
-                { title: '16. TANDATANGAN / SIGNATURES', text: `Pemilik: ${data.landlordName}. Penyewa: ${data.tenantName}. Tarikh / Date: ${new Date().toLocaleDateString()}.` }
-            ];
-
-            doc.setFontSize(9);
-            clauses.forEach(clause => {
-                if (y > 250) {
-                    doc.addPage();
-                    y = 20;
-                }
-                doc.setFont(undefined, 'bold');
-                doc.text(clause.title, 20, y);
-                y += 4;
-                doc.setFont(undefined, 'normal');
-                const lines = doc.splitTextToSize(clause.text, 170);
-                doc.text(lines, 20, y);
-                y += lines.length * 4 + 4;
+            safe(() => {
+                const data = JSON.parse(localStorage.getItem('janjiSewa_' + sessionID) || '{}');
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'mm', 'a4');
+                
+                doc.setFontSize(16);
+                doc.text('PERJANJIAN SEWAAN / TENANCY AGREEMENT', 105, 20, { align: 'center' });
+                doc.setFontSize(10);
+                doc.text(`Pemilik: ${data.landlordName || '-'}`, 20, 35);
+                doc.text(`Penyewa: ${data.tenantName || '-'}`, 20, 42);
+                
+                doc.save(`JANJIsewa_${sessionID}.pdf`);
             });
-
-            if (y > 200) doc.addPage();
-            y = 20;
-            doc.setFontSize(12);
-            doc.text('SIGNATURES', 105, y, { align: 'center' });
-            y += 15;
-
-            if (data.landlordSig && data.landlordSig.length > 50) {
-                doc.addImage(data.landlordSig, 'PNG', 20, y, 50, 30);
-            }
-            doc.text(`Pemilik / Landlord: ${data.landlordName}`, 20, y + 35);
-            doc.text(`Tarikh / Date: ______________`, 20, y + 42);
-
-            if (data.tenantSig && data.tenantSig.length > 50) {
-                doc.addImage(data.tenantSig, 'PNG', 120, y, 50, 30);
-            }
-            doc.text(`Penyewa / Tenant: ${data.tenantName}`, 120, y + 35);
-            doc.text(`Tarikh / Date: ______________`, 120, y + 42);
-
-            doc.save(`JANJIsewa_${sessionID}.pdf`);
         }
 
         function redirectToStripe() {
-            saveData();
-            window.location.href = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00';
+            safe(() => {
+                saveData();
+                window.location.href = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00';
+            });
         }
 
-        window.addEventListener('load', () => {
-            initSession();
-            updateIndicators();
-            updateUI();
-            checkConsent();
-            updateUIForRole();
+        window.addEventListener('DOMContentLoaded', () => {
+            safe(() => {
+                initSession();
+                updateIndicators();
+                updateUI();
+                checkConsent();
+                updateUIForRole();
+            });
         });
     </script>
 </body>
