@@ -677,11 +677,11 @@
                     // landlord's link, or Stripe redirected back after payment.
                     apiToken = urlToken;
                     localStorage.setItem('akadSewa_token', apiToken);
-                    const paidFlag = urlParams.get('paid');
-                    if (paidFlag !== 'success') {
-                        // Tenant opening the shared link → tenant role.
-                        setRole('tenant');
-                    }
+                    // Both cases are the TENANT: they open the shared link to
+                    // fill/sign, and they are the one who pays. After Stripe
+                    // redirects back (paid=success) they must land on the
+                    // tenant view so the Download section is visible.
+                    setRole('tenant');
                     loadFromServer(apiToken);
                 }
                 // No token in URL → this is a FRESH landlord session.
@@ -696,6 +696,9 @@
                 // We confirm with the server (which sets paid=1) then unlock.
                 const paidFlag = urlParams.get('paid');
                 if (paidFlag === 'success' && apiToken) {
+                    // Jump straight to Step 3 (tenant Download & Pay view)
+                    // so the download button is visible after payment.
+                    goToStepDirect(3);
                     markPaidOnServer(apiToken);
                 } else if (apiToken) {
                     // Token in URL but not a payment return — check if already paid.
@@ -1185,6 +1188,21 @@
                 if (en) en.textContent = days;
                 
                 updateStatus();
+            });
+        }
+
+        // Jump directly to a given step (used after Stripe payment return).
+        function goToStepDirect(target) {
+            safe(() => {
+                document.getElementById('step' + currentStep)?.classList.remove('active');
+                currentStep = target;
+                document.getElementById('step' + currentStep)?.classList.add('active');
+                updateIndicators();
+                updateUI();
+                if (currentStep === 3) {
+                    updateUIForRole();
+                    initCanvases();
+                }
             });
         }
 
