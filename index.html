@@ -114,34 +114,34 @@
     <div class="container">
         <div class="header">
             <img src="https://raw.githubusercontent.com/razzakmutalip/janjiSewa/main/Logo%20AkadSewa.png" alt="AkadSewa - Digital Tenancy Agreements">
-            <p>Perjanjian Sewaan Online • Digital Tenancy Agreements</p>
+            <p><span id="taglineBM">Perjanjian Sewaan Online • Perjanjian Sewaan Digital</span><span id="taglineEN" class="hidden">Online Tenancy Agreements • Digital Tenancy Agreements</span></p>
             
             <div class="role-selector">
-                <div class="role-title">Pilih Peranan / Select Role</div>
+                <div class="role-title"><span id="roleTitleBM">Pilih Peranan</span><span id="roleTitleEN" class="hidden">Select Role</span></div>
                 <div class="role-buttons">
-                    <button class="role-btn active" onclick="setRole('landlord')" id="roleLandlord">👨‍💼 Pemilik / Landlord</button>
-                    <button class="role-btn" onclick="setRole('tenant')" id="roleTenant">👨‍🏠 Penyewa / Tenant</button>
+                    <button class="role-btn active" onclick="setRole('landlord')" id="roleLandlord">👨‍💼 <span id="roleLandlordBM">Pemilik</span><span id="roleLandlordEN" class="hidden">Landlord</span></button>
+                    <button class="role-btn" onclick="setRole('tenant')" id="roleTenant">👨‍🏠 <span id="roleTenantBM">Penyewa</span><span id="roleTenantEN" class="hidden">Tenant</span></button>
                 </div>
             </div>
             
             <div class="workflow-guide" id="workflowLandlord">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #2563eb;">📋 Proses Pemilik / Landlord Workflow:</div>
-                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong>Isi maklumat pemilik & harta (Langkah 1-2)</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><strong>Tandatangan (Langkah 3)</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong>Klik SIMPAN untuk dapatkan KOD unik</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong>HANTAR KOD + LINK ke PENYEWA via WhatsApp</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text">Penyewa buka link, data anda dimuat automatik & tandatangan</div></div>
-                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text">Penyewa BAYAR RM19 untuk muat turun PDF final</div></div>
+                <div style="font-weight: 700; margin-bottom: 10px; color: #2563eb;">📋 <span id="wfLandlordTitleBM">Proses Pemilik / Landlord</span><span id="wfLandlordTitleEN" class="hidden">Landlord Workflow</span>:</div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong><span id="wfL1BM">Isi maklumat pemilik & harta (Langkah 1-2)</span><span id="wfL1EN" class="hidden">Fill in landlord & property details (Steps 1-2)</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><strong><span id="wfL2BM">Tandatangan (Langkah 3)</span><span id="wfL2EN" class="hidden">Sign (Step 3)</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong><span id="wfL3BM">Klik SIMPAN untuk dapatkan KOD unik</span><span id="wfL3EN" class="hidden">Click SAVE to get a unique CODE</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong><span id="wfL4BM">HANTAR KOD + LINK ke PENYEWA via WhatsApp</span><span id="wfL4EN" class="hidden">SEND CODE + LINK to TENANT via WhatsApp</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><span id="wfL5BM">Penyewa buka link, data anda dimuat automatik & tandatangan</span><span id="wfL5EN" class="hidden">Tenant opens the link, your data loads automatically & they sign</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfL6BM">Penyewa BAYAR RM19 untuk muat turun PDF final</span><span id="wfL6EN" class="hidden">Tenant PAYS RM19 to download the final PDF</span></div></div>
             </div>
             
             <div class="workflow-guide hidden" id="workflowTenant">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #2563eb;">📋 Proses Penyewa / Tenant Workflow:</div>
-                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong>Buka link dari pemilik (dengan KOD)</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text">Data pemilik dimuat secara automatik</div></div>
-                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong>Isi maklumat penyewa anda (Langkah 1-2)</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong>Tandatangan di Langkah 3</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><strong>BAYAR RM19 untuk muat turun PDF</strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text">Kongsikan PDF dengan pemilik</div></div>
+                <div style="font-weight: 700; margin-bottom: 10px; color: #2563eb;">📋 <span id="wfTenantTitleBM">Proses Penyewa / Tenant</span><span id="wfTenantTitleEN" class="hidden">Tenant Workflow</span>:</div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong><span id="wfT1BM">Buka link dari pemilik (dengan KOD)</span><span id="wfT1EN" class="hidden">Open the link from the landlord (with CODE)</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><span id="wfT2BM">Data pemilik dimuat secara automatik</span><span id="wfT2EN" class="hidden">Landlord's data loads automatically</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong><span id="wfT3BM">Isi maklumat penyewa anda (Langkah 1-2)</span><span id="wfT3EN" class="hidden">Fill in your tenant details (Steps 1-2)</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong><span id="wfT4BM">Tandatangan di Langkah 3</span><span id="wfT4EN" class="hidden">Sign at Step 3</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><strong><span id="wfT5BM">BAYAR RM19 untuk muat turun PDF</span><span id="wfT5EN" class="hidden">PAY RM19 to download the PDF</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfT6BM">Kongsikan PDF dengan pemilik</span><span id="wfT6EN" class="hidden">Share the PDF with the landlord</span></div></div>
             </div>
         </div>
 
