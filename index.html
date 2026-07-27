@@ -671,19 +671,21 @@
             safe(() => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const urlToken = urlParams.get('token');
-                const savedToken = localStorage.getItem('akadSewa_token') || '';
 
                 if (urlToken && urlToken.startsWith('AS-')) {
-                    // Tenant opened landlord's link
+                    // A token is in the URL — either the tenant opened the
+                    // landlord's link, or Stripe redirected back after payment.
                     apiToken = urlToken;
                     localStorage.setItem('akadSewa_token', apiToken);
-                    setRole('tenant');
-                    loadFromServer(apiToken);
-                } else if (savedToken && savedToken.startsWith('AS-')) {
-                    // Returning user (e.g. back from Stripe payment)
-                    apiToken = savedToken;
+                    const paidFlag = urlParams.get('paid');
+                    if (paidFlag !== 'success') {
+                        // Tenant opening the shared link → tenant role.
+                        setRole('tenant');
+                    }
                     loadFromServer(apiToken);
                 }
+                // No token in URL → this is a FRESH landlord session.
+                // Do NOT auto-load old data from localStorage; form stays blank.
 
                 const el = document.getElementById('sessionCode');
                 if (el && apiToken) el.textContent = apiToken;
@@ -696,7 +698,7 @@
                 if (paidFlag === 'success' && apiToken) {
                     markPaidOnServer(apiToken);
                 } else if (apiToken) {
-                    // Also check the server in case they already paid earlier.
+                    // Token in URL but not a payment return — check if already paid.
                     checkPaidStatus(apiToken);
                 }
             });
