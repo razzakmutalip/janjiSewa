@@ -822,16 +822,22 @@
                     if (diff > 0) months = diff;
                 }
 
+                const savePayload = {
+                    pemilik_nama: formData.landlordName,
+                    penyewa_nama: formData.tenantName || '-',
+                    harta_maklumat: JSON.stringify(formData),  // FULL data, encrypted server-side
+                    harga_bulanan: parseFloat(formData.rent) || 0,
+                    durasi_bulan: months
+                };
+                // Include existing token so a re-save UPDATES the same record.
+                if (apiToken && apiToken.startsWith('AS-')) {
+                    savePayload.token = apiToken;
+                }
+
                 const response = await fetch(API_SAVE, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        pemilik_nama: formData.landlordName,
-                        penyewa_nama: formData.tenantName || '-',
-                        harta_maklumat: JSON.stringify(formData),  // FULL data, encrypted server-side
-                        harga_bulanan: parseFloat(formData.rent) || 0,
-                        durasi_bulan: months
-                    })
+                    body: JSON.stringify(savePayload)
                 });
 
                 const result = await response.json();
@@ -869,16 +875,24 @@
                     if (diff > 0) months = diff;
                 }
 
+                const payload = {
+                    pemilik_nama: formData.landlordName || '-',
+                    penyewa_nama: formData.tenantName || '-',
+                    harta_maklumat: JSON.stringify(formData),
+                    harga_bulanan: parseFloat(formData.rent) || 0,
+                    durasi_bulan: months
+                };
+                // CRITICAL: include the existing token so the server UPDATES
+                // the landlord's record (merging tenant data) instead of
+                // creating a brand-new record and losing the link.
+                if (apiToken && apiToken.startsWith('AS-')) {
+                    payload.token = apiToken;
+                }
+
                 const response = await fetch(API_SAVE, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        pemilik_nama: formData.landlordName || '-',
-                        penyewa_nama: formData.tenantName || '-',
-                        harta_maklumat: JSON.stringify(formData),
-                        harga_bulanan: parseFloat(formData.rent) || 0,
-                        durasi_bulan: months
-                    })
+                    body: JSON.stringify(payload)
                 });
 
                 const result = await response.json();
