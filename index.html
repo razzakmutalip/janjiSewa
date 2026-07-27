@@ -688,7 +688,48 @@
                 const el = document.getElementById('sessionCode');
                 if (el && apiToken) el.textContent = apiToken;
                 updateStatus();
+
+                // ---- PAYMENT RETURN HANDLING ----
+                // Stripe success URL sends the user back with ?paid=success.
+                // We confirm with the server (which sets paid=1) then unlock.
+                const paidFlag = urlParams.get('paid');
+                if (paidFlag === 'success' && apiToken) {
+                    markPaidOnServer(apiToken);
+                } else if (apiToken) {
+                    // Also check the server in case they already paid earlier.
+                    checkPaidStatus(apiToken);
+                }
             });
+        }
+
+        // Tell the server this token is paid, then unlock download.
+        async function markPaidOnServer(token) {
+            try {
+                const res = await fetch(API_BASE + '/markpaid.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token })
+                });
+                const r = await res.json();
+                if (r.success) {
+                    unlockDownload();
+                    // Clean the ?paid=success from the URL bar.
+                    const clean = window.location.origin + window.location.pathname + '?token=' + encodeURIComponent(token);
+                    window.history.replaceState({}, '', clean);
+                }
+            } catch (e) { console.error('markPaid error', e); }
+        }
+
+        // Ask the server whether this token has already been paid.
+        async function checkPaidStatus(token) {
+            try {
+                const res = await fetch(API_GET + '?token=' + encodeURIComponent(token));
+                const r = await res.json();
+                const rec = r.data || r;
+                if (r.success && rec && Number(rec.paid) === 1) {
+                    unlockDownload();
+                }
+            } catch (e) { console.error('checkPaid error', e); }
         }
 
         // ============================================================
@@ -1090,7 +1131,38 @@
             }); 
         }
         function updateSignBtn() { safe(() => { /* verify checkbox on step 3 — kept for future use */ }); }
-        function updatePayBtn() { safe(() => { const ok = document.getElementById('agreeCheckbox')?.checked; const d = document.getElementById('btnDownload'); const p = document.getElementById('btnPay'); if (d) d.disabled = !ok; if (p) p.disabled = !ok; }); }
+        // Payment state — download is ONLY unlocked after successful payment.
+        let isPaid = false;
+
+        function updatePayBtn() {
+            safe(() => {
+                const ok = document.getElementById('agreeCheckbox')?.checked;
+                const d = document.getElementById('btnDownload');
+                const p = document.getElementById('btnPay');
+                // Pay button: enabled once user ticks agree.
+                if (p) p.disabled = !ok;
+                // Download button: enabled ONLY if payment is confirmed.
+                if (d) d.disabled = !isPaid;
+            });
+        }
+
+        // Called after we confirm payment (from Stripe redirect or DB paid flag).
+        function unlockDownload() {
+            safe(() => {
+                isPaid = true;
+                const d = document.getElementById('btnDownload');
+                const p = document.getElementById('btnPay');
+                if (d) {
+                    d.disabled = false;
+                    d.textContent = lang === 'bm' ? '📥 Muat Turun PDF (Sudah Bayar)' : '📥 Download PDF (Paid)';
+                }
+                if (p) {
+                    p.disabled = true;
+                    p.textContent = lang === 'bm' ? '✅ Sudah Dibayar' : '✅ Payment Complete';
+                    p.style.background = '#10b981';
+                }
+            });
+        }
 
         function updateNoticePeriod() {
             safe(() => {
@@ -1162,6 +1234,13 @@
 
         function downloadPDF() {
             safe(() => {
+                // HARD GUARD — never allow download before payment is confirmed.
+                if (!isPaid) {
+                    alert(lang === 'bm'
+                        ? 'Sila buat pembayaran RM19 dahulu sebelum muat turun PDF.'
+                        : 'Please complete the RM19 payment before downloading the PDF.');
+                    return;
+                }
                 // Data read from FORM (populated from database via loadFromServer)
                 const data = collectFormData();
                 const { jsPDF } = window.jspdf;
@@ -1358,7 +1437,13 @@
                 return;
             }
             
-            window.location.href = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00';
+            // Pass the token to Stripe as client_reference_id.
+            // Set the Payment Link's success URL (in Stripe dashboard) to:
+            //   https://janji-sewa.vercel.app/?token={CHECKOUT_SESSION_CLIENT_REFERENCE_ID}&paid=success
+            // Stripe will substitute the token back into the redirect.
+            const stripeUrl = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00'
+                + '?client_reference_id=' + encodeURIComponent(token);
+            window.location.href = stripeUrl;
         }
 
         function toggleExpand(btn) {
