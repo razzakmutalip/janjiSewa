@@ -342,9 +342,16 @@
             border-radius: var(--r-sm);
             margin: var(--s4) 0;
         }
-        .checkbox-group input {
-            width: 20px; height: 20px;
-            margin-top: 1px;
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-height: 0;          /* undo the global input min-height */
+            padding: 0;
+            border: none;
+            border-radius: 0;
+            /* centre the box against the first line of label text:
+               (14px * 1.55 line-height - 20px) / 2 = ~0.85px */
+            margin: 1px 0 0;
             cursor: pointer;
             accent-color: var(--blue);
             flex-shrink: 0;
@@ -368,7 +375,7 @@
             letter-spacing: .01em;
             margin-bottom: var(--s2);
         }
-        input, select {
+        input:not([type="checkbox"]):not([type="radio"]), select {
             width: 100%;
             min-height: 48px;
             padding: 0 var(--s4);
@@ -382,12 +389,12 @@
         }
         select { padding-right: var(--s7); cursor: pointer; }
         input::placeholder { color: #9aa8bd; }
-        input:focus, select:focus {
+        input:not([type="checkbox"]):not([type="radio"]):focus, select:focus {
             outline: none;
             border-color: var(--blue);
             box-shadow: var(--ring);
         }
-        input:disabled, select:disabled { background: #f4f7fb; color: var(--ink-soft); cursor: not-allowed; }
+        input:not([type="checkbox"]):not([type="radio"]):disabled, select:disabled { background: #f4f7fb; color: var(--ink-soft); cursor: not-allowed; }
 
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
         @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; gap: 0; } }
@@ -1001,7 +1008,7 @@
                         <strong>🛡️ Semak Anti-Penipuan / Anti-Fraud</strong>
                         <p id="verifyBM">Penyewa: semak akaun bank pemilik SEBELUM bayar deposit. Pemilik: semak no. telefon penyewa. Penyewa juga digalakkan minta salinan geran/bil cukai pintu untuk sahkan pemilikan.</p>
                         <p id="verifyEN" class="hidden">Tenant: check landlord's bank account BEFORE paying deposit. Landlord: check tenant's phone number. Tenants are also encouraged to request a copy of the land title/assessment bill to verify ownership.</p>
-                        <a href="https://ccid.rmp.gov.my/semakmule/" target="_blank">✓ Semak Mule — Akaun Bank & No. Telefon (RMP)</a>
+                        <a href="https://ccid.rmp.gov.my/semakmule/" target="_blank">✓ Semak Mule — Akaun Bank & No. Telefon (PDRM)</a>
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="verifyCheckbox" onchange="updateSignBtn()">
@@ -1091,10 +1098,10 @@
                             <div class="amount">RM 25.00</div>
                             <div class="promo-tag">🔥 Harga Promosi — Jimat RM25! / Promo Price — Save RM25!</div>
                         </div>
-                        <div class="checkbox-group" style="border-left-color: #ef4444; background: #fef2f2;">
+                        <div class="checkbox-group">
                             <input type="checkbox" id="agreeCheckbox" onchange="updatePayBtn()">
-                            <label id="agreeCheckBM" for="agreeCheckbox">Saya setuju untuk melanjutkan</label>
-                            <label id="agreeCheckEN" for="agreeCheckbox" class="hidden">I agree to proceed</label>
+                            <label id="agreeCheckBM" for="agreeCheckbox">Saya setuju untuk teruskan.</label>
+                            <label id="agreeCheckEN" for="agreeCheckbox" class="hidden">I agree to proceed.</label>
                         </div>
                         <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload" disabled>📥 Muat Turun / Download</button>
                         <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM25 / Pay RM25</button>
