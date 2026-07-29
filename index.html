@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AkadSewa - Perjanjian Sewaan RM19</title>
+    <title>AkadSewa - Perjanjian Sewaan RM25</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -108,6 +108,8 @@
         
         .price-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 8px; padding: 16px; text-align: center; margin: 14px 0; }
         .price-box .amount { font-size: 28px; color: #d97706; font-weight: 700; margin: 6px 0; }
+        .price-box .old-price { font-size: 17px; color: #92400e; text-decoration: line-through; opacity: .7; }
+        .price-box .promo-tag { font-size: 12px; color: #b45309; font-weight: 600; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -131,7 +133,7 @@
                 <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong><span id="wfL3BM">Klik SIMPAN untuk dapatkan KOD unik</span><span id="wfL3EN" class="hidden">Click SAVE to get a unique CODE</span></strong></div></div>
                 <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong><span id="wfL4BM">HANTAR KOD + LINK ke PENYEWA via WhatsApp</span><span id="wfL4EN" class="hidden">SEND CODE + LINK to TENANT via WhatsApp</span></strong></div></div>
                 <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><span id="wfL5BM">Penyewa buka link, data anda dimuat automatik & tandatangan</span><span id="wfL5EN" class="hidden">Tenant opens the link, your data loads automatically & they sign</span></div></div>
-                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfL6BM">Penyewa BAYAR RM19 untuk muat turun PDF final</span><span id="wfL6EN" class="hidden">Tenant PAYS RM19 to download the final PDF</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfL6BM">Penyewa BAYAR RM25 untuk muat turun PDF final</span><span id="wfL6EN" class="hidden">Tenant PAYS RM25 to download the final PDF</span></div></div>
             </div>
             
             <div class="workflow-guide hidden" id="workflowTenant">
@@ -140,7 +142,7 @@
                 <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><span id="wfT2BM">Data pemilik dimuat secara automatik</span><span id="wfT2EN" class="hidden">Landlord's data loads automatically</span></div></div>
                 <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong><span id="wfT3BM">Isi maklumat penyewa anda (Langkah 1-2)</span><span id="wfT3EN" class="hidden">Fill in your tenant details (Steps 1-2)</span></strong></div></div>
                 <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong><span id="wfT4BM">Tandatangan di Langkah 3</span><span id="wfT4EN" class="hidden">Sign at Step 3</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><strong><span id="wfT5BM">BAYAR RM19 untuk muat turun PDF</span><span id="wfT5EN" class="hidden">PAY RM19 to download the PDF</span></strong></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><strong><span id="wfT5BM">BAYAR RM25 untuk muat turun PDF</span><span id="wfT5EN" class="hidden">PAY RM25 to download the PDF</span></strong></div></div>
                 <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfT6BM">Kongsikan PDF dengan pemilik</span><span id="wfT6EN" class="hidden">Share the PDF with the landlord</span></div></div>
             </div>
         </div>
@@ -550,7 +552,7 @@
                                 3. Tekan "Hantar ke WhatsApp" untuk menghantar kod & link secara automatik<br>
                                 4. Penyewa akan membuka link — data anda dimuat automatik<br>
                                 5. Penyewa isi data mereka & tandatangan di halaman yang sama<br>
-                                6. <strong>Penyewa akan BAYAR RM19</strong> untuk muat turun PDF final
+                                6. <strong>Penyewa akan BAYAR RM25</strong> untuk muat turun PDF final
                             </div>
                             <div id="landlordInfoTextEN" class="hidden" style="margin-top: 8px; line-height: 1.6;">
                                 1. Click "SAVE & GET CODE" button above first<br>
@@ -558,7 +560,7 @@
                                 3. Press "Send via WhatsApp" to automatically send code & link<br>
                                 4. Tenant opens the link — your data loads automatically<br>
                                 5. Tenant fills their details & signs on the same page<br>
-                                6. <strong>Tenant will PAY RM19</strong> to download the final PDF
+                                6. <strong>Tenant will PAY RM25</strong> to download the final PDF
                             </div>
                         </div>
                         
@@ -593,7 +595,9 @@
                         <div class="price-box">
                             <div id="priceLabelBM">Harga / Price</div>
                             <div id="priceLabelEN" class="hidden">Price</div>
-                            <div class="amount">RM 19.00</div>
+                            <div class="old-price">RM 50.00</div>
+                            <div class="amount">RM 25.00</div>
+                            <div class="promo-tag">🔥 Harga Promosi — Jimat RM25! / Promo Price — Save RM25!</div>
                         </div>
                         <div class="checkbox-group" style="border-left-color: #ef4444; background: #fef2f2;">
                             <input type="checkbox" id="agreeCheckbox" onchange="updatePayBtn()">
@@ -601,7 +605,7 @@
                             <label id="agreeCheckEN" for="agreeCheckbox" class="hidden">I agree to proceed</label>
                         </div>
                         <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload" disabled>📥 Muat Turun / Download</button>
-                        <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM19 / Pay RM19</button>
+                        <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM25 / Pay RM25</button>
                     </div>
                 </div>
             </div>
@@ -1047,8 +1051,8 @@
                 
                 const urlWithCode = window.location.origin + window.location.pathname + '?token=' + apiToken;
                 const msg = lang === 'bm' 
-                    ? `Assalamualaikum!\n\nSila tandatangani perjanjian sewaan menggunakan link ini:\n\n${urlWithCode}\n\nData saya akan dimuat secara automatik.\n\nSelepas tandatangan, sila bayar RM19 untuk muat turun PDF perjanjian.\n\nTerima kasih,\n${document.getElementById('landlordName')?.value || 'Pemilik'}`
-                    : `Hello!\n\nPlease sign the tenancy agreement using this link:\n\n${urlWithCode}\n\nMy details will load automatically.\n\nAfter signing, please pay RM19 to download the agreement PDF.\n\nThank you,\n${document.getElementById('landlordName')?.value || 'Landlord'}`;
+                    ? `Assalamualaikum!\n\nSila tandatangani perjanjian sewaan menggunakan link ini:\n\n${urlWithCode}\n\nData saya akan dimuat secara automatik.\n\nSelepas tandatangan, sila bayar RM25 untuk muat turun PDF perjanjian.\n\nTerima kasih,\n${document.getElementById('landlordName')?.value || 'Pemilik'}`
+                    : `Hello!\n\nPlease sign the tenancy agreement using this link:\n\n${urlWithCode}\n\nMy details will load automatically.\n\nAfter signing, please pay RM25 to download the agreement PDF.\n\nThank you,\n${document.getElementById('landlordName')?.value || 'Landlord'}`;
                 
                 const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
                 window.open(waUrl, '_blank');
@@ -1309,8 +1313,8 @@
                 // HARD GUARD — never allow download before payment is confirmed.
                 if (!isPaid) {
                     alert(lang === 'bm'
-                        ? 'Sila buat pembayaran RM19 dahulu sebelum muat turun PDF.'
-                        : 'Please complete the RM19 payment before downloading the PDF.');
+                        ? 'Sila buat pembayaran RM25 dahulu sebelum muat turun PDF.'
+                        : 'Please complete the RM25 payment before downloading the PDF.');
                     return;
                 }
                 // Data read from FORM (populated from database via loadFromServer)
@@ -1522,7 +1526,7 @@
             const token = await saveToServerSilent();
             
             if (!token) {
-                if (btn) { btn.disabled = false; btn.textContent = '💳 Bayar RM19 / Pay RM19'; }
+                if (btn) { btn.disabled = false; btn.textContent = '💳 Bayar RM25 / Pay RM25'; }
                 alert(lang === 'bm'
                     ? 'Gagal menyimpan data. Sila cuba lagi sebelum bayar.'
                     : 'Failed to save data. Please try again before paying.');
@@ -1536,7 +1540,7 @@
             localStorage.setItem('akadSewa_pending_payment', token);
 
             // Also pass as client_reference_id (belt-and-suspenders).
-            const stripeUrl = 'https://buy.stripe.com/eVq7sLgcn3w0eYrfKs5AQ00'
+            const stripeUrl = 'https://buy.stripe.com/4gM8wP4tF1nSeYr7dW5AQ01'
                 + '?client_reference_id=' + encodeURIComponent(token);
             window.location.href = stripeUrl;
         }
