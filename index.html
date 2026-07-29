@@ -126,32 +126,65 @@
         .workflow-guide {
             background: #fff;
             border-radius: var(--r-md);
-            padding: var(--s4);
+            padding: var(--s5);
             margin-top: var(--s3);
             font-size: 14px;
-            line-height: 1.55;
+            line-height: 1.5;
             color: var(--ink);
             text-align: left;
         }
+        .workflow-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            padding-bottom: var(--s3);
+            margin-bottom: var(--s4);
+            border-bottom: 1px solid var(--line-soft);
+        }
+        /* Each step is a rail: the number column carries a connector
+           line so the list reads as one continuous flow. */
         .workflow-step {
             display: flex;
-            gap: var(--s3);
-            margin-bottom: var(--s3);
+            gap: var(--s4);
             align-items: flex-start;
+            position: relative;
+            padding-bottom: var(--s4);
         }
-        .workflow-step:last-child { margin-bottom: 0; }
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            left: 13px; top: 26px; bottom: 0;
+            width: 1.5px;
+            background: var(--line);
+        }
+        .workflow-step:last-child { padding-bottom: 0; }
+        .workflow-step:last-child::before { display: none; }
         .workflow-num {
-            background: var(--blue-soft);
+            background: #fff;
+            border: 1.5px solid var(--blue);
             color: var(--blue);
-            width: 24px; height: 24px;
+            width: 28px; height: 28px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 12px;
+            font-weight: 700; font-size: 13px;
             flex-shrink: 0;
-            margin-top: 1px;
+            position: relative;
+            z-index: 1;
         }
-        .workflow-text { flex: 1; }
+        .workflow-text { flex: 1; padding-top: 4px; }
         .workflow-text strong { color: var(--navy); font-weight: 600; }
+        /* Marks the point where the job passes to the other party. */
+        .workflow-handoff {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin: 0 0 var(--s4) 44px;
+            padding-top: var(--s1);
+        }
         .workflow-guide.hidden { display: none; }
 
         /* ---------- Progress stepper ---------- */
@@ -590,23 +623,24 @@
             </div>
             
             <div class="workflow-guide" id="workflowLandlord">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #2563eb;">📋 <span id="wfLandlordTitleBM">Proses Pemilik / Landlord</span><span id="wfLandlordTitleEN" class="hidden">Landlord Workflow</span>:</div>
-                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong><span id="wfL1BM">Isi maklumat pemilik & harta (Langkah 1-2)</span><span id="wfL1EN" class="hidden">Fill in landlord & property details (Steps 1-2)</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><strong><span id="wfL2BM">Tandatangan (Langkah 3)</span><span id="wfL2EN" class="hidden">Sign (Step 3)</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong><span id="wfL3BM">Klik SIMPAN untuk dapatkan KOD unik</span><span id="wfL3EN" class="hidden">Click SAVE to get a unique CODE</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong><span id="wfL4BM">HANTAR KOD + LINK ke PENYEWA via WhatsApp</span><span id="wfL4EN" class="hidden">SEND CODE + LINK to TENANT via WhatsApp</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><span id="wfL5BM">Penyewa buka link, data anda dimuat automatik & tandatangan</span><span id="wfL5EN" class="hidden">Tenant opens the link, your data loads automatically & they sign</span></div></div>
-                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfL6BM">Penyewa BAYAR RM25 untuk muat turun PDF final</span><span id="wfL6EN" class="hidden">Tenant PAYS RM25 to download the final PDF</span></div></div>
+                <div class="workflow-title"><span id="wfLandlordTitleBM">Proses pemilik</span><span id="wfLandlordTitleEN" class="hidden">Landlord process</span></div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><span id="wfL1BM">Isi maklumat pemilik dan harta</span><span id="wfL1EN" class="hidden">Fill in landlord and property details</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><span id="wfL2BM">Tandatangan</span><span id="wfL2EN" class="hidden">Sign</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><span id="wfL3BM">Simpan untuk dapatkan kod unik</span><span id="wfL3EN" class="hidden">Save to get your unique code</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><span id="wfL4BM">Hantar kod dan pautan kepada penyewa melalui WhatsApp</span><span id="wfL4EN" class="hidden">Send the code and link to your tenant on WhatsApp</span></div></div>
+                <div class="workflow-handoff"><span id="wfLHandoffBM">Kemudian, penyewa</span><span id="wfLHandoffEN" class="hidden">Then, the tenant</span></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><span id="wfL5BM">Buka pautan — maklumat anda dimuat automatik — dan tandatangan</span><span id="wfL5EN" class="hidden">Opens the link, your details load automatically, and signs</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfL6BM">Bayar RM25 dan muat turun PDF penuh</span><span id="wfL6EN" class="hidden">Pays RM25 and downloads the full PDF</span></div></div>
             </div>
             
             <div class="workflow-guide hidden" id="workflowTenant">
-                <div style="font-weight: 700; margin-bottom: 10px; color: #2563eb;">📋 <span id="wfTenantTitleBM">Proses Penyewa / Tenant</span><span id="wfTenantTitleEN" class="hidden">Tenant Workflow</span>:</div>
-                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><strong><span id="wfT1BM">Buka link dari pemilik (dengan KOD)</span><span id="wfT1EN" class="hidden">Open the link from the landlord (with CODE)</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><span id="wfT2BM">Data pemilik dimuat secara automatik</span><span id="wfT2EN" class="hidden">Landlord's data loads automatically</span></div></div>
-                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><strong><span id="wfT3BM">Isi maklumat penyewa anda (Langkah 1-2)</span><span id="wfT3EN" class="hidden">Fill in your tenant details (Steps 1-2)</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><strong><span id="wfT4BM">Tandatangan di Langkah 3</span><span id="wfT4EN" class="hidden">Sign at Step 3</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><strong><span id="wfT5BM">BAYAR RM25 untuk muat turun PDF</span><span id="wfT5EN" class="hidden">PAY RM25 to download the PDF</span></strong></div></div>
-                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfT6BM">Kongsikan PDF dengan pemilik</span><span id="wfT6EN" class="hidden">Share the PDF with the landlord</span></div></div>
+                <div class="workflow-title"><span id="wfTenantTitleBM">Proses penyewa</span><span id="wfTenantTitleEN" class="hidden">Tenant process</span></div>
+                <div class="workflow-step"><div class="workflow-num">1</div><div class="workflow-text"><span id="wfT1BM">Buka pautan daripada pemilik</span><span id="wfT1EN" class="hidden">Open the link from your landlord</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">2</div><div class="workflow-text"><span id="wfT2BM">Maklumat pemilik dimuat secara automatik</span><span id="wfT2EN" class="hidden">The landlord's details load automatically</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">3</div><div class="workflow-text"><span id="wfT3BM">Isi maklumat anda</span><span id="wfT3EN" class="hidden">Fill in your details</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">4</div><div class="workflow-text"><span id="wfT4BM">Tandatangan</span><span id="wfT4EN" class="hidden">Sign</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">5</div><div class="workflow-text"><span id="wfT5BM">Bayar RM25 untuk muat turun PDF</span><span id="wfT5EN" class="hidden">Pay RM25 to download the PDF</span></div></div>
+                <div class="workflow-step"><div class="workflow-num">6</div><div class="workflow-text"><span id="wfT6BM">Kongsikan PDF dengan pemilik</span><span id="wfT6EN" class="hidden">Share the PDF with your landlord</span></div></div>
             </div>
         </div>
 
