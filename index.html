@@ -1233,12 +1233,12 @@
 
                 // ---- PAYMENT RETURN HANDLING ----
                 // Stripe success URL sends the user back with ?paid=success.
-                // We confirm with the server (which sets paid=1) then unlock.
+                // We wait for Stripe's webhook to set paid=1, then unlock.
                 if (paidFlag === 'success' && apiToken) {
                     // Jump straight to Step 3 (tenant Download & Pay view)
                     // so the download button is visible after payment.
                     goToStepDirect(3);
-                    markPaidOnServer(apiToken);
+                    waitForPaymentConfirmation(apiToken);
                     // Clear the pending-payment marker now it's handled.
                     localStorage.removeItem('akadSewa_pending_payment');
                 } else if (apiToken) {
@@ -1248,22 +1248,64 @@
             });
         }
 
-        // Tell the server this token is paid, then unlock download.
-        async function markPaidOnServer(token) {
-            try {
-                const res = await fetch(API_BASE + '/markpaid.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token })
-                });
-                const r = await res.json();
-                if (r.success) {
-                    unlockDownload();
-                    // Clean the ?paid=success from the URL bar.
-                    const clean = window.location.origin + window.location.pathname + '?token=' + encodeURIComponent(token);
-                    window.history.replaceState({}, '', clean);
+        // Wait for Stripe's webhook to confirm payment on the server.
+        //
+        // The browser no longer declares payment itself. Stripe signs a
+        // server-to-server webhook that sets paid=1; we simply poll until
+        // that lands. The webhook usually arrives within a second or two,
+        // but the redirect is instant, so a short wait is expected.
+        async function waitForPaymentConfirmation(token) {
+            const MAX_ATTEMPTS = 15;   // 15 x 2s = 30 seconds
+            const INTERVAL_MS  = 2000;
+
+            const pay = document.getElementById('btnPay');
+            const showWaiting = (n) => {
+                if (!pay) return;
+                pay.disabled = true;
+                pay.textContent = (lang === 'bm'
+                    ? '\u23f3 Mengesahkan pembayaran... '
+                    : '\u23f3 Confirming payment... ') + n + '/' + MAX_ATTEMPTS;
+            };
+
+            for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+                showWaiting(attempt);
+                try {
+                    const res = await fetch(API_GET + '?token=' + encodeURIComponent(token));
+                    const r   = await res.json();
+                    const rec = r.data || r;
+                    if (r.success && rec && Number(rec.paid) === 1) {
+                        unlockDownload();
+                        // Clean the ?paid=success from the URL bar.
+                        const clean = window.location.origin + window.location.pathname + '?token=' + encodeURIComponent(token);
+                        window.history.replaceState({}, '', clean);
+                        return;
+                    }
+                } catch (e) { console.error('payment poll error', e); }
+
+                if (attempt < MAX_ATTEMPTS) {
+                    await new Promise(r => setTimeout(r, INTERVAL_MS));
                 }
-            } catch (e) { console.error('markPaid error', e); }
+            }
+
+            // Still unconfirmed after 30s. The payment itself is almost
+            // certainly fine - the webhook is just late - so give the user
+            // their reference code and a clear next step rather than an error.
+            if (pay) {
+                pay.disabled = true;
+                pay.style.background = '#d97706';
+                pay.textContent = lang === 'bm'
+                    ? 'Pengesahan lambat - muat semula halaman'
+                    : 'Confirmation delayed - refresh this page';
+            }
+            alert(lang === 'bm'
+                ? 'Pembayaran anda diterima, tetapi pengesahan masih diproses.\n\n'
+                  + 'Kod rujukan: ' + token + '\n\n'
+                  + 'Sila muat semula halaman ini dalam seminit. Jika ia masih terkunci, '
+                  + 'hubungi kami dengan kod rujukan di atas.'
+                : 'Your payment was received, but confirmation is still processing.\n\n'
+                  + 'Reference code: ' + token + '\n\n'
+                  + 'Please refresh this page in a minute. If it is still locked, '
+                  + 'contact us with the reference code above.');
         }
 
         // Ask the server whether this token has already been paid.
