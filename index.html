@@ -395,6 +395,12 @@
             box-shadow: var(--ring);
         }
         input:not([type="checkbox"]):not([type="radio"]):disabled, select:disabled { background: #f4f7fb; color: var(--ink-soft); cursor: not-allowed; }
+        /* Terms set by the landlord, shown read-only to the tenant. */
+        .field-locked {
+            background: #f4f7fb !important;
+            color: var(--ink-soft) !important;
+            cursor: not-allowed;
+        }
 
         .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
         @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; gap: 0; } }
@@ -661,6 +667,11 @@
 
         <form id="mainForm">
             <div class="step active" id="step1">
+                <div class="notice-box notice-warning hidden" id="finalNoticeTenant">
+                    <div class="notice-title"><span id="finalNoticeTitleBM">Versi Muktamad</span><span id="finalNoticeTitleEN" class="hidden">Final Version</span></div>
+                    <span id="finalNoticeBodyBM">Terma dalam perjanjian ini telah ditetapkan oleh pemilik dan tidak boleh diubah. Sila semak setiap butiran dengan teliti sebelum menandatangani. Jika anda tidak bersetuju dengan mana-mana terma, jangan tandatangan — hubungi pemilik untuk menyediakan perjanjian baharu.</span>
+                    <span id="finalNoticeBodyEN" class="hidden">The terms in this agreement were set by the landlord and cannot be changed. Please review every detail carefully before signing. If you do not agree with any term, do not sign — contact the landlord to have a new agreement prepared.</span>
+                </div>
                 <div class="content">
                     <div class="section-title">Maklumat Pihak-Pihak / Party Details</div>
 
@@ -1012,7 +1023,8 @@
                     </div>
                     <div class="checkbox-group">
                         <input type="checkbox" id="verifyCheckbox" onchange="updateSignBtn()">
-                        <label for="verifyCheckbox">Saya sudah semak / I've verified</label>
+                        <label id="verifyCheckBM" for="verifyCheckbox">Saya telah membuat semakan pengesahan di atas.</label>
+                        <label id="verifyCheckEN" for="verifyCheckbox" class="hidden">I have completed the verification checks above.</label>
                     </div>
                     <div class="status-box" id="statusBox">
                         <div id="landlordStatus" class="status-item pending">⏳ Pemilik / Landlord: Menunggu tandatangan</div>
@@ -1034,7 +1046,12 @@
                     <div id="step3Landlord">
                         <div class="section-title" style="margin-top: 28px;">Simpan & Kongsi / Save & Share</div>
                         
-                        <button type="button" class="btn-save-server" onclick="saveToServer()" id="btnSaveServer">💾 SIMPAN & DAPATKAN KOD / SAVE & GET CODE</button>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="landlordFinalCheckbox" onchange="updateSaveBtn()">
+                            <label id="landlordFinalBM" for="landlordFinalCheckbox">Saya mengesahkan semua terma di atas adalah muktamad dan tepat. Saya faham ia tidak boleh diubah selepas dihantar kepada penyewa — sebarang perubahan memerlukan perjanjian baharu.</label>
+                            <label id="landlordFinalEN" for="landlordFinalCheckbox" class="hidden">I confirm the terms above are final and correct. I understand they cannot be changed once sent to the tenant — any change requires a new agreement.</label>
+                        </div>
+                        <button type="button" class="btn-save-server" onclick="saveToServer()" id="btnSaveServer" disabled>💾 SIMPAN & DAPATKAN KOD / SAVE & GET CODE</button>
                         
                         <div class="session-box">
                             <div class="session-label">🔑 KONGSIKAN KOD INI KE PENYEWA / SHARE THIS CODE TO TENANT</div>
@@ -1100,8 +1117,8 @@
                         </div>
                         <div class="checkbox-group">
                             <input type="checkbox" id="agreeCheckbox" onchange="updatePayBtn()">
-                            <label id="agreeCheckBM" for="agreeCheckbox">Saya setuju untuk teruskan.</label>
-                            <label id="agreeCheckEN" for="agreeCheckbox" class="hidden">I agree to proceed.</label>
+                            <label id="agreeCheckBM" for="agreeCheckbox">Saya telah menyemak semua butiran di atas dan mengesahkan ia tepat serta seperti yang dipersetujui.</label>
+                            <label id="agreeCheckEN" for="agreeCheckbox" class="hidden">I have reviewed all the details above and confirm they are accurate and as agreed.</label>
                         </div>
                         <button type="button" class="btn-download" onclick="downloadPDF()" id="btnDownload" disabled>📥 Muat Turun / Download</button>
                         <button type="button" class="btn-pay" onclick="redirectToStripe()" id="btnPay" disabled style="margin-top: 8px; width: 100%;">💳 Bayar RM25 / Pay RM25</button>
@@ -1173,8 +1190,50 @@
             });
         }
 
+        // Fields the LANDLORD fills in. The tenant may read them but must
+        // never alter them: without this, a tenant could change the rent or
+        // deposit after the landlord had already signed, and the finished PDF
+        // would carry the landlord's signature on terms he never agreed to.
+        const LANDLORD_FIELDS = [
+            'landlordName', 'landlordIC', 'landlordPhone', 'landlordEmail', 'landlordAddress',
+            'propAddr', 'propType', 'propState', 'rentType', 'furnishedStatus',
+            'leaseStart', 'leaseEnd', 'noticePeriod', 'noticePeriodCustom',
+            'rent', 'depositMonths', 'depositAmount', 'utilityDeposit',
+            'lateCharges', 'paymentMode'
+        ];
+
+        function applyFieldLocks() {
+            safe(() => {
+                const lock = (userRole === 'tenant');
+                LANDLORD_FIELDS.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    // <select> has no readOnly attribute, so it must be disabled.
+                    // Values are read via .value in collectFormData(), which still
+                    // works on a disabled control.
+                    if (el.tagName === 'SELECT') {
+                        el.disabled = lock;
+                    } else {
+                        el.readOnly = lock;
+                    }
+                    el.classList.toggle('field-locked', lock);
+                });
+            });
+        }
+
+        // Landlord may not save or share until they confirm the terms are final.
+        function updateSaveBtn() {
+            safe(() => {
+                const ok = document.getElementById('landlordFinalCheckbox')?.checked;
+                const b  = document.getElementById('btnSaveServer');
+                if (b) b.disabled = !ok;
+            });
+        }
+
         function updateUIForRole() {
             safe(() => {
+                document.getElementById('finalNoticeTenant')?.classList.toggle('hidden', userRole !== 'tenant');
+                applyFieldLocks();
                 // Use classList (not inline style) because .hidden and canvas CSS
                 // use !important, which inline style cannot override (BUG FIX)
                 document.getElementById('landlordSigContainer')?.classList.toggle('hidden', userRole !== 'landlord');
@@ -1388,6 +1447,15 @@
             const btn = document.getElementById('btnSaveServer');
             try {
                 const formData = collectFormData();
+
+                // The button is disabled until this is ticked, but saveToServer()
+                // is also reached from the WhatsApp share path, so guard here too.
+                if (userRole === 'landlord' && !document.getElementById('landlordFinalCheckbox')?.checked) {
+                    alert(lang === 'bm'
+                        ? 'Sila tandakan pengesahan bahawa terma adalah muktamad sebelum menyimpan.'
+                        : 'Please tick the confirmation that the terms are final before saving.');
+                    return null;
+                }
 
                 if (!formData.landlordName) {
                     alert(lang === 'bm' ? 'Sila isi nama pemilik dahulu (Langkah 1)' : 'Please fill landlord name first (Step 1)');
