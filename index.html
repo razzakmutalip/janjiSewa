@@ -2165,6 +2165,7 @@
 
             // Security deposit: months x rent, unless a custom amount is set.
             let secVal = Number(d.depositAmount) || 0;
+            const secCustom = secVal > 0;   // landlord typed an exact figure
             let secMonths = 1;
             const dm = d.depositMonths || '';
             if (dm.indexOf('2') === 0) secMonths = 2;
@@ -2173,6 +2174,10 @@
             const SEC      = sumInWords(secVal, L);
             const SECMTHS  = bm ? (numWordsBM(secMonths).toLowerCase() + ' (' + secMonths + ') bulan')
                                 : (numWordsEN(secMonths).toLowerCase() + ' (' + secMonths + ') month' + (secMonths === 1 ? '' : 's'));
+            // The months phrase is only true when the deposit really is
+            // months x rent; with a custom figure it is dropped entirely.
+            const SECPHRASE_BM = secCustom ? '' : ', iaitu jumlah bersamaan ' + SECMTHS + ' Sewa,';
+            const SECPHRASE_EN = secCustom ? '' : ', being a total amount of ' + SECMTHS + ' Rental,';
 
             const UTIL     = sumInWords(d.utilityDeposit, L);
             const HAS_UTIL = Number(d.utilityDeposit) > 0;
@@ -2332,7 +2337,7 @@
             const c4 = [];
             if (bm) {
                 c4.push('4.1  Deposit Keselamatan');
-                c4.push('(a)  Semasa Perjanjian ini ditandatangani, Penyewa hendaklah membayar kepada Pemilik Deposit Keselamatan sebanyak ' + SEC + ' sahaja, iaitu jumlah bersamaan ' + SECMTHS + ' Sewa, sebagai deposit dan jaminan bagi pelaksanaan dan pematuhan sewajarnya oleh Penyewa terhadap akujanji Penyewa yang terkandung di sini. Deposit Keselamatan hendaklah dikekalkan dan ditingkatkan secara sepadan apabila Sewa dinaikkan pada masa pembaharuan Tempoh yang dirujuk dalam Klausa 6.1 di bawah. Kenaikan Deposit Keselamatan tersebut hendaklah dibayar oleh Penyewa kepada Pemilik pada masa kenaikan Sewa.');
+                c4.push('(a)  Semasa Perjanjian ini ditandatangani, Penyewa hendaklah membayar kepada Pemilik Deposit Keselamatan sebanyak ' + SEC + ' sahaja' + SECPHRASE_BM + ' sebagai deposit dan jaminan bagi pelaksanaan dan pematuhan sewajarnya oleh Penyewa terhadap akujanji Penyewa yang terkandung di sini. Deposit Keselamatan hendaklah dikekalkan dan ditingkatkan secara sepadan apabila Sewa dinaikkan pada masa pembaharuan Tempoh yang dirujuk dalam Klausa 6.1 di bawah. Kenaikan Deposit Keselamatan tersebut hendaklah dibayar oleh Penyewa kepada Pemilik pada masa kenaikan Sewa.');
                 c4.push('(b)  Dalam apa jua keadaan, Deposit Keselamatan tersebut tidak boleh dianggap sebagai bayaran Sewa yang kena dibayar di bawah Perjanjian ini tanpa kebenaran terdahulu Pemilik, dan hendaklah ditahan oleh Pemilik sehingga tamatnya Tempoh yang diwujudkan di sini, atau penamatan awal penyewaan menurut Klausa 6.3, mengikut mana yang berkenaan, dan penyerahan milikan kosong sepenuhnya oleh Penyewa kepada Pemilik. Deposit Keselamatan tersebut atau mana-mana bahagiannya boleh digunakan bagi atau ke arah pembayaran apa-apa jumlah tertunggak atau bagi membaiki apa-apa pelanggaran Perjanjian ini atau apa-apa kecacatan pada Premis yang disebabkan oleh Penyewa.');
                 c4.push('4.2  Deposit Utiliti');
                 c4.push(HAS_UTIL
@@ -2340,7 +2345,7 @@
                     : 'Tiada Deposit Utiliti berasingan dikenakan di bawah Perjanjian ini. Penyewa kekal bertanggungjawab sepenuhnya untuk membayar semua caj utiliti sebagaimana diperuntukkan dalam Klausa 7(b).');
             } else {
                 c4.push('4.1  Security Deposit');
-                c4.push('(a)  Upon the execution of this Agreement, the Tenant shall pay to the Landlord the Security Deposit of ' + SEC + ' only, being a total amount of ' + SECMTHS + ' Rental, as and by way of deposit as security for the due performance and observance by the Tenant of the covenants on the part of the Tenant herein contained. The Security Deposit shall be maintained and shall likewise be correspondingly increased whenever the Rental is increased at the time of renewal of the Term referred to in Clause 6.1 below. Such increase in the aforesaid Security Deposit shall be payable by the Tenant to the Landlord at the time of the increase in the Rental.');
+                c4.push('(a)  Upon the execution of this Agreement, the Tenant shall pay to the Landlord the Security Deposit of ' + SEC + ' only' + SECPHRASE_EN + ' as and by way of deposit as security for the due performance and observance by the Tenant of the covenants on the part of the Tenant herein contained. The Security Deposit shall be maintained and shall likewise be correspondingly increased whenever the Rental is increased at the time of renewal of the Term referred to in Clause 6.1 below. Such increase in the aforesaid Security Deposit shall be payable by the Tenant to the Landlord at the time of the increase in the Rental.');
                 c4.push('(b)  In either case, the aforesaid Security Deposit shall not be deemed to be payment for Rental due under this Agreement without the prior consent of the Landlord and shall be retained by the Landlord until the expiration of the Term herein created, or the early termination of the tenancy pursuant to Clause 6.3 hereof, as the case may be, and the delivery of complete vacant possession by the Tenant to the Landlord, but the aforesaid Security Deposit or any part thereof may be applied in or towards payment of any sums outstanding or for making good any breach of this Agreement or any defect to the Demised Premises by the Tenant.');
                 c4.push('4.2  Utilities Deposit');
                 c4.push(HAS_UTIL
