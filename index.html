@@ -694,14 +694,36 @@
         .notice-modal-body ul { margin: 8px 0 16px 22px; padding: 0; }
         .notice-modal-body li { margin-bottom: 7px; font-size: 0.9375rem; line-height: 1.6; color: #334155; }
 
-        /* Furnished items */
-        #furnishedItemsSection { margin: var(--s5) 0; padding: var(--s5); background: var(--blue-soft); border-radius: var(--r-md); border: 1px solid var(--line-soft); }
-        .furnished-items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); margin: var(--s5) 0; }
-        .checkbox-item { display: flex; align-items: center; gap: var(--s2); cursor: pointer; font-size: 0.9375rem; color: var(--ink); padding: var(--s2); border-radius: 6px; }
-        .checkbox-item:hover { background: rgba(37, 99, 235, 0.1); }
-        .checkbox-item input[type="checkbox"] { cursor: pointer; width: 18px; height: 18px; min-height: 18px; flex-shrink: 0; accent-color: #2563EB; }
-        @media (max-width: 768px) { .furnished-items-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .furnished-items-grid { grid-template-columns: 1fr; } }
+        /* ===== Furnished items — compact chip selector ===== */
+        #furnishedItemsSection { margin: 20px 0; padding: 22px; background: #F8FAFC; border-radius: 14px; border: 1px solid #E9EDF3; }
+        .furnished-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+        .furnished-head h3 { margin: 0; font-size: 0.9375rem; font-weight: 700; color: #0F172A; }
+        .furnished-count { font-size: 0.8125rem; font-weight: 600; color: #2563EB; background: #EFF6FF; border: 1px solid #DBEAFE; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+        .furnished-sub { margin: 0 0 12px 0; font-size: 0.8125rem; color: #64748B; line-height: 1.5; }
+        .furnished-actions { display: flex; gap: 8px; margin-bottom: 14px; }
+        .furnished-action-btn { background: #fff; border: 1px solid #E2E8F0; color: #475569; font-size: 0.75rem; font-weight: 600; padding: 6px 12px; min-height: 0; border-radius: 8px; cursor: pointer; transition: all .15s ease; }
+        .furnished-action-btn:hover { border-color: #2563EB; color: #1D4ED8; background: #F8FAFF; }
+
+        .furnished-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .furnished-chip { position: relative; display: inline-flex; align-items: center; gap: 7px; padding: 9px 15px; background: #fff; border: 1px solid #E2E8F0; border-radius: 999px; font-size: 0.875rem; color: #334155; cursor: pointer; user-select: none; transition: all .15s ease; line-height: 1.2; }
+        .furnished-chip:hover { border-color: #BFDBFE; background: #F8FAFF; }
+        .furnished-chip input[type="checkbox"] { position: absolute; opacity: 0; width: 1px; height: 1px; min-height: 0 !important; margin: 0; padding: 0; pointer-events: none; }
+        .furnished-chip .chip-tick { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid #CBD5E1; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s ease; }
+        .furnished-chip .chip-tick svg { width: 9px; height: 9px; stroke: #fff; stroke-width: 3.5; fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .15s ease; }
+        .furnished-chip.is-checked { background: #EFF6FF; border-color: #2563EB; color: #1D4ED8; font-weight: 600; }
+        .furnished-chip.is-checked .chip-tick { background: #2563EB; border-color: #2563EB; }
+        .furnished-chip.is-checked .chip-tick svg { opacity: 1; }
+        .furnished-chip.field-locked { opacity: .65; cursor: not-allowed; }
+        .furnished-chip.field-locked:hover { border-color: #E2E8F0; background: #fff; }
+        .furnished-chip.is-checked.field-locked:hover { background: #EFF6FF; border-color: #2563EB; }
+
+        .furnished-other-label { display: block; margin-bottom: 7px; font-size: 0.8125rem; font-weight: 600; color: #334155; }
+        #furnishedItemsOther { width: 100%; padding: 11px 13px; border: 1px solid #E2E8F0; border-radius: 10px; font-family: inherit; font-size: 0.875rem; resize: vertical; }
+        #furnishedItemsOther:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
+        .furnished-note { display: flex; gap: 9px; background: #EFF6FF; border: 1px solid #DBEAFE; padding: 12px 14px; border-radius: 10px; margin-top: 14px; }
+        .furnished-note svg { width: 15px; height: 15px; stroke: #2563EB; fill: none; stroke-width: 2; flex-shrink: 0; margin-top: 2px; }
+        .furnished-note p { margin: 0; font-size: 0.8125rem; color: #1E40AF; line-height: 1.55; }
+        @media (max-width: 480px) { .furnished-chip { font-size: 0.8125rem; padding: 8px 13px; } }
 
     </style>
 </head>
@@ -1019,42 +1041,144 @@
                     
                     <!-- FURNISHED ITEMS SECTION -->
                     <div id="furnishedItemsSection" style="display: none;">
-                      <h3 id="furnishedItemsTitleBM" style="margin-top: 18px; margin-bottom: 12px;">Barang-Barang Disediakan Pemilik</h3>
-                      <h3 id="furnishedItemsTitleEN" class="hidden" style="margin-top: 18px; margin-bottom: 12px;">Items Provided by Landlord</h3>
-                      
-                      <p id="furnishedItemsSubBM" style="margin: 0 0 16px 0; font-size: 13px; color: var(--ink-soft);">Sila pilih barang-barang yang disediakan oleh pemilik. Ini adalah senarai umum, tidak mengikat.</p>
-                      <p id="furnishedItemsSubEN" class="hidden" style="margin: 0 0 16px 0; font-size: 13px; color: var(--ink-soft);">Select items provided by the landlord. This is a non-exhaustive list.</p>
+                      <div class="furnished-head">
+                        <h3 id="furnishedItemsTitleBM">Barang-Barang Disediakan Pemilik</h3>
+                        <h3 id="furnishedItemsTitleEN" class="hidden">Items Provided by Landlord</h3>
+                        <span class="furnished-count" id="furnishedCount">0</span>
+                      </div>
+                      <p class="furnished-sub" id="furnishedItemsSubBM">Ketik untuk pilih. Senarai ini akan keluar sebagai Lampiran dalam PDF perjanjian.</p>
+                      <p class="furnished-sub hidden" id="furnishedItemsSubEN">Tap to select. This list appears as an Appendix in the agreement PDF.</p>
 
-                      <div class="furnished-items-grid">
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="bedframe" data-value-bm="Rangka katil" data-value-en="Bed frame" onchange="saveData()"><span id="itemBedframeBM">Rangka katil</span><span id="itemBedframeEN" class="hidden">Bed frame</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="mattress" data-value-bm="Tilam" data-value-en="Mattress" onchange="saveData()"><span id="itemMattressBM">Tilam</span><span id="itemMattressEN" class="hidden">Mattress</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="wardrobe" data-value-bm="Almari" data-value-en="Wardrobe/Cabinet" onchange="saveData()"><span id="itemWardrobeBM">Almari</span><span id="itemWardrobeEN" class="hidden">Wardrobe/Cabinet</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="table" data-value-bm="Meja" data-value-en="Table" onchange="saveData()"><span id="itemTableBM">Meja</span><span id="itemTableEN" class="hidden">Table</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="chair" data-value-bm="Kerusi" data-value-en="Chair" onchange="saveData()"><span id="itemChairBM">Kerusi</span><span id="itemChairEN" class="hidden">Chair</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="sofa" data-value-bm="Sofa" data-value-en="Sofa" onchange="saveData()"><span id="itemSofaBM">Sofa</span><span id="itemSofaEN" class="hidden">Sofa</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="refrigerator" data-value-bm="Peti sejuk" data-value-en="Refrigerator" onchange="saveData()"><span id="itemRefrigeratorBM">Peti sejuk</span><span id="itemRefrigeratorEN" class="hidden">Refrigerator</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="stove" data-value-bm="Dapur (Gas/Electric)" data-value-en="Stove (Gas/Electric)" onchange="saveData()"><span id="itemStoveBM">Dapur (Gas/Electric)</span><span id="itemStoveEN" class="hidden">Stove (Gas/Electric)</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="microwave" data-value-bm="Microwave" data-value-en="Microwave" onchange="saveData()"><span id="itemMicrowaveBM">Microwave</span><span id="itemMicrowaveEN" class="hidden">Microwave</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="sink" data-value-bm="Gelanggang pinggan" data-value-en="Kitchen sink" onchange="saveData()"><span id="itemSinkBM">Gelanggang pinggan</span><span id="itemSinkEN" class="hidden">Kitchen sink</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="ac" data-value-bm="Pendingin hawa (A/C)" data-value-en="Air conditioner (A/C)" onchange="saveData()"><span id="itemACBM">Pendingin hawa (A/C)</span><span id="itemACEN" class="hidden">Air conditioner (A/C)</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="fan" data-value-bm="Kipas" data-value-en="Fan" onchange="saveData()"><span id="itemFanBM">Kipas</span><span id="itemFanEN" class="hidden">Fan</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="lights" data-value-bm="Lampu & suis" data-value-en="Lights & switches" onchange="saveData()"><span id="itemLightsBM">Lampu & suis</span><span id="itemLightsEN" class="hidden">Lights & switches</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="curtains" data-value-bm="Langsir/Tirai" data-value-en="Curtains" onchange="saveData()"><span id="itemCurtainsBM">Langsir/Tirai</span><span id="itemCurtainsEN" class="hidden">Curtains</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="carpet" data-value-bm="Karpet" data-value-en="Carpet" onchange="saveData()"><span id="itemCarpetBM">Karpet</span><span id="itemCarpetEN" class="hidden">Carpet</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="tv" data-value-bm="TV" data-value-en="TV" onchange="saveData()"><span id="itemTVBM">TV</span><span id="itemTVEN" class="hidden">TV</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="washingmachine" data-value-bm="Mesin basuh" data-value-en="Washing machine" onchange="saveData()"><span id="itemWashingmachineBM">Mesin basuh</span><span id="itemWashingmachineEN" class="hidden">Washing machine</span></label>
-                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="waterheater" data-value-bm="Pemanas air" data-value-en="Water heater" onchange="saveData()"><span id="itemWaterheaterBM">Pemanas air</span><span id="itemWaterheaterEN" class="hidden">Water heater</span></label>
+                      <div class="furnished-actions">
+                        <button type="button" class="furnished-action-btn" id="furnishedSelectAll">
+                          <span id="furnishedSelectAllBM">Pilih semua</span>
+                          <span id="furnishedSelectAllEN" class="hidden">Select all</span>
+                        </button>
+                        <button type="button" class="furnished-action-btn" id="furnishedClearAll">
+                          <span id="furnishedClearAllBM">Kosongkan</span>
+                          <span id="furnishedClearAllEN" class="hidden">Clear</span>
+                        </button>
                       </div>
 
-                      <div style="margin-top: 16px;">
-                        <label for="furnishedItemsOther" id="furnishedItemsOtherLabelBM" style="display: block; margin-bottom: 8px; font-weight: 500;">Barang-barang lain (tidak wajib)</label>
-                        <label for="furnishedItemsOther" id="furnishedItemsOtherLabelEN" class="hidden" style="display: block; margin-bottom: 8px; font-weight: 500;">Other items (optional)</label>
-                        <textarea id="furnishedItemsOther" placeholder="Contoh: Meja belajar, almari dinding, dll. / Example: Study desk, wall cabinet, etc." rows="3" onchange="saveData()" style="width: 100%; padding: 12px; border: 1px solid var(--line-soft); border-radius: 8px; font-family: inherit; font-size: 14px;"></textarea>
+                      <div class="furnished-chips" id="furnishedChips">
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="bedframe" data-value-bm="Rangka katil" data-value-en="Bed frame" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemBedframeBM">Rangka katil</span>
+                          <span id="itemBedframeEN" class="hidden">Bed frame</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="mattress" data-value-bm="Tilam" data-value-en="Mattress" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemMattressBM">Tilam</span>
+                          <span id="itemMattressEN" class="hidden">Mattress</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="wardrobe" data-value-bm="Almari" data-value-en="Wardrobe" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemWardrobeBM">Almari</span>
+                          <span id="itemWardrobeEN" class="hidden">Wardrobe</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="table" data-value-bm="Meja" data-value-en="Table" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemTableBM">Meja</span>
+                          <span id="itemTableEN" class="hidden">Table</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="chair" data-value-bm="Kerusi" data-value-en="Chair" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemChairBM">Kerusi</span>
+                          <span id="itemChairEN" class="hidden">Chair</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="sofa" data-value-bm="Sofa" data-value-en="Sofa" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemSofaBM">Sofa</span>
+                          <span id="itemSofaEN" class="hidden">Sofa</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="refrigerator" data-value-bm="Peti sejuk" data-value-en="Refrigerator" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemRefrigeratorBM">Peti sejuk</span>
+                          <span id="itemRefrigeratorEN" class="hidden">Refrigerator</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="stove" data-value-bm="Dapur" data-value-en="Stove" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemStoveBM">Dapur</span>
+                          <span id="itemStoveEN" class="hidden">Stove</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="microwave" data-value-bm="Microwave" data-value-en="Microwave" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemMicrowaveBM">Microwave</span>
+                          <span id="itemMicrowaveEN" class="hidden">Microwave</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="sink" data-value-bm="Sinki dapur" data-value-en="Kitchen sink" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemSinkBM">Sinki dapur</span>
+                          <span id="itemSinkEN" class="hidden">Kitchen sink</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="ac" data-value-bm="Pendingin hawa" data-value-en="Air conditioner" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemACBM">Pendingin hawa</span>
+                          <span id="itemACEN" class="hidden">Air conditioner</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="fan" data-value-bm="Kipas" data-value-en="Fan" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemFanBM">Kipas</span>
+                          <span id="itemFanEN" class="hidden">Fan</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="lights" data-value-bm="Lampu & suis" data-value-en="Lights & switches" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemLightsBM">Lampu &amp; suis</span>
+                          <span id="itemLightsEN" class="hidden">Lights &amp; switches</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="curtains" data-value-bm="Langsir" data-value-en="Curtains" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemCurtainsBM">Langsir</span>
+                          <span id="itemCurtainsEN" class="hidden">Curtains</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="carpet" data-value-bm="Karpet" data-value-en="Carpet" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemCarpetBM">Karpet</span>
+                          <span id="itemCarpetEN" class="hidden">Carpet</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="tv" data-value-bm="TV" data-value-en="TV" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemTVBM">TV</span>
+                          <span id="itemTVEN" class="hidden">TV</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="washingmachine" data-value-bm="Mesin basuh" data-value-en="Washing machine" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemWashingmachineBM">Mesin basuh</span>
+                          <span id="itemWashingmachineEN" class="hidden">Washing machine</span>
+                        </label>
+                        <label class="furnished-chip">
+                          <input type="checkbox" name="furnishedItem" value="waterheater" data-value-bm="Pemanas air" data-value-en="Water heater" onchange="saveData()">
+                          <span class="chip-tick"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+                          <span id="itemWaterheaterBM">Pemanas air</span>
+                          <span id="itemWaterheaterEN" class="hidden">Water heater</span>
+                        </label>
                       </div>
 
-                      <div style="background: var(--blue-soft); border-left: 4px solid var(--blue); padding: 16px; border-radius: 4px; margin-top: 16px;">
-                        <p id="furnishedItemsNoteBM" style="margin: 0; font-size: 13px; color: #1e40af;"><strong>Nota:</strong> Senarai ini adalah untuk panduan umum. Kedua-dua pihak harus bersetuju tentang keadaan dan kelengkapan barang-barang ini pada awal tenancy. Barang-barang yang disediakan harus diperiksa dan didaftar oleh kedua-dua pihak.</p>
-                        <p id="furnishedItemsNoteEN" class="hidden" style="margin: 0; font-size: 13px; color: #1e40af;"><strong>Note:</strong> This list is for general guidance. Both parties should agree on the condition and completeness of items at the start of tenancy. Provided items should be inspected and recorded by both parties.</p>
+                      <label for="furnishedItemsOther" class="furnished-other-label" id="furnishedItemsOtherLabelBM">Barang lain (tidak wajib)</label>
+                      <label for="furnishedItemsOther" class="furnished-other-label hidden" id="furnishedItemsOtherLabelEN">Other items (optional)</label>
+                      <textarea id="furnishedItemsOther" rows="2" onchange="saveData()" placeholder="Cth: Meja belajar, almari dinding / E.g. Study desk, wall cabinet"></textarea>
+
+                      <div class="furnished-note">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        <p id="furnishedItemsNoteBM">Kedua-dua pihak perlu memeriksa dan bersetuju tentang keadaan barang-barang ini pada tarikh mula sewa.</p>
+                        <p id="furnishedItemsNoteEN" class="hidden">Both parties should inspect and agree on the condition of these items on the tenancy start date.</p>
                       </div>
                     </div>
 
@@ -1159,7 +1283,7 @@
                         <div id="clausesBM" style="line-height: 1.8; font-size: 11px;">
                             <strong>1. TAFSIRAN</strong> - Mentakrifkan istilah seperti Premis, Sewa, Tempoh, Deposit Keselamatan dan Deposit Utiliti, serta peraturan tafsiran perjanjian.<br><br>
 
-                            <strong>2. PERMULAAN PENYEWAAN</strong> - Pemilik memberi dan Penyewa menerima penyewaan bagi Tempoh yang dinyatakan pada kadar sewa bulanan yang dipersetujui. Sewa bulan pertama dibayar semasa perjanjian ditandatangani.<br><br>
+                            <strong>2. PERMULAAN PENYEWAAN</strong> - Pemilik memberi dan Penyewa menerima penyewaan bagi Tempoh yang dinyatakan pada kadar sewa bulanan yang dipersetujui. Sewa bulan pertama dibayar semasa perjanjian ditandatangani. Jika premis disewakan berperabot, kelengkapan dan perabot yang disediakan disenaraikan dalam Lampiran A dan menjadi sebahagian daripada Perjanjian ini.<br><br>
 
                             <strong>3. YURAN PENYELENGGARAAN</strong> - Pihak yang dinyatakan menanggung yuran penyelenggaraan bulanan, dibayar sebelum atau pada hari yang ditetapkan setiap bulan.<br><br>
 
@@ -1203,7 +1327,7 @@
                         <div id="clausesEN" class="hidden" style="line-height: 1.8; font-size: 11px;">
                             <strong>1. DEFINITIONS AND INTERPRETATION</strong> - Defines terms such as the Demised Premises, Rental, Term, Security Deposit and Utilities Deposit, and sets out the rules of interpretation.<br><br>
 
-                            <strong>2. COMMENCEMENT OF THE TENANCY</strong> - The Landlord grants and the Tenant accepts a tenancy for the stated Term at the agreed monthly rental. The first month's rental is paid on execution of this Agreement.<br><br>
+                            <strong>2. COMMENCEMENT OF THE TENANCY</strong> - The Landlord grants and the Tenant accepts a tenancy for the stated Term at the agreed monthly rental. The first month's rental is paid on execution of this Agreement. Where the premises are let furnished, the fixtures and furnishings provided are listed in Appendix A, which forms an integral part of this Agreement.<br><br>
 
                             <strong>3. MAINTENANCE FEES</strong> - The stated party bears the monthly maintenance fee, payable on or before the stated day of each month.<br><br>
 
@@ -1442,7 +1566,8 @@
             'leaseStart', 'leaseEnd', 'noticePeriod', 'noticePeriodCustom',
             'rent', 'maintenanceFee', 'maintenancePayer', 'paymentDueDay',
             'depositMonths', 'depositAmount', 'utilityDeposit',
-            'latePenaltyPercent', 'renewalRental', 'paymentMode'
+            'latePenaltyPercent', 'renewalRental', 'paymentMode',
+            'furnishedItemsOther'
         ];
 
         function applyFieldLocks() {
@@ -1460,6 +1585,12 @@
                         el.readOnly = lock;
                     }
                     el.classList.toggle('field-locked', lock);
+                });
+                // The 18 furnished-item checkboxes are landlord-owned too.
+                document.querySelectorAll('input[name="furnishedItem"]').forEach(cb => {
+                    cb.disabled = lock;
+                    const wrap = cb.closest('.furnished-chip');
+                    if (wrap) wrap.classList.toggle('field-locked', lock);
                 });
             });
         }
@@ -1680,6 +1811,11 @@
                 paymentMode: document.getElementById('paymentMode')?.value || '',
                 noticePeriod: document.getElementById('noticePeriod')?.value || '',
                 noticePeriodCustom: document.getElementById('noticePeriodCustom')?.value || '',
+                furnishedItems: Array.from(document.querySelectorAll('input[name="furnishedItem"]:checked'))
+                    .map(cb => (lang === 'bm' ? cb.dataset.valueBm : cb.dataset.valueEn)),
+                furnishedItemKeys: Array.from(document.querySelectorAll('input[name="furnishedItem"]:checked'))
+                    .map(cb => cb.value),
+                furnishedItemsOther: document.getElementById('furnishedItemsOther')?.value || '',
                 landlordSig: landlordSig,
                 tenantSig: tenantSig
             };
@@ -1860,6 +1996,21 @@
                     if (formData.tenantSig && formData.tenantSig.startsWith('data:image')) {
                         loadedTenantSig = formData.tenantSig;
                     }
+
+                    // Restore furnished items (checkboxes + free text), then
+                    // re-run the conditional show/hide so the section matches
+                    // the restored furnishedStatus. (BUG FIX)
+                    if (Array.isArray(formData.furnishedItemKeys)) {
+                        document.querySelectorAll('input[name="furnishedItem"]').forEach(cb => {
+                            cb.checked = formData.furnishedItemKeys.includes(cb.value);
+                        });
+                    }
+                    const fio = document.getElementById('furnishedItemsOther');
+                    if (fio && typeof formData.furnishedItemsOther === 'string') {
+                        fio.value = formData.furnishedItemsOther;
+                    }
+                    if (typeof toggleFurnishedItemsSection === 'function') toggleFurnishedItemsSection();
+                    if (typeof refreshFurnishedChips === 'function') refreshFurnishedChips();
 
                     updateNoticePeriod();
                     updateStatus();
@@ -2307,6 +2458,11 @@
             const STOREYS  = d.storeys || '';
             const PTYPE    = d.propType || '';
             const FURN     = d.furnishedStatus || '';
+            // Appendix A is only produced (and only referenced) when the
+            // premises are let furnished AND at least one item was listed.
+            const FURN_ITEMS = Array.isArray(d.furnishedItems) ? d.furnishedItems : [];
+            const HAS_APPX   = (FURN.includes('Fully') || FURN.includes('Partially')) &&
+                               (FURN_ITEMS.length > 0 || !!(d.furnishedItemsOther || '').trim());
             const USE      = d.rentType || '';
 
             const RENT     = sumInWords(d.rent, L);
@@ -2468,10 +2624,12 @@
             // ---- 2 ----
             C.push({ no: '2', title: bm ? 'PERMULAAN PENYEWAAN' : 'COMMENCEMENT OF THE TENANCY', paras: bm ? [
                 'Tertakluk kepada terma dan syarat yang terkandung kemudian daripada ini, Pemilik dengan ini memberikan dan Penyewa dengan ini menerima penyewaan Premis bagi Tempoh sebagaimana ditakrifkan di atas pada sewa bulanan sebanyak ' + RENT + ' sahaja ("Sewa"). Bayaran sewa pertama bagi bulan pertama penyewaan hendaklah dibayar semasa Perjanjian ini ditandatangani.' +
-                (USE ? ' Premis disewakan sebagai ' + USE + (FURN ? ' dan diserahkan dalam keadaan ' + FURN + '.' : '.') : '')
+                (USE ? ' Premis disewakan sebagai ' + USE + (FURN ? ' dan diserahkan dalam keadaan ' + FURN + '.' : '.') : '') +
+                (HAS_APPX ? ' Kelengkapan dan perabot yang disediakan oleh Pemilik adalah sebagaimana yang disenaraikan dalam Lampiran A yang dilampirkan pada Perjanjian ini, dan Lampiran A tersebut hendaklah dibaca bersama serta menjadi sebahagian daripada Perjanjian ini.' : '')
             ] : [
                 'Subject to the terms and conditions hereinafter contained, the Landlord hereby grants and the Tenant hereby accepts a tenancy of the Demised Premises for a Term as defined above at a monthly rental of ' + RENT + ' only ("Rental"). The first payment of rental for the first month of tenancy shall be paid on the execution of this Agreement.' +
-                (USE ? ' The Demised Premises are let as ' + USE + (FURN ? ' and delivered ' + FURN + '.' : '.') : '')
+                (USE ? ' The Demised Premises are let as ' + USE + (FURN ? ' and delivered ' + FURN + '.' : '.') : '') +
+                (HAS_APPX ? ' The fixtures and furnishings provided by the Landlord are as listed in Appendix A annexed to this Agreement, which Appendix A shall be read together with and form an integral part of this Agreement.' : '')
             ]});
 
             // ---- 3 ----
@@ -2540,7 +2698,7 @@
                 '(a)  Membayar Sewa sebelum atau pada hari ' + DUETXT + ' setiap bulan kalendar semasa dengan memasukkan bayaran tersebut ke dalam akaun yang diselenggarakan oleh Pemilik mengikut terma dan syarat yang dinyatakan dalam Perjanjian ini, dan membayar yuran penyelenggaraan mengikut cara yang dirujuk dalam Klausa 3 di atas.',
                 '(b)  Membayar semua caj berkenaan elektrik, telefon, air dan apa-apa perbelanjaan lain yang digunakan di dalam atau dibekalkan kepada Premis dari tarikh penyerahan milikan kosong Premis.',
                 '(c)  Mengekalkan bahagian dalam Premis dalam keadaan baik dan terpelihara sepanjang Tempoh.',
-                '(d)  Membenarkan Pemilik dan/atau ejennya yang diberi kuasa pada bila-bila masa yang munasabah, setelah memberikan notis terdahulu, untuk memasuki Premis dan memeriksa keadaannya serta membuat inventori kelengkapan Pemilik di dalamnya (jika ada) dan melakukan pembaikan struktur atau luaran kepada Premis. Pemilik boleh menyampaikan kepada Penyewa notis bertulis yang menyatakan apa-apa pembaikan atau kerja yang perlu dilakukan atau penggantian yang perlu dibuat bagi mematuhi kewajipan Penyewa untuk membaiki yang terkandung di sini, dan menghendaki Penyewa dengan serta-merta melaksanakan pembaikan atau kerja tersebut. Sekiranya Penyewa tidak dalam tempoh tiga puluh (30) hari selepas penyampaian notis tersebut meneruskan dengan tekun pelaksanaan pembaikan atau kerja atau penggantian tersebut, maka adalah sah di sisi undang-undang bagi Pemilik memasuki Premis dan melaksanakan pembaikan atau kerja atau membuat penggantian tersebut, dan kos itu menjadi hutang yang kena dibayar oleh Penyewa kepada Pemilik dan boleh dituntut serta-merta melalui tindakan.',
+                '(d)  Membenarkan Pemilik dan/atau ejennya yang diberi kuasa pada bila-bila masa yang munasabah, setelah memberikan notis terdahulu, untuk memasuki Premis dan memeriksa keadaannya serta membuat inventori kelengkapan Pemilik di dalamnya (sebagaimana disenaraikan dalam Lampiran A, jika ada) dan melakukan pembaikan struktur atau luaran kepada Premis. Pemilik boleh menyampaikan kepada Penyewa notis bertulis yang menyatakan apa-apa pembaikan atau kerja yang perlu dilakukan atau penggantian yang perlu dibuat bagi mematuhi kewajipan Penyewa untuk membaiki yang terkandung di sini, dan menghendaki Penyewa dengan serta-merta melaksanakan pembaikan atau kerja tersebut. Sekiranya Penyewa tidak dalam tempoh tiga puluh (30) hari selepas penyampaian notis tersebut meneruskan dengan tekun pelaksanaan pembaikan atau kerja atau penggantian tersebut, maka adalah sah di sisi undang-undang bagi Pemilik memasuki Premis dan melaksanakan pembaikan atau kerja atau membuat penggantian tersebut, dan kos itu menjadi hutang yang kena dibayar oleh Penyewa kepada Pemilik dan boleh dituntut serta-merta melalui tindakan.',
                 '(e)  Memberikan notis kepada Pemilik tentang semua kecacatan struktur pada Premis.',
                 '(f)  Tidak menyimpan atau membawa ke dalam Premis senjata, peluru atau barang haram dan serbuk letupan di mana-mana bahagian Premis, dan tidak meletakkan atau meninggalkan di pintu masuk tangga, laluan atau koridor Premis apa-apa kotak atau sampah atau selainnya menghalang laluan tersebut, serta mengekalkan Premis dalam keadaan bersih dan bersanitasi.',
                 '(g)  Tidak menggunakan Premis bagi apa-apa tujuan yang menyalahi undang-undang, haram atau tidak bermoral, bagi tujuan perjudian atau bagi apa-apa kegunaan yang menyalahi undang-undang atau tidak wajar, dan tidak melakukan atau membenarkan dilakukan apa-apa perbuatan atau perkara yang boleh menjadi gangguan atau memberi sebab munasabah untuk aduan daripada mana-mana tetamu, pelanggan atau penghuni premis bersebelahan atau kejiranan, dan khususnya tidak menggunakan Premis atau membenarkannya digunakan sebagai makmal atau bengkel.',
@@ -2562,7 +2720,7 @@
                 '(a)  To pay the Rental on or before the ' + DUETXT + ' day of each current calendar month by depositing the same into the account maintained by the Landlord in accordance with the terms and conditions set out in this Agreement, and to pay the maintenance fees in the manner referred to in Clause 3 above.',
                 '(b)  To pay all charges in respect of electricity, telephone, water and such other outgoings used in or provided to the Demised Premises from the date of the delivery of vacant possession of the Demised Premises.',
                 '(c)  To keep the interior of the Demised Premises in good repair and condition throughout the Term.',
-                '(d)  To permit the Landlord and/or its duly authorised agents at all reasonable times upon giving prior notice to enter the Demised Premises and to view the condition thereof and to take inventories of the Landlord\u2019s fixtures therein (if any) and to do structural or external repairs to the Demised Premises. The Landlord may serve upon the Tenant notice in writing specifying any repairs or work necessary to be done or replacement necessary to be made to comply with the Tenant\u2019s obligations to repair herein contained and require the Tenant forthwith to execute such repairs or work or make such replacement, and if the Tenant shall not within thirty (30) days after the service of such notice proceed diligently with the execution of such repairs or work or the making of such replacements, then it shall be lawful for the Landlord to enter upon the Demised Premises and execute such repairs or work or make such replacements, and the cost thereof shall be a debt due from the Tenant to the Landlord and be forthwith recoverable by action.',
+                '(d)  To permit the Landlord and/or its duly authorised agents at all reasonable times upon giving prior notice to enter the Demised Premises and to view the condition thereof and to take inventories of the Landlord\u2019s fixtures therein (as listed in Appendix A, if any) and to do structural or external repairs to the Demised Premises. The Landlord may serve upon the Tenant notice in writing specifying any repairs or work necessary to be done or replacement necessary to be made to comply with the Tenant\u2019s obligations to repair herein contained and require the Tenant forthwith to execute such repairs or work or make such replacement, and if the Tenant shall not within thirty (30) days after the service of such notice proceed diligently with the execution of such repairs or work or the making of such replacements, then it shall be lawful for the Landlord to enter upon the Demised Premises and execute such repairs or work or make such replacements, and the cost thereof shall be a debt due from the Tenant to the Landlord and be forthwith recoverable by action.',
                 '(e)  To give the Landlord notice of all structural defects in the Demised Premises.',
                 '(f)  Not to store or bring upon the Demised Premises arms, ammunition or unlawful goods and gunpowder in any part of the Demised Premises, and not to place or leave in the entrance of stairways, passages or corridors of the Demised Premises any boxes or rubbish or otherwise encumber the same, and to keep the Demised Premises in a clean and sanitary condition.',
                 '(g)  Not to use the Demised Premises for any illegal, unlawful or immoral purpose, for the purpose of gambling or for any illegal or improper use, and not to do or permit to be done any act or thing which may become a nuisance or give reasonable cause for complaint from any guest, customer or patron of the Demised Premises or occupiers of adjacent premises or the neighbourhood, and in particular not to use the Demised Premises or permit the same to be used as a laboratory or workshop.',
@@ -2883,22 +3041,34 @@
                 }
 
                 // ========== APPENDIX: FURNISHED ITEMS ========== (if applicable)
-                if (A.furnishedStatus && (A.furnishedStatus.includes('Fully') || A.furnishedStatus.includes('Partially'))) {
+                const APPX_STATUS = A.furnishedStatus || '';
+                const APPX_ITEMS  = Array.isArray(A.furnishedItems) ? A.furnishedItems : [];
+                const APPX_OTHER  = (A.furnishedItemsOther || '').trim();
+                const SHOW_APPX   = (APPX_STATUS.includes('Fully') || APPX_STATUS.includes('Partially')) &&
+                                    (APPX_ITEMS.length > 0 || !!APPX_OTHER);
+                if (SHOW_APPX) {
                     doc.addPage(); y = M;
-                    
+
                     // Title
                     doc.setFontSize(14); doc.setFont(undefined, 'bold'); doc.setTextColor(15, 45, 92);
                     if (L === 'bm') {
-                        doc.text('LAMPIRAN', PW / 2, y, { align: 'center' });
+                        doc.text('LAMPIRAN A', PW / 2, y, { align: 'center' });
                         y += 8;
                         doc.setFontSize(12); doc.setFont(undefined, 'bold');
-                        doc.text('Jadual Barang-Barang Disediakan oleh Pemilik', PW / 2, y, { align: 'center' });
+                        doc.text('Jadual Kelengkapan dan Perabot', PW / 2, y, { align: 'center' });
+                        y += 7;
+                        doc.setFontSize(8.5); doc.setFont(undefined, 'italic'); doc.setTextColor(90, 90, 90);
+                        doc.text('(Dirujuk dalam Klausa 2 Perjanjian ini)', PW / 2, y, { align: 'center' });
                     } else {
-                        doc.text('APPENDIX', PW / 2, y, { align: 'center' });
+                        doc.text('APPENDIX A', PW / 2, y, { align: 'center' });
                         y += 8;
                         doc.setFontSize(12); doc.setFont(undefined, 'bold');
-                        doc.text('Schedule of Items Provided by Landlord', PW / 2, y, { align: 'center' });
+                        doc.text('Schedule of Fixtures and Furnishings', PW / 2, y, { align: 'center' });
+                        y += 7;
+                        doc.setFontSize(8.5); doc.setFont(undefined, 'italic'); doc.setTextColor(90, 90, 90);
+                        doc.text('(Referred to in Clause 2 of this Agreement)', PW / 2, y, { align: 'center' });
                     }
+                    doc.setTextColor(0, 0, 0); doc.setFont(undefined, 'normal');
                     y += 12;
                     
                     // Furnished Status & Items List
@@ -2966,10 +3136,43 @@
                     y += 6;
                     doc.setFont(undefined, 'normal');
                     if (L === 'bm') {
-                        para('Kedua-dua pihak (Pemilik dan Penyewa) mengakui bahawa barang-barang yang disenaraikan di atas dalam keadaan baik dan berfungsi pada tarikh mula tempoh sewa. Penyewa bersetuju untuk memelihara barang-barang ini dalam keadaan yang sama atau lebih baik.', { gap: 4, size: 9 });
+                        para('Kedua-dua pihak mengakui bahawa barang-barang yang disenaraikan di atas telah diperiksa dan berada dalam keadaan baik serta berfungsi pada tarikh mula Tempoh. Penyewa hendaklah memulangkan barang-barang tersebut dalam keadaan yang sama pada akhir Tempoh, kecuali kehausan biasa. Senarai ini adalah tidak menyeluruh dan tidak menjejaskan mana-mana terma lain dalam Perjanjian ini.', { gap: 4, size: 9 });
                     } else {
-                        para('Both parties (Landlord and Tenant) acknowledge that the items listed above are in good working condition as of the commencement date of the tenancy. The Tenant agrees to maintain these items in the same or better condition.', { gap: 4, size: 9 });
+                        para('Both parties acknowledge that the items listed above have been inspected and are in good working condition as at the commencement date of the Term. The Tenant shall return the said items in the same condition at the end of the Term, fair wear and tear excepted. This list is not exhaustive and does not derogate from any other term of this Agreement.', { gap: 4, size: 9 });
                     }
+
+                    // ---- Appendix signature block: an unsigned annexure has
+                    // no contractual weight, so both parties initial it here.
+                    y += 10;
+                    need(46);
+                    const colW = 78;
+                    const cols = [M, M + colW + 14];
+                    const names = [A.llName, A.tnName];
+                    const roles = [A.llRole, A.tnRole];
+                    const sigs  = [d.landlordSig, d.tenantSig];
+                    const topY  = y;
+                    let maxY = y;
+                    for (let i = 0; i < 2; i++) {
+                        let cy = topY;
+                        const cx = cols[i];
+                        if (sigs[i] && sigs[i].indexOf('data:image') === 0) {
+                            try { doc.addImage(sigs[i], 'PNG', cx, cy, 48, 16); } catch (e) {}
+                        }
+                        cy += 18;
+                        doc.line(cx, cy, cx + colW, cy);
+                        cy += 4.5;
+                        doc.setFontSize(9); doc.setFont(undefined, 'bold');
+                        doc.text(String(names[i] || ''), cx, cy);
+                        cy += 4.5;
+                        doc.setFontSize(8); doc.setFont(undefined, 'normal'); doc.setTextColor(90, 90, 90);
+                        doc.text(String(roles[i] || ''), cx, cy);
+                        cy += 4.5;
+                        doc.text(A.dateLbl + ' ' + A.today, cx, cy);
+                        doc.setTextColor(0, 0, 0);
+                        if (cy > maxY) maxY = cy;
+                    }
+                    doc.setFontSize(10);
+                    y = maxY + 6;
                 }
 
                 // ---------- FOOTER ON EVERY PAGE ----------
@@ -3156,42 +3359,82 @@
 
         function updateFurnishedItemsLanguage(lang) {
           const isBM = lang === 'bm';
-          document.getElementById('furnishedItemsTitleBM').classList.toggle('hidden', !isBM);
-          document.getElementById('furnishedItemsTitleEN').classList.toggle('hidden', isBM);
-          document.getElementById('furnishedItemsSubBM').classList.toggle('hidden', !isBM);
-          document.getElementById('furnishedItemsSubEN').classList.toggle('hidden', isBM);
-          document.getElementById('furnishedItemsOtherLabelBM').classList.toggle('hidden', !isBM);
-          document.getElementById('furnishedItemsOtherLabelEN').classList.toggle('hidden', isBM);
-          document.getElementById('furnishedItemsNoteBM').classList.toggle('hidden', !isBM);
-          document.getElementById('furnishedItemsNoteEN').classList.toggle('hidden', isBM);
-          const items = ['Bedframe', 'Mattress', 'Wardrobe', 'Table', 'Chair', 'Sofa', 'Refrigerator', 'Stove', 'Microwave', 'Sink', 'AC', 'Fan', 'Lights', 'Curtains', 'Carpet', 'TV', 'Washingmachine', 'Waterheater'];
-          items.forEach(item => {
-            const bmEl = document.getElementById(`item${item}BM`);
-            if (bmEl) {
-              bmEl.classList.toggle('hidden', !isBM);
-              const enEl = document.getElementById(`item${item}EN`);
-              if (enEl) enEl.classList.toggle('hidden', isBM);
-            }
+          const pairs = ['furnishedItemsTitle','furnishedItemsSub','furnishedItemsOtherLabel',
+                         'furnishedItemsNote','furnishedSelectAll','furnishedClearAll'];
+          pairs.forEach(p => {
+            const bm = document.getElementById(p + 'BM'), en = document.getElementById(p + 'EN');
+            if (bm) bm.classList.toggle('hidden', !isBM);
+            if (en) en.classList.toggle('hidden', isBM);
           });
+          ['Bedframe','Mattress','Wardrobe','Table','Chair','Sofa','Refrigerator','Stove',
+           'Microwave','Sink','AC','Fan','Lights','Curtains','Carpet','TV',
+           'Washingmachine','Waterheater'].forEach(item => {
+            const bm = document.getElementById('item' + item + 'BM');
+            const en = document.getElementById('item' + item + 'EN');
+            if (bm) bm.classList.toggle('hidden', !isBM);
+            if (en) en.classList.toggle('hidden', isBM);
+          });
+          const other = document.getElementById('furnishedItemsOther');
+          if (other) other.placeholder = isBM
+            ? 'Cth: Meja belajar, almari dinding'
+            : 'E.g. Study desk, wall cabinet';
+        }
+
+        // Sync each chip's visual state + the selected counter.
+        function refreshFurnishedChips() {
+          const boxes = document.querySelectorAll('input[name="furnishedItem"]');
+          let n = 0;
+          boxes.forEach(cb => {
+            const chip = cb.closest('.furnished-chip');
+            if (chip) chip.classList.toggle('is-checked', cb.checked);
+            if (cb.checked) n++;
+          });
+          const badge = document.getElementById('furnishedCount');
+          if (badge) {
+            badge.textContent = n === 0
+              ? (lang === 'bm' ? 'Belum pilih' : 'None selected')
+              : n + (lang === 'bm' ? ' dipilih' : ' selected');
+          }
         }
 
         function toggleFurnishedItemsSection() {
           const statusSelect = document.getElementById('furnishedStatus');
           const section = document.getElementById('furnishedItemsSection');
-          if (statusSelect && section) {
-            const selectedValue = statusSelect.value;
-            section.style.display = (selectedValue === 'Fully Furnished / Lengkap' || selectedValue === 'Partially Furnished / Separuh') ? 'block' : 'none';
+          if (!statusSelect || !section) return;
+          const v = statusSelect.value || '';
+          section.style.display = (v.includes('Fully') || v.includes('Partially')) ? 'block' : 'none';
+          refreshFurnishedChips();
+        }
+
+        function initFurnishedItems() {
+          const grid = document.getElementById('furnishedChips');
+          if (grid) {
+            grid.addEventListener('change', (e) => {
+              if (e.target && e.target.name === 'furnishedItem') refreshFurnishedChips();
+            });
           }
+          const setAll = (state) => {
+            document.querySelectorAll('input[name="furnishedItem"]').forEach(cb => {
+              if (!cb.disabled) cb.checked = state;
+            });
+            refreshFurnishedChips();
+            saveData();
+          };
+          const selAll = document.getElementById('furnishedSelectAll');
+          const clrAll = document.getElementById('furnishedClearAll');
+          if (selAll) selAll.addEventListener('click', () => setAll(true));
+          if (clrAll) clrAll.addEventListener('click', () => setAll(false));
+
+          const statusSelect = document.getElementById('furnishedStatus');
+          if (statusSelect) statusSelect.addEventListener('change', toggleFurnishedItemsSection);
+
+          toggleFurnishedItemsSection();
         }
 
         document.addEventListener('DOMContentLoaded', () => {
           safe(() => {
             initNotices();
-            toggleFurnishedItemsSection();
-            const statusSelect = document.getElementById('furnishedStatus');
-            if (statusSelect) {
-              statusSelect.addEventListener('change', toggleFurnishedItemsSection);
-            }
+            initFurnishedItems();
           });
         });
 
