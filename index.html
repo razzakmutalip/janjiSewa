@@ -614,6 +614,292 @@
         @media (prefers-reduced-motion: reduce) {
             * { transition: none !important; animation: none !important; }
         }
+
+        /* ============================================================
+           NOTICES REDESIGN STYLES (6 CARDS + MODAL)
+           ============================================================ */
+
+        .notices-container {
+          margin: var(--s5) 0;
+          padding: var(--s5) 0;
+          border-top: 1px solid var(--line-soft);
+          border-bottom: 1px solid var(--line-soft);
+        }
+
+        .notices-header {
+          text-align: center;
+          margin-bottom: var(--s5);
+        }
+
+        .notices-header h2 {
+          margin: 0 0 var(--s2) 0;
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: var(--ink);
+        }
+
+        .notices-header p {
+          margin: 0;
+          font-size: 0.9375rem;
+          color: var(--ink-soft);
+        }
+
+        .notices-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--s4);
+          margin-bottom: var(--s5);
+        }
+
+        .notice-card {
+          background: var(--card);
+          border: 1px solid var(--line-soft);
+          border-radius: var(--r-md);
+          padding: var(--s5);
+          display: flex;
+          flex-direction: column;
+          gap: var(--s3);
+          cursor: pointer;
+          transition: all 0.2s ease;
+          border-left: 4px solid var(--line-soft);
+        }
+
+        .notice-card:hover {
+          border-left-color: var(--blue);
+          box-shadow: 0 2px 8px rgba(15, 45, 92, 0.08);
+          transform: translateY(-2px);
+        }
+
+        .notice-icon {
+          font-size: 1.75rem;
+          line-height: 1;
+        }
+
+        .notice-card h3 {
+          margin: 0;
+          font-size: 0.9375rem;
+          font-weight: 600;
+          color: var(--ink);
+        }
+
+        .notice-card p {
+          margin: 0;
+          font-size: 0.8125rem;
+          color: var(--ink-soft);
+          line-height: 1.4;
+          flex-grow: 1;
+        }
+
+        .card-expand-btn {
+          align-self: flex-start;
+          background: none;
+          border: 1px solid var(--blue);
+          color: var(--blue);
+          padding: var(--s2) var(--s3);
+          border-radius: var(--r-sm);
+          font-size: 0.75rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .card-expand-btn:hover {
+          background: var(--blue);
+          color: white;
+        }
+
+        @media (max-width: 1024px) {
+          .notices-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 640px) {
+          .notices-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .notices-header h2 {
+            font-size: 1.25rem;
+          }
+        }
+
+        .notices-consent {
+          display: flex;
+          align-items: flex-start;
+          padding: var(--s4) 0;
+        }
+
+        .checkbox-wrapper {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--s3);
+          cursor: pointer;
+          font-size: 0.875rem;
+          color: var(--ink);
+          line-height: 1.5;
+        }
+
+        .notice-consent-input {
+          margin-top: 4px;
+          cursor: pointer;
+          width: 18px;
+          height: 18px;
+          flex-shrink: 0;
+        }
+
+        .notices-modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 1000;
+        }
+
+        .notices-modal.active {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .notices-modal-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          cursor: pointer;
+        }
+
+        .notices-modal-content {
+          position: relative;
+          background: white;
+          border-radius: var(--r-md);
+          max-width: 600px;
+          width: 90%;
+          max-height: 80vh;
+          overflow-y: auto;
+          box-shadow: var(--shadow);
+        }
+
+        .notices-modal-close {
+          position: sticky;
+          top: 0;
+          float: right;
+          background: transparent;
+          border: none;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: var(--s4);
+          color: var(--ink-soft);
+          z-index: 10;
+        }
+
+        .notices-modal-close:hover {
+          color: var(--ink);
+        }
+
+        .notice-modal-body {
+          display: none;
+          padding: var(--s5);
+          padding-top: var(--s4);
+        }
+
+        .notice-modal-body.active {
+          display: block;
+        }
+
+        .notice-modal-body h2 {
+          margin: 0 0 var(--s4) 0;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: var(--ink);
+        }
+
+        .notice-modal-body p {
+          margin: 0 0 var(--s4) 0;
+          font-size: 0.9375rem;
+          line-height: 1.6;
+          color: var(--ink);
+        }
+
+        .notice-modal-body p:last-child {
+          margin-bottom: 0;
+        }
+
+        .notice-modal-body ul {
+          margin: var(--s3) 0 var(--s4) var(--s5);
+          padding: 0;
+        }
+
+        .notice-modal-body li {
+          margin-bottom: var(--s2);
+          font-size: 0.9375rem;
+          line-height: 1.6;
+          color: var(--ink);
+        }
+
+        .notice-modal-body strong {
+          font-weight: 600;
+        }
+
+        /* ============================================================
+           FURNISHED ITEMS SECTION STYLES
+           ============================================================ */
+
+        #furnishedItemsSection {
+          margin: var(--s5) 0;
+          padding: var(--s5);
+          background: var(--blue-soft);
+          border-radius: var(--r-md);
+          border: 1px solid var(--line-soft);
+        }
+
+        .furnished-items-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--s4);
+          margin: var(--s5) 0;
+        }
+
+        .checkbox-item {
+          display: flex;
+          align-items: center;
+          gap: var(--s2);
+          cursor: pointer;
+          font-size: 0.9375rem;
+          color: var(--ink);
+          padding: var(--s2);
+          border-radius: 6px;
+          transition: background 0.2s ease;
+        }
+
+        .checkbox-item:hover {
+          background: rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+          cursor: pointer;
+          width: 18px;
+          height: 18px;
+          flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+          .furnished-items-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .furnished-items-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
     </style>
 </head>
 <body>
