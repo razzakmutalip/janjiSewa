@@ -615,290 +615,93 @@
             * { transition: none !important; animation: none !important; }
         }
 
-        /* ============================================================
-           NOTICES REDESIGN STYLES (6 CARDS + MODAL)
-           ============================================================ */
+        /* ===== NOTICES — POLISHED CARD DESIGN ===== */
+        .notices-container { margin: var(--s5) 0; }
+        .notices-header { text-align: center; margin-bottom: 32px; }
+        .notices-hero-icon { width: 72px; height: 72px; border-radius: 50%; background: #EEF2FF; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+        .notices-hero-icon svg { width: 32px; height: 32px; stroke: #2563EB; fill: none; stroke-width: 2; }
+        .notices-header h2 { margin: 0 0 8px 0; font-size: 1.75rem; font-weight: 700; color: #0F172A; letter-spacing: -0.02em; }
+        .notices-header p { margin: 0; font-size: 0.9375rem; color: #64748B; }
 
-        .notices-container {
-          margin: var(--s5) 0;
-          padding: var(--s5) 0;
-          border-top: 1px solid var(--line-soft);
-          border-bottom: 1px solid var(--line-soft);
-        }
+        .notices-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        .notice-card { background: #fff; border: 1px solid #E9EDF3; border-radius: 16px; padding: 28px 20px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; cursor: pointer; transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease; }
+        .notice-card:hover { border-color: #C7D2FE; box-shadow: 0 8px 24px rgba(15,45,92,.10); transform: translateY(-3px); }
+        .notice-card.is-open { border-color: #2563EB; box-shadow: 0 8px 24px rgba(37,99,235,.14); }
 
-        .notices-header {
-          text-align: center;
-          margin-bottom: var(--s5);
-        }
+        .notice-icon-wrap { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .notice-icon-wrap svg { width: 28px; height: 28px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        .ic-blue   { background: #DBEAFE; } .ic-blue svg   { stroke: #2563EB; }
+        .ic-green  { background: #D1FAE5; } .ic-green svg  { stroke: #059669; }
+        .ic-orange { background: #FEF3C7; } .ic-orange svg { stroke: #D97706; }
+        .ic-purple { background: #EDE9FE; } .ic-purple svg { stroke: #7C3AED; }
+        .ic-amber  { background: #FFEDD5; } .ic-amber svg  { stroke: #EA580C; }
+        .ic-slate  { background: #E2E8F0; } .ic-slate svg  { stroke: #475569; }
 
-        .notices-header h2 {
-          margin: 0 0 var(--s2) 0;
-          font-size: 1.5rem;
-          font-weight: 600;
-          color: var(--ink);
-        }
+        .notice-card h3 { margin: 0; font-size: 1rem; font-weight: 700; color: #0F172A; line-height: 1.3; }
+        .notice-card p { margin: 0; font-size: 0.875rem; color: #64748B; line-height: 1.55; flex-grow: 1; }
+        .notice-badge { display: inline-block; background: #F1F5F9; color: #475569; font-size: 0.6875rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+        .notice-chevron { width: 18px; height: 18px; stroke: #94A3B8; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s ease, stroke .2s ease; margin-top: 2px; }
+        .notice-card:hover .notice-chevron { stroke: #2563EB; }
+        .notice-card.is-open .notice-chevron { transform: rotate(180deg); stroke: #2563EB; }
 
-        .notices-header p {
-          margin: 0;
-          font-size: 0.9375rem;
-          color: var(--ink-soft);
-        }
+        /* Inline expand panel */
+        .notice-detail { grid-column: 1 / -1; background: #F8FAFC; border: 1px solid #E9EDF3; border-radius: 16px; padding: 24px 26px; display: none; }
+        .notice-detail.active { display: block; animation: noticeFade .22s ease; }
+        @keyframes noticeFade { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+        .notice-detail h4 { margin: 0 0 12px 0; font-size: 1.0625rem; font-weight: 700; color: #0F172A; }
+        .notice-detail p { margin: 0 0 12px 0; font-size: 0.9375rem; line-height: 1.65; color: #334155; }
+        .notice-detail p:last-child { margin-bottom: 0; }
+        .notice-detail ul { margin: 8px 0 12px 20px; padding: 0; }
+        .notice-detail li { margin-bottom: 6px; font-size: 0.9375rem; line-height: 1.6; color: #334155; }
 
-        .notices-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: var(--s4);
-          margin-bottom: var(--s5);
-        }
+        /* Ringkasan / summary strip */
+        .notices-summary { display: flex; align-items: center; gap: 16px; background: linear-gradient(90deg,#EFF6FF 0%,#F5F9FF 100%); border: 1px solid #DBEAFE; border-radius: 14px; padding: 18px 20px; margin-bottom: 20px; }
+        .notices-summary-icon { width: 44px; height: 44px; border-radius: 12px; background: #2563EB; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .notices-summary-icon svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+        .notices-summary-text { flex-grow: 1; }
+        .notices-summary-text strong { display: block; font-size: 0.9375rem; font-weight: 700; color: #1D4ED8; margin-bottom: 3px; }
+        .notices-summary-text span { font-size: 0.875rem; color: #475569; line-height: 1.5; }
+        .notices-full-btn { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid #BFDBFE; color: #1D4ED8; font-size: 0.875rem; font-weight: 600; padding: 10px 16px; border-radius: 10px; cursor: pointer; white-space: nowrap; transition: all .2s ease; }
+        .notices-full-btn:hover { background: #2563EB; border-color: #2563EB; color: #fff; }
+        .notices-full-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-        .notice-card {
-          background: var(--card);
-          border: 1px solid var(--line-soft);
-          border-radius: var(--r-md);
-          padding: var(--s5);
-          display: flex;
-          flex-direction: column;
-          gap: var(--s3);
-          cursor: pointer;
-          transition: all 0.2s ease;
-          border-left: 4px solid var(--line-soft);
-        }
+        /* Consent */
+        .notices-consent { background: #fff; border: 1px solid #E9EDF3; border-radius: 14px; padding: 18px 20px; }
+        .checkbox-wrapper { display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 0.9375rem; color: #0F172A; line-height: 1.5; }
+        .notice-consent-input { cursor: pointer; width: 22px; height: 22px; min-height: 22px; flex-shrink: 0; accent-color: #2563EB; }
 
-        .notice-card:hover {
-          border-left-color: var(--blue);
-          box-shadow: 0 2px 8px rgba(15, 45, 92, 0.08);
-          transform: translateY(-2px);
-        }
-
-        .notice-icon {
-          font-size: 1.75rem;
-          line-height: 1;
-        }
-
-        .notice-card h3 {
-          margin: 0;
-          font-size: 0.9375rem;
-          font-weight: 600;
-          color: var(--ink);
-        }
-
-        .notice-card p {
-          margin: 0;
-          font-size: 0.8125rem;
-          color: var(--ink-soft);
-          line-height: 1.4;
-          flex-grow: 1;
-        }
-
-        .card-expand-btn {
-          align-self: flex-start;
-          background: none;
-          border: 1px solid var(--blue);
-          color: var(--blue);
-          padding: var(--s2) var(--s3);
-          border-radius: var(--r-sm);
-          font-size: 0.75rem;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .card-expand-btn:hover {
-          background: var(--blue);
-          color: white;
-        }
-
-        @media (max-width: 1024px) {
-          .notices-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
+        @media (max-width: 1024px) { .notices-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 640px) {
-          .notices-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .notices-header h2 {
-            font-size: 1.25rem;
-          }
+            .notices-grid { grid-template-columns: 1fr; }
+            .notices-header h2 { font-size: 1.375rem; }
+            .notices-summary { flex-direction: column; align-items: flex-start; }
+            .notices-full-btn { width: 100%; justify-content: center; }
         }
 
-        .notices-consent {
-          display: flex;
-          align-items: flex-start;
-          padding: var(--s4) 0;
-        }
+        /* Modal (full version) */
+        .notices-modal { display: none; position: fixed; inset: 0; z-index: 1000; }
+        .notices-modal.active { display: flex; align-items: center; justify-content: center; }
+        .notices-modal-overlay { position: absolute; inset: 0; background: rgba(15,23,42,.55); cursor: pointer; }
+        .notices-modal-content { position: relative; background: #fff; border-radius: 18px; max-width: 720px; width: 92%; max-height: 84vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(15,23,42,.28); }
+        .notices-modal-close { position: sticky; top: 0; float: right; background: transparent; border: none; font-size: 1.75rem; line-height: 1; cursor: pointer; padding: 18px 22px; color: #94A3B8; z-index: 10; }
+        .notices-modal-close:hover { color: #0F172A; }
+        .notice-modal-body { display: none; padding: 28px 32px 32px; }
+        .notice-modal-body.active { display: block; }
+        .notice-modal-body h2 { margin: 0 0 16px 0; font-size: 1.25rem; font-weight: 700; color: #0F172A; }
+        .notice-modal-body h3 { margin: 22px 0 10px; font-size: 1.0625rem; font-weight: 700; color: #0F172A; }
+        .notice-modal-body h3:first-of-type { margin-top: 0; }
+        .notice-modal-body p { margin: 0 0 14px 0; font-size: 0.9375rem; line-height: 1.65; color: #334155; }
+        .notice-modal-body ul { margin: 8px 0 16px 22px; padding: 0; }
+        .notice-modal-body li { margin-bottom: 7px; font-size: 0.9375rem; line-height: 1.6; color: #334155; }
 
-        .checkbox-wrapper {
-          display: flex;
-          align-items: flex-start;
-          gap: var(--s3);
-          cursor: pointer;
-          font-size: 0.875rem;
-          color: var(--ink);
-          line-height: 1.5;
-        }
-
-        .notice-consent-input {
-          margin-top: 4px;
-          cursor: pointer;
-          width: 18px;
-          height: 18px;
-          flex-shrink: 0;
-        }
-
-        .notices-modal {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 1000;
-        }
-
-        .notices-modal.active {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .notices-modal-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.5);
-          cursor: pointer;
-        }
-
-        .notices-modal-content {
-          position: relative;
-          background: white;
-          border-radius: var(--r-md);
-          max-width: 600px;
-          width: 90%;
-          max-height: 80vh;
-          overflow-y: auto;
-          box-shadow: var(--shadow);
-        }
-
-        .notices-modal-close {
-          position: sticky;
-          top: 0;
-          float: right;
-          background: transparent;
-          border: none;
-          font-size: 1.5rem;
-          cursor: pointer;
-          padding: var(--s4);
-          color: var(--ink-soft);
-          z-index: 10;
-        }
-
-        .notices-modal-close:hover {
-          color: var(--ink);
-        }
-
-        .notice-modal-body {
-          display: none;
-          padding: var(--s5);
-          padding-top: var(--s4);
-        }
-
-        .notice-modal-body.active {
-          display: block;
-        }
-
-        .notice-modal-body h2 {
-          margin: 0 0 var(--s4) 0;
-          font-size: 1.25rem;
-          font-weight: 600;
-          color: var(--ink);
-        }
-
-        .notice-modal-body p {
-          margin: 0 0 var(--s4) 0;
-          font-size: 0.9375rem;
-          line-height: 1.6;
-          color: var(--ink);
-        }
-
-        .notice-modal-body p:last-child {
-          margin-bottom: 0;
-        }
-
-        .notice-modal-body ul {
-          margin: var(--s3) 0 var(--s4) var(--s5);
-          padding: 0;
-        }
-
-        .notice-modal-body li {
-          margin-bottom: var(--s2);
-          font-size: 0.9375rem;
-          line-height: 1.6;
-          color: var(--ink);
-        }
-
-        .notice-modal-body strong {
-          font-weight: 600;
-        }
-
-        /* ============================================================
-           FURNISHED ITEMS SECTION STYLES
-           ============================================================ */
-
-        #furnishedItemsSection {
-          margin: var(--s5) 0;
-          padding: var(--s5);
-          background: var(--blue-soft);
-          border-radius: var(--r-md);
-          border: 1px solid var(--line-soft);
-        }
-
-        .furnished-items-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: var(--s4);
-          margin: var(--s5) 0;
-        }
-
-        .checkbox-item {
-          display: flex;
-          align-items: center;
-          gap: var(--s2);
-          cursor: pointer;
-          font-size: 0.9375rem;
-          color: var(--ink);
-          padding: var(--s2);
-          border-radius: 6px;
-          transition: background 0.2s ease;
-        }
-
-        .checkbox-item:hover {
-          background: rgba(37, 99, 235, 0.1);
-        }
-
-        .checkbox-item input[type="checkbox"] {
-          cursor: pointer;
-          width: 18px;
-          height: 18px;
-          flex-shrink: 0;
-        }
-
-        @media (max-width: 768px) {
-          .furnished-items-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        @media (max-width: 480px) {
-          .furnished-items-grid {
-            grid-template-columns: 1fr;
-          }
-        }
+        /* Furnished items */
+        #furnishedItemsSection { margin: var(--s5) 0; padding: var(--s5); background: var(--blue-soft); border-radius: var(--r-md); border: 1px solid var(--line-soft); }
+        .furnished-items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s4); margin: var(--s5) 0; }
+        .checkbox-item { display: flex; align-items: center; gap: var(--s2); cursor: pointer; font-size: 0.9375rem; color: var(--ink); padding: var(--s2); border-radius: 6px; }
+        .checkbox-item:hover { background: rgba(37, 99, 235, 0.1); }
+        .checkbox-item input[type="checkbox"] { cursor: pointer; width: 18px; height: 18px; min-height: 18px; flex-shrink: 0; accent-color: #2563EB; }
+        @media (max-width: 768px) { .furnished-items-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .furnished-items-grid { grid-template-columns: 1fr; } }
 
     </style>
 </head>
@@ -961,89 +764,107 @@
                 <div class="content">
                     <div class="section-title">Maklumat Pihak-Pihak / Party Details</div>
 
-                    <div class="notice-info">
-                        <strong id="panduan1BM">💡 Panduan:</strong><strong id="panduan1EN" class="hidden">💡 Guide:</strong>
-                        <div id="panduan1TextBM">
-                            <div>Pemilik sila isi data anda dan harta. Tandatangan di Langkah 3. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
-                            <div class="notice-expanded">
-                                Selepas tandatangan, klik SIMPAN di Langkah 3 untuk mendapatkan kod unik. Kongsi kod tersebut dengan penyewa melalui WhatsApp atau mesej lain. Sebaik sahaja penyewa membuka link dengan kod tersebut, data anda akan dimuat secara automatik dan mereka boleh mengisi data mereka sendiri. Pastikan kedua-dua pihak menandatangani borang sebelum memproses pembayaran.
-                            </div>
+                    <!-- ========== 6-CARD NOTICES ========== -->
+                    <section id="noticesSection" class="notices-container">
+                      <div class="notices-header">
+                        <div class="notices-hero-icon">
+                          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         </div>
-                        <div id="panduan1TextEN" class="hidden">
-                            <div>Landlord please fill your details and property information. Sign at Step 3. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
-                            <div class="notice-expanded">
-                                After signing, click SAVE at Step 3 to get a unique code. Share that code with the tenant via WhatsApp or other messaging. Once the tenant opens the link with the code, your data loads automatically and they can fill in their own details. Ensure both parties sign before processing payment.
-                            </div>
-                        </div>
-                    </div>
+                        <h2 id="noticesTitleBM">Notis Penting</h2>
+                        <h2 id="noticesTitleEN" class="hidden">Important Notices</h2>
+                        <p id="noticesSubBM">Sila semak ringkasan notis di bawah sebelum teruskan.</p>
+                        <p id="noticesSubEN" class="hidden">Please review the notices below before proceeding.</p>
+                      </div>
 
-                    <div class="notice-box notice-warning">
-                        <div class="notice-title">⚠️ ARAHAN PENTING / IMPORTANT NOTICE</div>
-                        <div id="notice1BM">
-                            <div>Data anda disimpan secara SELAMAT & DISULITKAN (encrypted) dan akan DIPADAM secara automatik selepas tempoh tamat. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
-                            <div class="notice-expanded">
-                                Data perjanjian anda disimpan sementara di pelayan kami dengan penyulitan (encryption) untuk membolehkan penyewa mengakses dan melengkapkan borang dari peranti mereka sendiri. Data akan dipadam secara automatik selepas tempoh sah kod tamat. Sila muat turun dan simpan PDF perjanjian anda sebelum kod tamat tempoh. Untuk keselamatan maksimum, jangan kongsikan kod anda dengan orang yang tidak dipercayai.
-                            </div>
+                      <div class="notices-grid" id="noticesGrid">
+                        <div class="notice-card" data-notice="guidance" role="button" tabindex="0">
+                          <div class="notice-icon-wrap ic-blue"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+                          <h3 id="noticeCard1TitleBM">Panduan Pengisian</h3>
+                          <h3 id="noticeCard1TitleEN" class="hidden">Guidance</h3>
+                          <p id="noticeCard1SubBM">Cara isi borang ini dengan betul.</p>
+                          <p id="noticeCard1SubEN" class="hidden">How to fill in this form correctly.</p>
+                          <svg class="notice-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
                         </div>
-                        <div id="notice1EN" class="hidden">
-                            <div>Your data is stored SECURELY & ENCRYPTED and will be automatically DELETED after the validity period ends. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
-                            <div class="notice-expanded">
-                                Your agreement data is temporarily stored on our servers with encryption to allow the tenant to access and complete the form from their own device. Data is automatically deleted after the code validity period expires. Please download and save your agreement PDF before the code expires. For maximum security, do not share your code with untrusted parties.
-                            </div>
+                        <div class="notice-card" data-notice="security" role="button" tabindex="0">
+                          <div class="notice-icon-wrap ic-green"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                          <h3 id="noticeCard2TitleBM">Keselamatan Data</h3>
+                          <h3 id="noticeCard2TitleEN" class="hidden">Data Security</h3>
+                          <p id="noticeCard2SubBM">Data anda disimpan dengan selamat &amp; akan dipadam selepas tempoh tamat.</p>
+                          <p id="noticeCard2SubEN" class="hidden">Your data is stored securely &amp; deleted after the validity period.</p>
+                          <svg class="notice-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
                         </div>
-                    </div>
+                        <div class="notice-card" data-notice="standard" role="button" tabindex="0">
+                          <div class="notice-icon-wrap ic-orange"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+                          <h3 id="noticeCard3TitleBM">Perjanjian Standard</h3>
+                          <h3 id="noticeCard3TitleEN" class="hidden">Standard Agreement</h3>
+                          <p id="noticeCard3SubBM">Terma standard yang digunakan di Malaysia.</p>
+                          <p id="noticeCard3SubEN" class="hidden">Standard terms used in Malaysia.</p>
+                          <svg class="notice-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="notice-card" data-notice="pdpa" role="button" tabindex="0">
+                          <div class="notice-icon-wrap ic-purple"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+                          <h3 id="noticeCard4TitleBM">Data Peribadi (PDPA)</h3>
+                          <h3 id="noticeCard4TitleEN" class="hidden">Personal Data (PDPA)</h3>
+                          <p id="noticeCard4SubBM">Kami lindungi data anda mengikut undang-undang yang berkuat kuasa.</p>
+                          <p id="noticeCard4SubEN" class="hidden">We protect your data under applicable law.</p>
+                          <svg class="notice-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="notice-card" data-notice="disclaimer" role="button" tabindex="0">
+                          <div class="notice-icon-wrap ic-amber"><svg viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="21"/><line x1="5" y1="7" x2="19" y2="7"/><path d="M5 7l-3 7h6z"/><path d="M19 7l-3 7h6z"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
+                          <h3 id="noticeCard5TitleBM">Penafian Undang-undang</h3>
+                          <h3 id="noticeCard5TitleEN" class="hidden">Legal Disclaimer</h3>
+                          <p id="noticeCard5SubBM">AkadSewa hanya menyediakan borang perjanjian. Bukan nasihat undang-undang.</p>
+                          <p id="noticeCard5SubEN" class="hidden">AkadSewa only provides agreement forms. Not legal advice.</p>
+                          <svg class="notice-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
+                        <div class="notice-card" data-notice="stamping" role="button" tabindex="0">
+                          <div class="notice-icon-wrap ic-slate"><svg viewBox="0 0 24 24"><path d="M9 3h6a2 2 0 0 1 2 2v3a4 4 0 0 1-1.5 3.1L15 12h2a3 3 0 0 1 3 3v2H4v-2a3 3 0 0 1 3-3h2l-.5-.9A4 4 0 0 1 7 8V5a2 2 0 0 1 2-2z"/><line x1="4" y1="21" x2="20" y2="21"/></svg></div>
+                          <h3 id="noticeCard6TitleBM">Stamping LHDN</h3>
+                          <h3 id="noticeCard6TitleEN" class="hidden">Stamp Duty (LHDN)</h3>
+                          <span class="notice-badge" id="noticeCard6BadgeBM">Makluman</span>
+                          <span class="notice-badge hidden" id="noticeCard6BadgeEN">Notice</span>
+                          <p id="noticeCard6SubBM">Kami tidak bertanggungjawab atas duti setem di LHDN. Tanggungjawab anda.</p>
+                          <p id="noticeCard6SubEN" class="hidden">We are not responsible for LHDN stamp duty. It is your responsibility.</p>
+                          <svg class="notice-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                        </div>
 
-                    <div class="notice-box notice-standard">
-                        <div class="notice-title">📋 PERJANJIAN STANDARD / STANDARD AGREEMENT</div>
-                        <div id="notice2BM">
-                            <div>TERMA ADALAH TETAP dan TIDAK BOLEH DIUBAH (ini adalah Standard Agreement yang dipakai di Malaysia). Perlu ubah? <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
-                            <div class="notice-expanded">
-                                Perjanjian ini mengikuti format standard yang diluluskan dan digunakan secara meluas di Malaysia. Ia mengandungi 21 klausa yang menutup semua aspek penting perjanjian sewaan. Setiap klausa telah dirangka dengan cermat untuk melindungi hak kedua-dua pemilik dan penyewa mengikut undang-undang Malaysia. Jika anda perlu mengubah atau menambah syarat khusus, sila berunding dengan peguam berdaftar untuk mendapatkan nasihat undang-undang. Setiap perubahan harus didokumentasikan secara rasmi dan ditandatangani oleh kedua-dua pihak.
-                            </div>
-                        </div>
-                        <div id="notice2EN" class="hidden">
-                            <div>All TERMS ARE FIXED and CANNOT BE MODIFIED. This is a Standard Agreement widely used in Malaysia. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
-                            <div class="notice-expanded">
-                                This agreement follows a standardized format approved and widely used in Malaysia. It contains 21 clauses covering all important aspects of a tenancy. Each clause has been carefully drafted to protect the rights of both landlord and tenant under Malaysian law. If you need to modify or add special terms, please consult with a registered lawyer for legal advice. Any changes must be formally documented and signed by both parties.
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Inline detail panel (injected here by JS) -->
+                        <div class="notice-detail" id="noticeDetail"></div>
+                      </div>
 
-                    <div class="notice-box notice-consent">
-                        <div class="notice-title">🔒 PERSETUJUAN DATA PERIBADI / PDPA CONSENT</div>
-                        <div id="notice3BM">
-                            <div>Dengan mengisi borang ini, anda bersetuju data anda dikumpul untuk menyediakan perjanjian ini sahaja. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
-                            <div class="notice-expanded">
-                                Data peribadi anda (nama, no. K.P., telefon, dan alamat) dihantar ke pelayan kami dan disimpan secara DISULITKAN (encrypted) untuk tempoh terhad sahaja, bagi membolehkan kedua-dua pihak melengkapkan perjanjian dari peranti masing-masing. Data akan dipadam secara automatik selepas tempoh tamat. Kami TIDAK menggunakan data anda untuk tujuan pemasaran atau perkongsian dengan pihak ketiga. Untuk maklumat lanjut tentang bagaimana kami mengendalikan data, atau untuk meminta pemadaman data, hubungi admin@findlawyer.my. Persetujuan anda adalah wajib untuk meneruskan dengan perjanjian ini.
-                            </div>
+                      <div class="notices-summary">
+                        <div class="notices-summary-icon">
+                          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
                         </div>
-                        <div id="notice3EN" class="hidden">
-                            <div>By proceeding, you consent to your data being collected solely to generate this agreement. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
-                            <div class="notice-expanded">
-                                Your personal data (name, IC number, phone, and address) is sent to our servers and stored ENCRYPTED for a limited period only, to allow both parties to complete the agreement from their own devices. Data is automatically deleted after expiry. We do NOT use your data for marketing purposes or share it with third parties. For more information about how we handle data, or to request data deletion, contact admin@findlawyer.my. Your consent is required to proceed with this agreement.
-                            </div>
+                        <div class="notices-summary-text">
+                          <strong id="noticesSummaryTitleBM">Ringkasan</strong>
+                          <strong id="noticesSummaryTitleEN" class="hidden">Summary</strong>
+                          <span id="noticesSummaryBodyBM">Notis-notis ini untuk melindungi anda dan memastikan proses perjanjian berjalan dengan lancar.</span>
+                          <span id="noticesSummaryBodyEN" class="hidden">These notices protect you and ensure the agreement process runs smoothly.</span>
                         </div>
-                    </div>
+                        <button type="button" class="notices-full-btn" id="noticesFullBtn">
+                          <span id="noticesFullBtnBM">Baca versi penuh</span>
+                          <span id="noticesFullBtnEN" class="hidden">Read full version</span>
+                          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        </button>
+                      </div>
 
-                    <div class="disclaimer-box">
-                        <div class="disclaimer-title">⚖️ PENAFIAN UNDANG-UNDANG / LEGAL DISCLAIMER</div>
-                        <div id="disclaimerBM">
-                            <div>AkadSewa hanya menyediakan borang perjanjian standard. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Baca Selanjutnya...</button></div>
-                            <div class="notice-expanded">
-                                Kami bukan firma guaman dan tidak memberikan nasihat undang-undang. Perjanjian ini adalah untuk rujukan umum sahaja. Sila konsultasikan dengan peguam berdaftar jika anda memerlukan nasihat undang-undang tertentu. Kami tidak bertanggung jawab atas sebarang kerugian atau kerosakan yang timbul daripada penggunaan borang ini. Kedua-dua pihak bersetuju bahawa penggunaan perjanjian ini adalah atas risiko mereka sendiri. AkadSewa menyediakan perkhidmatan sebagaimana adanya tanpa jaminan atau waranti.
-                            </div>
-                        </div>
-                        <div id="disclaimerEN" class="hidden">
-                            <div>AkadSewa only provides a standard agreement form. <button type="button" class="read-more-btn" onclick="toggleExpand(this)">Read More...</button></div>
-                            <div class="notice-expanded">
-                                We are not a law firm and do not provide legal advice. This agreement is for general reference only. Please consult with a registered lawyer if you require specific legal advice. We are not responsible for any loss or damage arising from the use of this form. Both parties agree that the use of this agreement is at their own risk. AkadSewa provides the service as-is without warranty or guarantee.
-                            </div>
-                        </div>
-                    </div>
+                      <div class="notices-consent">
+                        <label class="checkbox-wrapper">
+                          <input type="checkbox" id="consentCheckbox" class="notice-consent-input" required onchange="checkConsent()">
+                          <span id="noticesConsentLabelBM">Saya telah membaca dan bersetuju dengan semua notis di atas.</span>
+                          <span id="noticesConsentLabelEN" class="hidden">I have read and agree to all the notices above.</span>
+                        </label>
+                      </div>
+                    </section>
 
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="consentCheckbox" onchange="checkConsent()">
-                        <label for="consentCheckbox">Saya setuju dengan semua notis di atas / I agree to all the notices above</label>
+                    <!-- FULL-VERSION MODAL -->
+                    <div id="noticesModal" class="notices-modal">
+                      <div class="notices-modal-overlay"></div>
+                      <div class="notices-modal-content">
+                        <button class="notices-modal-close" type="button" aria-label="Close">&times;</button>
+                        <div class="notice-modal-body" id="noticesFullBody"></div>
+                      </div>
                     </div>
 
                     <div style="font-size: 13px; font-weight: 700; color: #1f2937; margin-top: 18px;">PEMILIK / LANDLORD</div>
@@ -1195,6 +1016,48 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <!-- FURNISHED ITEMS SECTION -->
+                    <div id="furnishedItemsSection" style="display: none;">
+                      <h3 id="furnishedItemsTitleBM" style="margin-top: 18px; margin-bottom: 12px;">Barang-Barang Disediakan Pemilik</h3>
+                      <h3 id="furnishedItemsTitleEN" class="hidden" style="margin-top: 18px; margin-bottom: 12px;">Items Provided by Landlord</h3>
+                      
+                      <p id="furnishedItemsSubBM" style="margin: 0 0 16px 0; font-size: 13px; color: var(--ink-soft);">Sila pilih barang-barang yang disediakan oleh pemilik. Ini adalah senarai umum, tidak mengikat.</p>
+                      <p id="furnishedItemsSubEN" class="hidden" style="margin: 0 0 16px 0; font-size: 13px; color: var(--ink-soft);">Select items provided by the landlord. This is a non-exhaustive list.</p>
+
+                      <div class="furnished-items-grid">
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="bedframe" data-value-bm="Rangka katil" data-value-en="Bed frame" onchange="saveData()"><span id="itemBedframeBM">Rangka katil</span><span id="itemBedframeEN" class="hidden">Bed frame</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="mattress" data-value-bm="Tilam" data-value-en="Mattress" onchange="saveData()"><span id="itemMattressBM">Tilam</span><span id="itemMattressEN" class="hidden">Mattress</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="wardrobe" data-value-bm="Almari" data-value-en="Wardrobe/Cabinet" onchange="saveData()"><span id="itemWardrobeBM">Almari</span><span id="itemWardrobeEN" class="hidden">Wardrobe/Cabinet</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="table" data-value-bm="Meja" data-value-en="Table" onchange="saveData()"><span id="itemTableBM">Meja</span><span id="itemTableEN" class="hidden">Table</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="chair" data-value-bm="Kerusi" data-value-en="Chair" onchange="saveData()"><span id="itemChairBM">Kerusi</span><span id="itemChairEN" class="hidden">Chair</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="sofa" data-value-bm="Sofa" data-value-en="Sofa" onchange="saveData()"><span id="itemSofaBM">Sofa</span><span id="itemSofaEN" class="hidden">Sofa</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="refrigerator" data-value-bm="Peti sejuk" data-value-en="Refrigerator" onchange="saveData()"><span id="itemRefrigeratorBM">Peti sejuk</span><span id="itemRefrigeratorEN" class="hidden">Refrigerator</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="stove" data-value-bm="Dapur (Gas/Electric)" data-value-en="Stove (Gas/Electric)" onchange="saveData()"><span id="itemStoveBM">Dapur (Gas/Electric)</span><span id="itemStoveEN" class="hidden">Stove (Gas/Electric)</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="microwave" data-value-bm="Microwave" data-value-en="Microwave" onchange="saveData()"><span id="itemMicrowaveBM">Microwave</span><span id="itemMicrowaveEN" class="hidden">Microwave</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="sink" data-value-bm="Gelanggang pinggan" data-value-en="Kitchen sink" onchange="saveData()"><span id="itemSinkBM">Gelanggang pinggan</span><span id="itemSinkEN" class="hidden">Kitchen sink</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="ac" data-value-bm="Pendingin hawa (A/C)" data-value-en="Air conditioner (A/C)" onchange="saveData()"><span id="itemACBM">Pendingin hawa (A/C)</span><span id="itemACEN" class="hidden">Air conditioner (A/C)</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="fan" data-value-bm="Kipas" data-value-en="Fan" onchange="saveData()"><span id="itemFanBM">Kipas</span><span id="itemFanEN" class="hidden">Fan</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="lights" data-value-bm="Lampu & suis" data-value-en="Lights & switches" onchange="saveData()"><span id="itemLightsBM">Lampu & suis</span><span id="itemLightsEN" class="hidden">Lights & switches</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="curtains" data-value-bm="Langsir/Tirai" data-value-en="Curtains" onchange="saveData()"><span id="itemCurtainsBM">Langsir/Tirai</span><span id="itemCurtainsEN" class="hidden">Curtains</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="carpet" data-value-bm="Karpet" data-value-en="Carpet" onchange="saveData()"><span id="itemCarpetBM">Karpet</span><span id="itemCarpetEN" class="hidden">Carpet</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="tv" data-value-bm="TV" data-value-en="TV" onchange="saveData()"><span id="itemTVBM">TV</span><span id="itemTVEN" class="hidden">TV</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="washingmachine" data-value-bm="Mesin basuh" data-value-en="Washing machine" onchange="saveData()"><span id="itemWashingmachineBM">Mesin basuh</span><span id="itemWashingmachineEN" class="hidden">Washing machine</span></label>
+                        <label class="checkbox-item"><input type="checkbox" name="furnishedItem" value="waterheater" data-value-bm="Pemanas air" data-value-en="Water heater" onchange="saveData()"><span id="itemWaterheaterBM">Pemanas air</span><span id="itemWaterheaterEN" class="hidden">Water heater</span></label>
+                      </div>
+
+                      <div style="margin-top: 16px;">
+                        <label for="furnishedItemsOther" id="furnishedItemsOtherLabelBM" style="display: block; margin-bottom: 8px; font-weight: 500;">Barang-barang lain (tidak wajib)</label>
+                        <label for="furnishedItemsOther" id="furnishedItemsOtherLabelEN" class="hidden" style="display: block; margin-bottom: 8px; font-weight: 500;">Other items (optional)</label>
+                        <textarea id="furnishedItemsOther" placeholder="Contoh: Meja belajar, almari dinding, dll. / Example: Study desk, wall cabinet, etc." rows="3" onchange="saveData()" style="width: 100%; padding: 12px; border: 1px solid var(--line-soft); border-radius: 8px; font-family: inherit; font-size: 14px;"></textarea>
+                      </div>
+
+                      <div style="background: var(--blue-soft); border-left: 4px solid var(--blue); padding: 16px; border-radius: 4px; margin-top: 16px;">
+                        <p id="furnishedItemsNoteBM" style="margin: 0; font-size: 13px; color: #1e40af;"><strong>Nota:</strong> Senarai ini adalah untuk panduan umum. Kedua-dua pihak harus bersetuju tentang keadaan dan kelengkapan barang-barang ini pada awal tenancy. Barang-barang yang disediakan harus diperiksa dan didaftar oleh kedua-dua pihak.</p>
+                        <p id="furnishedItemsNoteEN" class="hidden" style="margin: 0; font-size: 13px; color: #1e40af;"><strong>Note:</strong> This list is for general guidance. Both parties should agree on the condition and completeness of items at the start of tenancy. Provided items should be inspected and recorded by both parties.</p>
+                      </div>
+                    </div>
+
                     <div class="two-col">
                         <div class="form-group">
                             <label>Tarikh Mula / Start</label>
@@ -2079,6 +1942,9 @@
         function setLanguage(newLang) {
             safe(() => {
                 lang = newLang;
+        if (typeof updateNoticesLanguage === 'function') updateNoticesLanguage(lang);
+        if (typeof updateFurnishedItemsLanguage === 'function') updateFurnishedItemsLanguage(lang);
+
                 document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.btn-lang')[newLang === 'bm' ? 0 : 1]?.classList.add('active');
                 document.querySelectorAll('[id$="EN"]').forEach(e => e.classList.toggle('hidden', newLang !== 'en'));
@@ -3016,6 +2882,96 @@
                     para(A.coConsent, { size: 9, style: 'italic', gap: 4 });
                 }
 
+                // ========== APPENDIX: FURNISHED ITEMS ========== (if applicable)
+                if (A.furnishedStatus && (A.furnishedStatus.includes('Fully') || A.furnishedStatus.includes('Partially'))) {
+                    doc.addPage(); y = M;
+                    
+                    // Title
+                    doc.setFontSize(14); doc.setFont(undefined, 'bold'); doc.setTextColor(15, 45, 92);
+                    if (L === 'bm') {
+                        doc.text('LAMPIRAN', PW / 2, y, { align: 'center' });
+                        y += 8;
+                        doc.setFontSize(12); doc.setFont(undefined, 'bold');
+                        doc.text('Jadual Barang-Barang Disediakan oleh Pemilik', PW / 2, y, { align: 'center' });
+                    } else {
+                        doc.text('APPENDIX', PW / 2, y, { align: 'center' });
+                        y += 8;
+                        doc.setFontSize(12); doc.setFont(undefined, 'bold');
+                        doc.text('Schedule of Items Provided by Landlord', PW / 2, y, { align: 'center' });
+                    }
+                    y += 12;
+                    
+                    // Furnished Status & Items List
+                    doc.setFontSize(10); doc.setFont(undefined, 'bold'); doc.setTextColor(0, 0, 0);
+                    if (L === 'bm') {
+                        doc.text('Status Perabot:', M, y);
+                    } else {
+                        doc.text('Furnishing Status:', M, y);
+                    }
+                    y += 5;
+                    doc.setFont(undefined, 'normal');
+                    const statusMap = {
+                        'Fully Furnished / Lengkap': { bm: 'Lengkap (Fully Furnished)', en: 'Fully Furnished' },
+                        'Partially Furnished / Separuh': { bm: 'Separuh (Partially Furnished)', en: 'Partially Furnished' },
+                        'Not Furnished / Kosong': { bm: 'Kosong (Not Furnished)', en: 'Not Furnished' }
+                    };
+                    const statusText = statusMap[A.furnishedStatus]?.[L === 'bm' ? 'bm' : 'en'] || A.furnishedStatus;
+                    doc.setFontSize(10);
+                    para(statusText, { gap: 4 });
+                    y += 6;
+                    
+                    // Items List
+                    doc.setFontSize(10); doc.setFont(undefined, 'bold');
+                    if (L === 'bm') {
+                        doc.text('Barang-Barang Disediakan:', M, y);
+                    } else {
+                        doc.text('Items Provided:', M, y);
+                    }
+                    y += 6;
+                    
+                    doc.setFont(undefined, 'normal'); doc.setFontSize(10);
+                    if (A.furnishedItems && A.furnishedItems.length > 0) {
+                        A.furnishedItems.forEach(item => {
+                            need(5);
+                            doc.text('• ' + item, M + 5, y);
+                            y += 5;
+                        });
+                    } else {
+                        doc.text((L === 'bm' ? '[Tiada barang disediakan]' : '[No items provided]'), M + 5, y);
+                        y += 5;
+                    }
+                    
+                    // Other items
+                    if (A.furnishedItemsOther) {
+                        y += 3;
+                        doc.setFont(undefined, 'bold');
+                        if (L === 'bm') {
+                            doc.text('Barang-Barang Lain:', M, y);
+                        } else {
+                            doc.text('Other Items:', M, y);
+                        }
+                        y += 5;
+                        doc.setFont(undefined, 'normal');
+                        para(A.furnishedItemsOther, { gap: 4 });
+                    }
+                    
+                    // Acknowledgement
+                    y += 8;
+                    doc.setFont(undefined, 'bold');
+                    if (L === 'bm') {
+                        doc.text('Pengakuan:', M, y);
+                    } else {
+                        doc.text('Acknowledgement:', M, y);
+                    }
+                    y += 6;
+                    doc.setFont(undefined, 'normal');
+                    if (L === 'bm') {
+                        para('Kedua-dua pihak (Pemilik dan Penyewa) mengakui bahawa barang-barang yang disenaraikan di atas dalam keadaan baik dan berfungsi pada tarikh mula tempoh sewa. Penyewa bersetuju untuk memelihara barang-barang ini dalam keadaan yang sama atau lebih baik.', { gap: 4, size: 9 });
+                    } else {
+                        para('Both parties (Landlord and Tenant) acknowledge that the items listed above are in good working condition as of the commencement date of the tenancy. The Tenant agrees to maintain these items in the same or better condition.', { gap: 4, size: 9 });
+                    }
+                }
+
                 // ---------- FOOTER ON EVERY PAGE ----------
                 try {
                     const total = doc.internal.getNumberOfPages();
@@ -3080,6 +3036,164 @@
                 }
             });
         }
+
+
+        // ===== NOTICES: inline expand + full-version modal + language sync =====
+        const NOTICE_CONTENT = {
+          guidance: {
+            bm: { t: 'Panduan Pengisian', h: '<p>Pemilik sila isi maklumat anda dan maklumat harta. Tandatangan di Langkah 3. Selepas tandatangan, klik SIMPAN untuk mendapatkan kod unik. Kongsi kod tersebut dengan penyewa melalui WhatsApp.</p><p>Sebaik sahaja penyewa membuka pautan dengan kod tersebut, maklumat anda akan dimuat secara automatik dan mereka boleh mengisi maklumat mereka sendiri. Pastikan kedua-dua pihak menandatangani sebelum membuat pembayaran.</p>' },
+            en: { t: 'Guidance', h: '<p>Landlord, please fill in your details and the property information. Sign at Step 3. After signing, click SAVE to obtain a unique code. Share that code with the tenant via WhatsApp.</p><p>Once the tenant opens the link with that code, your details load automatically and they can fill in their own. Ensure both parties sign before making payment.</p>' }
+          },
+          security: {
+            bm: { t: 'Keselamatan Data', h: '<p><strong>Data anda disimpan dengan selamat dan disulitkan (encrypted), dan akan dipadam secara automatik selepas tempoh sah tamat.</strong></p><p>Data perjanjian disimpan sementara di pelayan kami untuk membolehkan penyewa mengakses dan melengkapkan borang dari peranti mereka sendiri.</p><p>Sila muat turun dan simpan PDF perjanjian anda sebelum kod tamat tempoh. Jangan kongsikan kod anda dengan pihak yang tidak dipercayai.</p>' },
+            en: { t: 'Data Security', h: '<p><strong>Your data is stored securely and encrypted, and is automatically deleted once the validity period ends.</strong></p><p>Agreement data is stored temporarily on our servers so the tenant can access and complete the form from their own device.</p><p>Please download and save your agreement PDF before the code expires. Do not share your code with untrusted parties.</p>' }
+          },
+          standard: {
+            bm: { t: 'Perjanjian Standard', h: '<p><strong>Terma adalah tetap dan tidak boleh diubah.</strong> Ini adalah perjanjian standard yang digunakan secara meluas di Malaysia.</p><p>Perjanjian ini mengandungi 21 klausa yang menutup semua aspek penting sewaan, dirangka untuk melindungi hak pemilik dan penyewa mengikut undang-undang Malaysia.</p><p>Jika anda perlu menambah syarat khusus, sila berunding dengan peguam berdaftar.</p>' },
+            en: { t: 'Standard Agreement', h: '<p><strong>All terms are fixed and cannot be modified.</strong> This is a standard agreement widely used in Malaysia.</p><p>It contains 21 clauses covering all key aspects of a tenancy, drafted to protect the rights of both landlord and tenant under Malaysian law.</p><p>If you need to add special terms, please consult a registered lawyer.</p>' }
+          },
+          pdpa: {
+            bm: { t: 'Data Peribadi (PDPA)', h: '<p><strong>Dengan meneruskan, anda bersetuju data anda dikumpul untuk menyediakan perjanjian ini sahaja.</strong></p><p>Data peribadi anda (nama, no. K.P., telefon, alamat) disimpan secara disulitkan untuk tempoh terhad, bagi membolehkan kedua-dua pihak melengkapkan perjanjian.</p><p>Kami tidak menggunakan data anda untuk pemasaran atau berkongsi dengan pihak ketiga. Untuk pemadaman data, hubungi <strong>admin@findlawyer.my</strong>.</p>' },
+            en: { t: 'Personal Data (PDPA)', h: '<p><strong>By proceeding, you consent to your data being collected solely to generate this agreement.</strong></p><p>Your personal data (name, IC number, phone, address) is stored encrypted for a limited period so both parties can complete the agreement.</p><p>We do not use your data for marketing or share it with third parties. For data deletion, contact <strong>admin@findlawyer.my</strong>.</p>' }
+          },
+          disclaimer: {
+            bm: { t: 'Penafian Undang-undang', h: '<p><strong>AkadSewa hanya menyediakan borang perjanjian standard. Kami bukan firma guaman dan tidak memberikan nasihat undang-undang.</strong></p><p>Perjanjian ini untuk rujukan umum sahaja. Sila rujuk peguam berdaftar jika anda memerlukan nasihat undang-undang tertentu.</p><p>Kami tidak bertanggungjawab atas sebarang kerugian yang timbul daripada penggunaan borang ini.</p>' },
+            en: { t: 'Legal Disclaimer', h: '<p><strong>AkadSewa only provides a standard agreement form. We are not a law firm and do not provide legal advice.</strong></p><p>This agreement is for general reference only. Please consult a registered lawyer if you require specific legal advice.</p><p>We are not responsible for any loss arising from the use of this form.</p>' }
+          },
+          stamping: {
+            bm: { t: 'Stamping LHDN', h: '<p><strong>Duti setem dan proses stamping adalah tanggungjawab pihak-pihak dalam perjanjian.</strong></p><p><strong>Apa yang AkadSewa lakukan:</strong></p><ul><li>Menjana dokumen perjanjian sewaan yang lengkap dan standard.</li><li>Menyediakan PDF perjanjian yang telah ditandatangani kedua-dua pihak.</li></ul><p><strong>Apa yang AkadSewa TIDAK lakukan:</strong></p><ul><li>Kami tidak menjalankan proses stamping atau menyerahkan dokumen kepada LHDN bagi pihak anda.</li></ul><p><strong>Apa yang anda perlu lakukan:</strong></p><ul><li>Muat turun PDF perjanjian yang telah ditandatangani.</li><li>Serahkan ke pejabat LHDN untuk proses stamping.</li><li>Bayar duti setem mengikut kadar LHDN.</li></ul><p>Maklumat lanjut: <strong>www.hasil.gov.my</strong></p>' },
+            en: { t: 'Stamp Duty (LHDN)', h: '<p><strong>Stamp duty and the stamping process are the responsibility of the parties to the agreement.</strong></p><p><strong>What AkadSewa does:</strong></p><ul><li>Generates a complete, standard tenancy agreement document.</li><li>Provides a PDF signed by both parties.</li></ul><p><strong>What AkadSewa does NOT do:</strong></p><ul><li>We do not perform stamping or submit documents to LHDN on your behalf.</li></ul><p><strong>What you need to do:</strong></p><ul><li>Download the signed agreement PDF.</li><li>Submit it to the LHDN office for stamping.</li><li>Pay the stamp duty at LHDN rates.</li></ul><p>More info: <strong>www.hasil.gov.my</strong></p>' }
+          }
+        };
+        const NOTICE_ORDER = ['guidance','security','standard','pdpa','disclaimer','stamping'];
+        let openNotice = null;
+
+        function renderNoticeDetail() {
+          const box = document.getElementById('noticeDetail');
+          if (!box) return;
+          if (!openNotice) { box.classList.remove('active'); box.innerHTML = ''; return; }
+          const c = NOTICE_CONTENT[openNotice][lang === 'bm' ? 'bm' : 'en'];
+          box.innerHTML = '<h4>' + c.t + '</h4>' + c.h;
+          box.classList.add('active');
+        }
+
+        function toggleNotice(key) {
+          const cards = document.querySelectorAll('.notice-card');
+          openNotice = (openNotice === key) ? null : key;
+          cards.forEach(c => c.classList.toggle('is-open', c.dataset.notice === openNotice));
+          const box = document.getElementById('noticeDetail');
+          const grid = document.getElementById('noticesGrid');
+          if (openNotice && box && grid) {
+            // place panel right after the row containing the open card
+            const cardEl = grid.querySelector('.notice-card[data-notice="' + openNotice + '"]');
+            const all = Array.from(grid.querySelectorAll('.notice-card'));
+            const idx = all.indexOf(cardEl);
+            const cols = window.innerWidth <= 640 ? 1 : (window.innerWidth <= 1024 ? 2 : 3);
+            const endOfRow = Math.min(all.length - 1, Math.floor(idx / cols) * cols + cols - 1);
+            grid.insertBefore(box, all[endOfRow].nextSibling);
+          }
+          renderNoticeDetail();
+        }
+
+        function openNoticesFullModal() {
+          const modal = document.getElementById('noticesModal');
+          const body = document.getElementById('noticesFullBody');
+          if (!modal || !body) return;
+          const L = lang === 'bm' ? 'bm' : 'en';
+          let html = '<h2>' + (L === 'bm' ? 'Notis Penting — Versi Penuh' : 'Important Notices — Full Version') + '</h2>';
+          NOTICE_ORDER.forEach(k => {
+            const c = NOTICE_CONTENT[k][L];
+            html += '<h3>' + c.t + '</h3>' + c.h;
+          });
+          body.innerHTML = html;
+          body.classList.add('active');
+          modal.classList.add('active');
+        }
+
+        function closeNoticesModal() {
+          const modal = document.getElementById('noticesModal');
+          if (!modal) return;
+          modal.classList.remove('active');
+          document.querySelectorAll('.notice-modal-body').forEach(b => b.classList.remove('active'));
+        }
+
+        function initNotices() {
+          document.querySelectorAll('.notice-card').forEach(cardEl => {
+            cardEl.addEventListener('click', () => toggleNotice(cardEl.dataset.notice));
+            cardEl.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleNotice(cardEl.dataset.notice); }
+            });
+          });
+          const fullBtn = document.getElementById('noticesFullBtn');
+          if (fullBtn) fullBtn.addEventListener('click', openNoticesFullModal);
+          const closeBtn = document.querySelector('.notices-modal-close');
+          if (closeBtn) closeBtn.addEventListener('click', closeNoticesModal);
+          const overlay = document.querySelector('.notices-modal-overlay');
+          if (overlay) overlay.addEventListener('click', closeNoticesModal);
+          document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNoticesModal(); });
+        }
+
+        function updateNoticesLanguage(lang) {
+          const isBM = lang === 'bm';
+          const pairs = ['noticesTitle','noticesSub','noticesSummaryTitle','noticesSummaryBody','noticesFullBtn','noticesConsentLabel'];
+          pairs.forEach(p => {
+            const bm = document.getElementById(p + 'BM'), en = document.getElementById(p + 'EN');
+            if (bm) bm.classList.toggle('hidden', !isBM);
+            if (en) en.classList.toggle('hidden', isBM);
+          });
+          for (let i = 1; i <= 6; i++) {
+            ['Title','Sub','Badge'].forEach(part => {
+              const bm = document.getElementById('noticeCard' + i + part + 'BM');
+              const en = document.getElementById('noticeCard' + i + part + 'EN');
+              if (bm) bm.classList.toggle('hidden', !isBM);
+              if (en) en.classList.toggle('hidden', isBM);
+            });
+          }
+          renderNoticeDetail();
+          const modal = document.getElementById('noticesModal');
+          if (modal && modal.classList.contains('active')) openNoticesFullModal();
+        }
+
+        function updateFurnishedItemsLanguage(lang) {
+          const isBM = lang === 'bm';
+          document.getElementById('furnishedItemsTitleBM').classList.toggle('hidden', !isBM);
+          document.getElementById('furnishedItemsTitleEN').classList.toggle('hidden', isBM);
+          document.getElementById('furnishedItemsSubBM').classList.toggle('hidden', !isBM);
+          document.getElementById('furnishedItemsSubEN').classList.toggle('hidden', isBM);
+          document.getElementById('furnishedItemsOtherLabelBM').classList.toggle('hidden', !isBM);
+          document.getElementById('furnishedItemsOtherLabelEN').classList.toggle('hidden', isBM);
+          document.getElementById('furnishedItemsNoteBM').classList.toggle('hidden', !isBM);
+          document.getElementById('furnishedItemsNoteEN').classList.toggle('hidden', isBM);
+          const items = ['Bedframe', 'Mattress', 'Wardrobe', 'Table', 'Chair', 'Sofa', 'Refrigerator', 'Stove', 'Microwave', 'Sink', 'AC', 'Fan', 'Lights', 'Curtains', 'Carpet', 'TV', 'Washingmachine', 'Waterheater'];
+          items.forEach(item => {
+            const bmEl = document.getElementById(`item${item}BM`);
+            if (bmEl) {
+              bmEl.classList.toggle('hidden', !isBM);
+              const enEl = document.getElementById(`item${item}EN`);
+              if (enEl) enEl.classList.toggle('hidden', isBM);
+            }
+          });
+        }
+
+        function toggleFurnishedItemsSection() {
+          const statusSelect = document.getElementById('furnishedStatus');
+          const section = document.getElementById('furnishedItemsSection');
+          if (statusSelect && section) {
+            const selectedValue = statusSelect.value;
+            section.style.display = (selectedValue === 'Fully Furnished / Lengkap' || selectedValue === 'Partially Furnished / Separuh') ? 'block' : 'none';
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+          safe(() => {
+            initNotices();
+            toggleFurnishedItemsSection();
+            const statusSelect = document.getElementById('furnishedStatus');
+            if (statusSelect) {
+              statusSelect.addEventListener('change', toggleFurnishedItemsSection);
+            }
+          });
+        });
 
         window.addEventListener('DOMContentLoaded', () => {
             safe(() => {
