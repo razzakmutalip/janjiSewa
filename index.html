@@ -1391,8 +1391,8 @@
                         <label id="verifyCheckEN" for="verifyCheckbox" class="hidden">I have completed the verification checks above.</label>
                     </div>
                     <div class="status-box" id="statusBox">
-                        <div id="landlordStatus" class="status-item pending">⏳ Pemilik / Landlord: Menunggu tandatangan</div>
-                        <div id="tenantStatus" class="status-item pending">⏳ Penyewa / Tenant: Menunggu tandatangan</div>
+                        <div id="landlordStatus" class="status-item pending">⏳ Pemilik: Menunggu tandatangan</div>
+                        <div id="tenantStatus" class="status-item pending">⏳ Penyewa: Menunggu tandatangan</div>
                     </div>
 
                     <div class="sig-container" id="landlordSigContainer">
@@ -2095,6 +2095,7 @@
                 lang = newLang;
         if (typeof updateNoticesLanguage === 'function') updateNoticesLanguage(lang);
         if (typeof updateFurnishedItemsLanguage === 'function') updateFurnishedItemsLanguage(lang);
+        if (typeof updateStatus === 'function') updateStatus();
 
                 document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.btn-lang')[newLang === 'bm' ? 0 : 1]?.classList.add('active');
@@ -2121,15 +2122,29 @@
                 const landlordSigned = hasSignature(document.getElementById('landlordSigCanvas')) || !!loadedLandlordSig;
                 const tenantSigned = hasSignature(document.getElementById('tenantSigCanvas')) || !!loadedTenantSig;
                 
+                // follow the selected language: this line used to stay in
+                // Malay even on the English side of the form
+                const en = (lang === 'en');
+                const T = {
+                    landlord: en ? 'Landlord' : 'Pemilik',
+                    tenant:   en ? 'Tenant'   : 'Penyewa',
+                    signed:   en ? 'Signed'   : 'Tandatangan sah',
+                    waiting:  en ? 'Awaiting signature' : 'Menunggu tandatangan'
+                };
+
                 const ls = document.getElementById('landlordStatus');
                 if (ls) {
-                    ls.innerHTML = landlordSigned ? '✓ Pemilik / Landlord: <strong>Tandatangan sah</strong>' : '⏳ Pemilik / Landlord: Menunggu tandatangan';
+                    ls.innerHTML = landlordSigned
+                        ? '✓ ' + T.landlord + ': <strong>' + T.signed + '</strong>'
+                        : '⏳ ' + T.landlord + ': ' + T.waiting;
                     ls.className = 'status-item' + (landlordSigned ? '' : ' pending');
                 }
-                
+
                 const ts = document.getElementById('tenantStatus');
                 if (ts) {
-                    ts.innerHTML = tenantSigned ? '✓ Penyewa / Tenant: <strong>Tandatangan sah</strong>' : '⏳ Penyewa / Tenant: Menunggu tandatangan';
+                    ts.innerHTML = tenantSigned
+                        ? '✓ ' + T.tenant + ': <strong>' + T.signed + '</strong>'
+                        : '⏳ ' + T.tenant + ': ' + T.waiting;
                     ts.className = 'status-item' + (tenantSigned ? '' : ' pending');
                 }
             });
@@ -3544,8 +3559,8 @@
             en: { t: 'Legal Disclaimer', h: '<p><strong>AkadSewa only provides a standard agreement form. We are not a law firm and do not provide legal advice.</strong></p><p>This agreement is for general reference only. Please consult a registered lawyer if you require specific legal advice.</p><p>We are not responsible for any loss arising from the use of this form.</p>' }
           },
           stamping: {
-            bm: { t: 'Stamping LHDN', h: '<p><strong>Duti setem dan proses stamping adalah tanggungjawab pihak-pihak dalam perjanjian.</strong></p><p><strong>Apa yang AkadSewa lakukan:</strong></p><ul><li>Menjana dokumen perjanjian sewaan yang lengkap dan standard.</li><li>Menyediakan PDF perjanjian yang telah ditandatangani kedua-dua pihak.</li></ul><p><strong>Apa yang AkadSewa TIDAK lakukan:</strong></p><ul><li>Kami tidak menjalankan proses stamping atau menyerahkan dokumen kepada LHDN bagi pihak anda.</li></ul><p><strong>Apa yang anda perlu lakukan:</strong></p><ul><li>Muat turun PDF perjanjian yang telah ditandatangani.</li><li>Serahkan ke pejabat LHDN untuk proses stamping.</li><li>Bayar duti setem mengikut kadar LHDN.</li></ul><p>Maklumat lanjut: <strong>www.hasil.gov.my</strong></p>' },
-            en: { t: 'Stamp Duty (LHDN)', h: '<p><strong>Stamp duty and the stamping process are the responsibility of the parties to the agreement.</strong></p><p><strong>What AkadSewa does:</strong></p><ul><li>Generates a complete, standard tenancy agreement document.</li><li>Provides a PDF signed by both parties.</li></ul><p><strong>What AkadSewa does NOT do:</strong></p><ul><li>We do not perform stamping or submit documents to LHDN on your behalf.</li></ul><p><strong>What you need to do:</strong></p><ul><li>Download the signed agreement PDF.</li><li>Submit it to the LHDN office for stamping.</li><li>Pay the stamp duty at LHDN rates.</li></ul><p>More info: <strong>www.hasil.gov.my</strong></p>' }
+            bm: { t: 'Stamping LHDN', h: '<p><strong>Duti setem dan proses stamping adalah tanggungjawab pihak-pihak dalam perjanjian.</strong></p><p><strong>Apa yang AkadSewa lakukan:</strong></p><ul><li>Menjana dokumen perjanjian sewaan yang lengkap dan standard.</li><li>Menyediakan PDF perjanjian yang telah ditandatangani kedua-dua pihak.</li></ul><p><strong>Apa yang AkadSewa TIDAK lakukan:</strong></p><ul><li>Kami tidak menjalankan proses stamping atau menyerahkan dokumen kepada LHDN bagi pihak anda.</li></ul><p><strong>Apa yang anda perlu lakukan:</strong></p><ul><li>Muat turun PDF perjanjian yang telah ditandatangani.</li><li>Log masuk ke portal MyTax dan pilih e-Duti Setem.</li><li>Hantar perjanjian dan bayar duti setem secara dalam talian.</li><li>Muat turun Sijil Setem setelah bayaran selesai.</li></ul><p>Portal: <strong>mytax.hasil.gov.my</strong></p>' },
+            en: { t: 'Stamp Duty (LHDN)', h: '<p><strong>Stamp duty and the stamping process are the responsibility of the parties to the agreement.</strong></p><p><strong>What AkadSewa does:</strong></p><ul><li>Generates a complete, standard tenancy agreement document.</li><li>Provides a PDF signed by both parties.</li></ul><p><strong>What AkadSewa does NOT do:</strong></p><ul><li>We do not perform stamping or submit documents to LHDN on your behalf.</li></ul><p><strong>What you need to do:</strong></p><ul><li>Download the signed agreement PDF.</li><li>Log in to the MyTax portal and select e-Duti Setem.</li><li>Submit the agreement and pay the stamp duty online.</li><li>Download the Stamp Certificate once payment is complete.</li></ul><p>Portal: <strong>mytax.hasil.gov.my</strong></p>' }
           }
         };
         const NOTICE_ORDER = ['guidance','security','standard','pdpa','disclaimer','stamping'];
