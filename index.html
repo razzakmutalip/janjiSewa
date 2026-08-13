@@ -3126,8 +3126,7 @@
                 block('AkadSewa\u2122', M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 1.5 });
                 block(L === 'bm' ? 'Perjanjian Penyewaan Digital' : 'Digital Tenancy Agreements',
                       M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
-                block('Impact Analytix Sdn. Bhd. (200901037283)', M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 1 });
-                block('akad-sewa.vercel.app', M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
+                block('Impact Analytix Sdn. Bhd. (200901037283)', M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
                 if (apiToken) {
                     block((L === 'bm' ? 'Ruj: ' : 'Ref: ') + apiToken, M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 0 });
                 }
@@ -3466,9 +3465,11 @@
 
                         doc.setFontSize(7);
                         doc.setTextColor(140, 140, 140);
+                        // No URL here: this document may be read years later,
+                        // and a stale link repeated on every page reads worse
+                        // than none. The address stays on the cover only.
                         doc.text('AkadSewa\u2122  \u00A9 ' + yr + ' Impact Analytix Sdn. Bhd. (200901037283). ' +
-                                 (L === 'bm' ? 'Hak Cipta Terpelihara' : 'All Rights Reserved') +
-                                 '  \u2022  akad-sewa.vercel.app',
+                                 (L === 'bm' ? 'Hak Cipta Terpelihara' : 'All Rights Reserved') + '.',
                                  PW / 2, PH - 10, { align: 'center' });
                     }
                     doc.setTextColor(0, 0, 0);
