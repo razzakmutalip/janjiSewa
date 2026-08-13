@@ -1816,6 +1816,10 @@
                 furnishedItemKeys: Array.from(document.querySelectorAll('input[name="furnishedItem"]:checked'))
                     .map(cb => cb.value),
                 furnishedItemsOther: document.getElementById('furnishedItemsOther')?.value || '',
+                // Carry the language with the record: without it the tenant
+                // opens the link on a fresh page that always starts in Malay,
+                // no matter which language the landlord filled the form in.
+                lang: lang,
                 landlordSig: landlordSig,
                 tenantSig: tenantSig
             };
@@ -1972,9 +1976,17 @@
                 }
 
                 if (formData) {
+                    // Open in the language the landlord used. Do this before
+                    // filling fields so every label, notice and status line is
+                    // already switched when the tenant sees the form.
+                    if (formData.lang === 'en' || formData.lang === 'bm') {
+                        setLanguage(formData.lang);
+                    }
+
                     Object.keys(formData).forEach(k => {
                         if (k === 'landlordSig' || k === 'tenantSig') return; // signatures handled separately
                         if (k === 'hasCoOwner') return;                       // checkbox, handled below
+                        if (k === 'lang') return;                             // not a form field
                         const el = document.getElementById(k);
                         if (el) el.value = formData[k] || '';
                     });
