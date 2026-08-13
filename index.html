@@ -3142,8 +3142,14 @@
                 block(L === 'bm' ? 'Perjanjian Penyewaan Digital' : 'Digital Tenancy Agreements',
                       M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
                 block('Impact Analytix Sdn. Bhd. (200901037283)', M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
-                if (apiToken) {
-                    block((L === 'bm' ? 'Ruj: ' : 'Ref: ') + apiToken, M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 0 });
+                // The raw token is a long UUID. Printed in full it reads as
+                // machine debris rather than a file reference, so show a short
+                // uppercase stem. The full token still identifies the record.
+                const FILEREF = apiToken
+                    ? 'AS-' + String(apiToken).replace(/^AS-/i, '').slice(0, 8).toUpperCase()
+                    : '';
+                if (FILEREF) {
+                    block((L === 'bm' ? 'Ruj: ' : 'Ref: ') + FILEREF, M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 0 });
                 }
 
                 // ============================================================
@@ -3472,10 +3478,10 @@
                         }
 
                         // document reference, bottom left
-                        if (apiToken) {
+                        if (FILEREF) {
                             doc.setFontSize(8);
                             doc.setTextColor(90, 90, 90);
-                            doc.text('{' + apiToken + '}', M, PH - 17);
+                            doc.text('{' + FILEREF + '}', M, PH - 17);
                         }
 
                         doc.setFontSize(7);
