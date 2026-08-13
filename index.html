@@ -1033,7 +1033,7 @@
                             <label>Furnished Status / Status Perabot</label>
                             <select id="furnishedStatus" onchange="saveData()">
                                 <option>Fully Furnished / Lengkap</option>
-                                <option>Partially Furnished / Separuh</option>
+                                <option>Partially Furnished / Separa Lengkap</option>
                                 <option>Not Furnished / Kosong</option>
                             </select>
                         </div>
@@ -2457,13 +2457,28 @@
             const AREA     = d.builtUpArea ? Number(d.builtUpArea).toLocaleString('en-MY') : '';
             const STOREYS  = d.storeys || '';
             const PTYPE    = d.propType || '';
-            const FURN     = d.furnishedStatus || '';
+            // The two selects store a bilingual label with a slash
+            // ("Fully Furnished / Lengkap"), which reads badly dropped into a
+            // sentence in either language. Map to a proper phrase instead.
+            const FURN_RAW = d.furnishedStatus || '';
+            const FURN_MAP = {
+                'Fully Furnished / Lengkap':     { bm: 'berperabot lengkap',      en: 'fully furnished' },
+                'Partially Furnished / Separa Lengkap': { bm: 'berperabot separa lengkap', en: 'partially furnished' },
+                'Partially Furnished / Separuh':        { bm: 'berperabot separa lengkap', en: 'partially furnished' },
+                'Not Furnished / Kosong':        { bm: 'tanpa perabot',           en: 'unfurnished' }
+            };
+            const FURN = (FURN_MAP[FURN_RAW] || {})[bm ? 'bm' : 'en'] || FURN_RAW;
             // Appendix A is only produced (and only referenced) when the
             // premises are let furnished AND at least one item was listed.
             const FURN_ITEMS = Array.isArray(d.furnishedItems) ? d.furnishedItems : [];
-            const HAS_APPX   = (FURN.includes('Fully') || FURN.includes('Partially')) &&
+            const HAS_APPX   = (FURN_RAW.includes('Fully') || FURN_RAW.includes('Partially')) &&
                                (FURN_ITEMS.length > 0 || !!(d.furnishedItemsOther || '').trim());
-            const USE      = d.rentType || '';
+            const USE_RAW  = d.rentType || '';
+            const USE_MAP  = {
+                'Whole Unit / Keseluruhan Unit': { bm: 'keseluruhan unit', en: 'a whole unit' },
+                'Room Only / Bilik Sahaja':      { bm: 'bilik sahaja',     en: 'a room only' }
+            };
+            const USE = (USE_MAP[USE_RAW] || {})[bm ? 'bm' : 'en'] || USE_RAW;
 
             const RENT     = sumInWords(d.rent, L);
             const MAINT    = sumInWords(d.maintenanceFee, L);
@@ -2914,283 +2929,547 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF('p', 'mm', 'a4');
 
+                // ============================================================
+                // LAYOUT — modelled on a Malaysian law-firm execution copy.
+                // Times serif, 11pt, justified body, half-inch tab stops.
+                // ============================================================
                 const PW = doc.internal.pageSize.getWidth();
                 const PH = doc.internal.pageSize.getHeight();
-                const M  = 20;                 // legal documents want a wider margin
-                const W  = PW - (2 * M);
-                const BOTTOM = PH - 22;        // leave room for the page footer
-                let y = M;
+                const M  = 31.75;              // 1.25" side margins
+                const T  = 12.70;              // 0.5" tab stop
+                const RIGHT  = PW - M;         // right text edge
+                const TOP    = 30;             // first baseline below the header
+                const BOTTOM = PH - 24;        // last baseline above the footer
+                const FS     = 11;             // body size
+                const LEAD   = 5.0;            // baseline-to-baseline
+                const DEFCOL = M + (2 * T) + 51;   // definition text column
+
+                let y = TOP;
+
+                function F(style, size) {
+                    doc.setFont('times', style || 'normal');
+                    doc.setFontSize(size || FS);
+                }
 
                 function need(h) {
-                    if (y + h > BOTTOM) { doc.addPage(); y = M; return true; }
+                    if (y + h > BOTTOM) { doc.addPage(); y = TOP; return true; }
                     return false;
                 }
 
-                function para(text, opts) {
+                // ---- inline bold: money sums are emphasised, as in a
+                // ---- firm-drafted agreement. Returns [{t,b}] tokens.
+                const MONEY = /Ringgit Malaysia [^()]*\(RM[\d,.]+\)/g;
+
+                // Straight quotes read as typescript; a drafted agreement
+                // uses proper opening and closing marks.
+                function typo(s) {
+                    s = String(s == null ? '' : s);
+                    let out = '';
+                    for (let i = 0; i < s.length; i++) {
+                        const ch = s[i];
+                        if (ch === '"') {
+                            const p = (i === 0) ? '' : s[i - 1];
+                            out += (p === '' || /[\s([]/.test(p)) ? '\u201C' : '\u201D';
+                        } else if (ch === "'") {
+                            const p = (i === 0) ? '' : s[i - 1];
+                            out += (p === '' || /[\s([]/.test(p)) ? '\u2018' : '\u2019';
+                        } else out += ch;
+                    }
+                    return out;
+                }
+
+                function tokenise(text, forceBold) {
+                    text = typo(text);
+                    const out = [];
+                    let last = 0, m;
+                    MONEY.lastIndex = 0;
+                    if (!forceBold) {
+                        while ((m = MONEY.exec(text)) !== null) {
+                            if (m.index > last) out.push({ t: text.slice(last, m.index), b: false });
+                            out.push({ t: m[0], b: true });
+                            last = m.index + m[0].length;
+                        }
+                    }
+                    if (last < text.length) out.push({ t: text.slice(last), b: !!forceBold });
+                    const words = [];
+                    out.forEach(seg => {
+                        seg.t.split(/\s+/).forEach(w => { if (w) words.push({ t: w, b: seg.b }); });
+                    });
+                    return words;
+                }
+
+                function wordW(w, size) {
+                    F(w.b ? 'bold' : 'normal', size);
+                    return doc.getTextWidth(w.t);
+                }
+
+                // ---- justified paragraph with page-break control ----
+                function block(text, x, width, opts) {
                     opts = opts || {};
-                    const size   = opts.size   || 9.5;
-                    const style  = opts.style  || 'normal';
-                    const indent = opts.indent || 0;
-                    const lead   = opts.lead   || 4.4;
-                    const align  = opts.align  || 'left';
-                    doc.setFontSize(size);
-                    doc.setFont(undefined, style);
-                    const lines = doc.splitTextToSize(text, W - indent);
-                    lines.forEach(line => {
+                    const size    = opts.size || FS;
+                    const lead    = opts.lead || LEAD;
+                    const bold    = !!opts.bold;
+                    const justify = opts.justify !== false;
+                    const centre  = !!opts.centre;
+
+                    const words = opts.words || tokenise(String(text == null ? '' : text), bold);
+                    if (!words.length) return;
+
+                    F('normal', size);
+                    const spaceW = doc.getTextWidth(' ');
+
+                    // greedy line fill
+                    const rows = [];
+                    let row = [], roww = 0;
+                    words.forEach(w => {
+                        const ww = wordW(w, size);
+                        const add = row.length ? spaceW + ww : ww;
+                        if (row.length && roww + add > width) { rows.push({ ws: row, w: roww }); row = [w]; roww = ww; }
+                        else { row.push(w); roww += add; }
+                    });
+                    if (row.length) rows.push({ ws: row, w: roww });
+
+                    // measure-only: caller wants the height so it can reserve
+                    // space and keep the unit from splitting across a page
+                    if (opts.measure) return rows.length * lead;
+
+                    rows.forEach((r, i) => {
                         need(lead);
-                        if (align === 'center') doc.text(line, PW / 2, y, { align: 'center' });
-                        else doc.text(line, M + indent, y);
+                        const last = (i === rows.length - 1);
+                        const stretch = justify && !centre && !last && r.ws.length > 1;
+                        let cx = x;
+                        if (centre) cx = x + (width - r.w) / 2;
+
+                        if (stretch) {
+                            // spread the slack evenly between words
+                            let sum = 0;
+                            r.ws.forEach(w => { sum += wordW(w, size); });
+                            const gap = (width - sum) / (r.ws.length - 1);
+                            r.ws.forEach(w => {
+                                F(w.b ? 'bold' : 'normal', size);
+                                doc.text(w.t, cx, y);
+                                cx += doc.getTextWidth(w.t) + gap;
+                            });
+                        } else {
+                            // Draw each run of same-styled words as one string:
+                            // the viewer then sets the spaces itself, which is
+                            // wider (and truer) than the metric jsPDF reports.
+                            let k = 0;
+                            while (k < r.ws.length) {
+                                const b = r.ws[k].b;
+                                const grp = [];
+                                while (k < r.ws.length && r.ws[k].b === b) { grp.push(r.ws[k].t); k++; }
+                                const s = grp.join(' ');
+                                F(b ? 'bold' : 'normal', size);
+                                doc.text(s, cx, y);
+                                cx += doc.getTextWidth(s);
+                                if (k < r.ws.length) cx += spaceW;
+                            }
+                        }
                         y += lead;
                     });
-                    if (opts.gap !== 0) y += (opts.gap || 2.2);
+                    if (opts.gap !== 0) y += (opts.gap == null ? 3.4 : opts.gap);
                 }
 
-                // ---------- COVER ----------
-                y = 45;
-                para(A.dateLine, { size: 12, style: 'bold', align: 'center', gap: 14 });
-                para(A.between, { size: 11, style: 'bold', align: 'center', gap: 6 });
-                para(A.llName, { size: 12, style: 'bold', align: 'center', gap: 1 });
-                para('(' + A.icLabel + ' ' + A.llIC + ')', { size: 10, align: 'center', gap: 2 });
-                para(A.llLabel, { size: 10, align: 'center', gap: 10 });
-                para(A.and, { size: 11, style: 'bold', align: 'center', gap: 6 });
-                para(A.tnName, { size: 12, style: 'bold', align: 'center', gap: 1 });
-                para('(' + A.icLabel + ' ' + A.tnIC + ')', { size: 10, align: 'center', gap: 2 });
-                para(A.tnLabel, { size: 10, align: 'center', gap: 18 });
-                doc.setLineWidth(0.4);
-                doc.line(M + 25, y, PW - M - 25, y); y += 8;
-                para(A.title, { size: 15, style: 'bold', align: 'center', gap: 6 });
-                doc.line(M + 25, y, PW - M - 25, y);
+                // ---- a label sitting in its own column, text flowing beside ----
+                function hang(label, labelX, text, textX, opts) {
+                    opts = opts || {};
+                    // reserve the whole paragraph, so the label is never left
+                    // stranded at the foot of a page without its text
+                    const h = block(text, textX, RIGHT - textX,
+                                    Object.assign({}, opts, { measure: true }));
+                    need(Math.min(h, BOTTOM - TOP));
+                    const top = y;
+                    F(opts.labelBold ? 'bold' : 'normal', opts.size || FS);
+                    doc.text(label, labelX, top);
+                    block(text, textX, RIGHT - textX, opts);
+                }
 
-                // ---------- BODY ----------
-                doc.addPage(); y = M;
-                para(A.preamble, { size: 9.5, gap: 4 });
-                para(A.party1, { size: 9.5, gap: 3 });
-                para(A.party2, { size: 9.5, gap: 3 });
-                para(A.partyNote, { size: 9.5, style: 'italic', gap: 5 });
+                // ============================================================
+                // COVER
+                // ============================================================
+                // "DATED THIS 13TH DAY OF AUGUST 2026" reads as an engrossment;
+                // a bare "DATED 13 August 2026" does not. Rebuilt from A.today
+                // so the wording in buildAgreement is left alone.
+                let coverDate = A.dateLine;
+                (function () {
+                    const m = /^(\d{1,2})\s+(\S+)\s+(\d{4})$/.exec(String(A.today || '').trim());
+                    if (!m) return;
+                    const day = Number(m[1]), mon = m[2].toUpperCase(), yr = m[3];
+                    coverDate = (L === 'bm')
+                        ? 'BERTARIKH ' + day + ' HARIBULAN ' + mon + ' ' + yr
+                        : 'DATED THIS ' + ordinalEN(day).toUpperCase() + ' DAY OF ' + mon + ' ' + yr;
+                })();
 
-                para(A.recitalHead, { size: 10, style: 'bold', gap: 3 });
-                A.recitals.forEach(r => para(r, { size: 9.5, indent: 6, gap: 3 }));
-                para(A.witnesseth, { size: 10, style: 'bold', gap: 5 });
+                y = 50;
+                block(coverDate, M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 20 });
+                block(A.between,  M, RIGHT - M, { bold: true, centre: true, gap: 13 });
 
-                A.clauses.forEach(c => {
-                    need(16);
-                    para(c.no + '.   ' + c.title, { size: 10.5, style: 'bold', gap: 3 });
-                    c.paras.forEach(p => {
-                        // Sub-headings such as "4.1  Security Deposit" read as
-                        // headings, not body text, so they are bolded.
-                        const isSub = /^\d+\.\d+\s{2}/.test(p);
-                        para(p, {
-                            size: 9.5,
-                            style: isSub ? 'bold' : 'normal',
-                            indent: isSub ? 0 : 6,
-                            gap: isSub ? 1.5 : 2.4
-                        });
+                block(A.llName, M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 0.4 });
+                block('(' + A.icLabel + ' ' + A.llIC + ')', M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 1 });
+                block(A.llLabel, M, RIGHT - M, { centre: true, gap: 16 });
+
+                block(A.and, M, RIGHT - M, { bold: true, centre: true, gap: 13 });
+
+                block(A.tnName, M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 0.4 });
+                block('(' + A.icLabel + ' ' + A.tnIC + ')', M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 1 });
+                block(A.tnLabel, M, RIGHT - M, { centre: true, gap: 22 });
+
+                doc.setLineWidth(0.5);
+                doc.line(M + 15, y, RIGHT - 15, y);
+                y += 10;
+                block(A.title, M, RIGHT - M, { bold: true, size: 16, lead: 7, centre: true, gap: 4 });
+                doc.line(M + 15, y, RIGHT - 15, y);
+
+                // house block, in place of a law firm's letterhead
+                y += 19;
+                block('AkadSewa\u2122', M, RIGHT - M, { bold: true, size: 12, lead: 6, centre: true, gap: 1.5 });
+                block(L === 'bm' ? 'Perjanjian Penyewaan Digital' : 'Digital Tenancy Agreements',
+                      M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
+                block('Impact Analytix Sdn. Bhd. (200901037283)', M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 1 });
+                block('akad-sewa.vercel.app', M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 3.5 });
+                if (apiToken) {
+                    block((L === 'bm' ? 'Ruj: ' : 'Ref: ') + apiToken, M, RIGHT - M, { size: 10, lead: 4.6, centre: true, gap: 0 });
+                }
+
+                // ============================================================
+                // RECITALS
+                // ============================================================
+                doc.addPage(); y = TOP;
+
+                (function () {
+                    const head = (L === 'bm') ? 'PERJANJIAN PENYEWAAN INI' : 'THIS TENANCY AGREEMENT';
+                    const rest = A.preamble.indexOf(head) === 0 ? A.preamble.slice(head.length) : null;
+                    if (rest === null) { block(A.preamble, M, RIGHT - M, { gap: 5 }); return; }
+                    // opening words bold, remainder normal, one justified flow
+                    block(null, M, RIGHT - M, {
+                        words: tokenise(head, true).concat(tokenise(rest, false)),
+                        gap: 5
                     });
-                    y += 2;
+                })();
+
+                block(L === 'bm' ? 'Antara' : 'Between', M, RIGHT - M, { bold: true, gap: 5 });
+
+                // party paragraphs: "(1)" in its own column, name bold
+                [A.party1, A.party2].forEach(function (p) {
+                    const m = /^(\(\d\))\s+(.*)$/.exec(p);
+                    if (!m) { block(p, M, RIGHT - M, { gap: 5 }); return; }
+                    const rest = m[2];
+                    const nameEnd = rest.indexOf('(');
+                    const namePart = nameEnd > 0 ? rest.slice(0, nameEnd) : '';
+                    const tailPart = nameEnd > 0 ? rest.slice(nameEnd) : rest;
+                    need(LEAD);
+                    F('normal', FS);
+                    doc.text(m[1], M, y);
+                    // bold the party name, normal thereafter
+                    block(null, M + T, RIGHT - (M + T), {
+                        words: tokenise(namePart, true).concat(tokenise(tailPart, false)),
+                        gap: 4
+                    });
                 });
 
-                need(10);
-                para(A.endClauses, { size: 9.5, style: 'bold', align: 'center', gap: 6 });
+                block(A.partyNote, M, RIGHT - M, { gap: 6 });
+                block(A.recitalHead, M, RIGHT - M, { bold: true, gap: 5 });
 
-                // ---------- EXECUTION ----------
-                doc.addPage(); y = M + 4;
-                para(A.witness, { size: 9.5, gap: 12 });
+                A.recitals.forEach(function (r) {
+                    const m = /^([A-Z]\.)\s+(.*)$/.exec(r);
+                    if (m) hang(m[1], M, m[2], M + T, { gap: 5 });
+                    else block(r, M + T, RIGHT - (M + T), { gap: 5 });
+                });
 
-                function block(role, name, ic, sig) {
-                    need(62);
-                    doc.setFontSize(9.5);
-                    doc.setFont(undefined, 'normal');
+                block(A.witnesseth, M, RIGHT - M, { bold: true, gap: 7 });
+
+                // ============================================================
+                // CLAUSES
+                // ============================================================
+                const RE_SUB    = /^(\d+\.\d+)\s{2}(.*)$/;
+                const RE_LETTER = /^(\([a-z]\))\s{2}(.*)$/;
+                const RE_DEF_EN = /^("[^"]+")\s+(means\s+.*)$/;
+                const RE_DEF_BM = /^("[^"]+")\s+(bermaksud\s+.*)$/;
+
+                A.clauses.forEach(function (c) {
+                    need(20);
+                    y += 2;
+                    // clause heading: number in its own column, title beside it
+                    need(LEAD);
+                    F('bold', FS);
+                    doc.text(c.no + '.', M, y);
+                    block(c.title, M + T, RIGHT - (M + T), { bold: true, justify: false, gap: 6 });
+
+                    let sub = false;   // has a numbered sub-heading been seen?
+
+                    c.paras.forEach(function (p) {
+                        p = String(p == null ? '' : p);
+                        let m;
+
+                        if ((m = RE_SUB.exec(p))) {
+                            sub = true;
+                            need(LEAD + 2);
+                            y += 1;
+                            F('bold', FS);
+                            doc.text(m[1], M + T, y);
+                            block(m[2], M + (2 * T), RIGHT - (M + 2 * T), { bold: true, justify: false, gap: 5 });
+                            return;
+                        }
+
+                        if ((m = RE_LETTER.exec(p))) {
+                            const lx = sub ? M + (2 * T) : M + T;
+                            const tx = sub ? M + (3 * T) : M + (2 * T);
+                            hang(m[1], lx, m[2], tx, { gap: 5 });
+                            return;
+                        }
+
+                        m = (L === 'bm') ? RE_DEF_BM.exec(p) : RE_DEF_EN.exec(p);
+                        if (m) {
+                            // two-column definition: term bold on the left.
+                            // Reserve the full height first, or a definition
+                            // that straddles a page break strands the term and
+                            // leaves the rest of the page blank.
+                            const tx = M + (2 * T);
+                            const hTerm = block(m[1], tx, DEFCOL - tx - 4,
+                                                { bold: true, justify: false, measure: true });
+                            const hDef  = block(m[2], DEFCOL, RIGHT - DEFCOL, { measure: true });
+                            need(Math.max(hTerm, hDef));
+                            const top = y;
+                            block(m[1], tx, DEFCOL - tx - 4, { bold: true, justify: false, gap: 0 });
+                            const afterTerm = y;
+                            y = top;
+                            block(m[2], DEFCOL, RIGHT - DEFCOL, { gap: 0 });
+                            y = Math.max(y, afterTerm) + 4.5;
+                            return;
+                        }
+
+                        block(p, sub ? M + (2 * T) : M + T,
+                                 RIGHT - (sub ? M + (2 * T) : M + T), { gap: 5 });
+                    });
+
+                    y += 3;
+                });
+
+                need(12);
+                y += 4;
+                block(A.endClauses, M, RIGHT - M, { centre: true, size: 10, gap: 0 });
+
+                // ============================================================
+                // EXECUTION — no witness lines: a tenancy agreement is a simple
+                // contract and needs none, and a witness cannot be produced by
+                // two parties signing separately on their own phones.
+                // ============================================================
+                doc.addPage(); y = TOP;
+
+                (function () {
+                    const head = (L === 'bm') ? 'PADA MENYAKSIKAN HAL DI ATAS,' : 'IN WITNESS WHEREOF';
+                    const rest = A.witness.indexOf(head) === 0 ? A.witness.slice(head.length) : null;
+                    if (rest === null) { block(A.witness, M, RIGHT - M, { gap: 18 }); return; }
+                    block(null, M, RIGHT - M, {
+                        words: tokenise(head, true).concat(tokenise(rest, false)),
+                        gap: 18
+                    });
+                })();
+
+                const BR   = M + 72;      // the ")" column
+                const SIGX = M + 85;      // signature / rule column
+                const SIGW = RIGHT - SIGX;
+
+                function execBlock(role, name, ic, sig) {
+                    need(52);
+                    const top = y;
+
+                    F('normal', FS);
                     doc.text(A.signedBy + ' ' + role, M, y);
-                    doc.text(')', M + 78, y);
-                    y += 5;
-                    doc.setFont(undefined, 'bold');
+                    doc.text(')', BR, y);
+                    y += LEAD;
+
+                    F('bold', FS);
                     doc.text(name, M, y);
-                    doc.setFont(undefined, 'normal');
-                    doc.text(')', M + 78, y);
-                    y += 5;
+                    F('normal', FS);
+                    doc.text(')', BR, y);
+                    y += LEAD;
+
                     doc.text('(' + A.icLabel + ' ' + ic + ')', M, y);
-                    doc.text(')', M + 78, y);
-                    y += 5;
-                    doc.text(A.inPresence, M, y);
-                    doc.text(')', M + 78, y);
+                    doc.text(')', BR, y);
 
-                    // Signature sits to the right of the bracket column.
+                    // signature sits above the rule, in the right-hand column
                     if (sig && sig.indexOf('data:image') === 0) {
-                        try { doc.addImage(sig, 'PNG', M + 90, y - 16, 55, 18); } catch (e) {}
+                        try { doc.addImage(sig, 'PNG', SIGX, top - 3, Math.min(52, SIGW), 17); } catch (e) {}
                     }
-                    doc.line(M + 90, y + 4, M + 145, y + 4);
-                    y += 12;
+                    const ruleY = top + 17;
+                    doc.setLineWidth(0.2);
+                    doc.line(SIGX, ruleY, RIGHT, ruleY);
 
-                    // Witness line for the signing party.
-                    doc.line(M, y, M + 70, y);
-                    y += 4.5;
-                    doc.setFontSize(8);
-                    doc.text(A.witnessLbl, M, y);
-                    doc.setFontSize(9.5);
-                    y += 6;
-                    doc.text(A.dateLbl + ' ' + A.today, M + 90, y);
-                    y += 16;
+                    F('normal', 10);
+                    doc.text(A.dateLbl + ' ' + A.today, SIGX, ruleY + 5);
+
+                    y = Math.max(y, ruleY + 5) + 22;
                 }
 
-                block(A.llRole, A.llName, A.llIC, d.landlordSig);
-                block(A.tnRole, A.tnName, A.tnIC, d.tenantSig);
+                execBlock(A.llRole, A.llName, A.llIC, d.landlordSig);
+                execBlock(A.tnRole, A.tnName, A.tnIC, d.tenantSig);
 
                 if (A.coConsent) {
                     need(20);
-                    para(A.coConsent, { size: 9, style: 'italic', gap: 4 });
+                    block(A.coConsent, M, RIGHT - M, { size: 10, gap: 4 });
                 }
 
                 // ========== APPENDIX: FURNISHED ITEMS ========== (if applicable)
-                const APPX_STATUS = A.furnishedStatus || '';
-                const APPX_ITEMS  = Array.isArray(A.furnishedItems) ? A.furnishedItems : [];
-                const APPX_OTHER  = (A.furnishedItemsOther || '').trim();
+                // Read the furnishing data from the form: buildAgreement does
+                // not copy it onto A, so keying off A left Appendix A missing
+                // even though Clause 2 refers to it.
+                const APPX_STATUS = d.furnishedStatus || '';
+                const APPX_OTHER  = (d.furnishedItemsOther || '').trim();
+
+                // The saved item names are in whichever language the form was
+                // in when they were ticked, so translate from the stable keys
+                // to the language this PDF is being produced in.
+                const ITEM_NAMES = {
+                    bedframe:       { bm: 'Rangka katil',   en: 'Bed frame' },
+                    mattress:       { bm: 'Tilam',          en: 'Mattress' },
+                    wardrobe:       { bm: 'Almari',         en: 'Wardrobe' },
+                    table:          { bm: 'Meja',           en: 'Table' },
+                    chair:          { bm: 'Kerusi',         en: 'Chair' },
+                    sofa:           { bm: 'Sofa',           en: 'Sofa' },
+                    refrigerator:   { bm: 'Peti sejuk',     en: 'Refrigerator' },
+                    stove:          { bm: 'Dapur',          en: 'Stove' },
+                    microwave:      { bm: 'Microwave',      en: 'Microwave' },
+                    sink:           { bm: 'Sinki dapur',    en: 'Kitchen sink' },
+                    ac:             { bm: 'Pendingin hawa', en: 'Air conditioner' },
+                    fan:            { bm: 'Kipas',          en: 'Fan' },
+                    lights:         { bm: 'Lampu & suis',   en: 'Lights & switches' },
+                    curtains:       { bm: 'Langsir',        en: 'Curtains' },
+                    carpet:         { bm: 'Karpet',         en: 'Carpet' },
+                    tv:             { bm: 'TV',             en: 'TV' },
+                    washingmachine: { bm: 'Mesin basuh',    en: 'Washing machine' },
+                    waterheater:    { bm: 'Pemanas air',    en: 'Water heater' }
+                };
+                const APPX_KEYS = Array.isArray(d.furnishedItemKeys) ? d.furnishedItemKeys : [];
+                const APPX_ITEMS = APPX_KEYS.length
+                    ? APPX_KEYS.map(function (k) {
+                          const e = ITEM_NAMES[k];
+                          return e ? e[L === 'bm' ? 'bm' : 'en'] : String(k);
+                      })
+                    : (Array.isArray(d.furnishedItems) ? d.furnishedItems : []);
                 const SHOW_APPX   = (APPX_STATUS.includes('Fully') || APPX_STATUS.includes('Partially')) &&
                                     (APPX_ITEMS.length > 0 || !!APPX_OTHER);
                 if (SHOW_APPX) {
-                    doc.addPage(); y = M;
+                    doc.addPage(); y = TOP;
 
-                    // Title
-                    doc.setFontSize(14); doc.setFont(undefined, 'bold'); doc.setTextColor(15, 45, 92);
-                    if (L === 'bm') {
-                        doc.text('LAMPIRAN A', PW / 2, y, { align: 'center' });
-                        y += 8;
-                        doc.setFontSize(12); doc.setFont(undefined, 'bold');
-                        doc.text('Jadual Kelengkapan dan Perabot', PW / 2, y, { align: 'center' });
-                        y += 7;
-                        doc.setFontSize(8.5); doc.setFont(undefined, 'italic'); doc.setTextColor(90, 90, 90);
-                        doc.text('(Dirujuk dalam Klausa 2 Perjanjian ini)', PW / 2, y, { align: 'center' });
-                    } else {
-                        doc.text('APPENDIX A', PW / 2, y, { align: 'center' });
-                        y += 8;
-                        doc.setFontSize(12); doc.setFont(undefined, 'bold');
-                        doc.text('Schedule of Fixtures and Furnishings', PW / 2, y, { align: 'center' });
-                        y += 7;
-                        doc.setFontSize(8.5); doc.setFont(undefined, 'italic'); doc.setTextColor(90, 90, 90);
-                        doc.text('(Referred to in Clause 2 of this Agreement)', PW / 2, y, { align: 'center' });
-                    }
-                    doc.setTextColor(0, 0, 0); doc.setFont(undefined, 'normal');
-                    y += 12;
-                    
-                    // Furnished Status & Items List
-                    doc.setFontSize(10); doc.setFont(undefined, 'bold'); doc.setTextColor(0, 0, 0);
-                    if (L === 'bm') {
-                        doc.text('Status Perabot:', M, y);
-                    } else {
-                        doc.text('Furnishing Status:', M, y);
-                    }
-                    y += 5;
-                    doc.setFont(undefined, 'normal');
+                    block(L === 'bm' ? 'LAMPIRAN A' : 'APPENDIX A',
+                          M, RIGHT - M, { bold: true, size: 13, centre: true, gap: 4 });
+                    block(L === 'bm' ? 'Jadual Kelengkapan dan Perabot' : 'Schedule of Fixtures and Furnishings',
+                          M, RIGHT - M, { bold: true, size: 12, centre: true, gap: 3 });
+                    block(L === 'bm' ? '(Dirujuk dalam Klausa 2 Perjanjian ini)' : '(Referred to in Clause 2 of this Agreement)',
+                          M, RIGHT - M, { size: 10, centre: true, gap: 12 });
+
                     const statusMap = {
-                        'Fully Furnished / Lengkap': { bm: 'Lengkap (Fully Furnished)', en: 'Fully Furnished' },
-                        'Partially Furnished / Separuh': { bm: 'Separuh (Partially Furnished)', en: 'Partially Furnished' },
-                        'Not Furnished / Kosong': { bm: 'Kosong (Not Furnished)', en: 'Not Furnished' }
+                        'Fully Furnished / Lengkap':     { bm: 'Lengkap (Fully Furnished)',      en: 'Fully Furnished' },
+                        'Partially Furnished / Separa Lengkap': { bm: 'Separa Lengkap (Partially Furnished)', en: 'Partially Furnished' },
+                        'Partially Furnished / Separuh':        { bm: 'Separa Lengkap (Partially Furnished)', en: 'Partially Furnished' },
+                        'Not Furnished / Kosong':        { bm: 'Kosong (Not Furnished)',          en: 'Not Furnished' }
                     };
-                    const statusText = statusMap[A.furnishedStatus]?.[L === 'bm' ? 'bm' : 'en'] || A.furnishedStatus;
-                    doc.setFontSize(10);
-                    para(statusText, { gap: 4 });
-                    y += 6;
-                    
-                    // Items List
-                    doc.setFontSize(10); doc.setFont(undefined, 'bold');
-                    if (L === 'bm') {
-                        doc.text('Barang-Barang Disediakan:', M, y);
-                    } else {
-                        doc.text('Items Provided:', M, y);
-                    }
-                    y += 6;
-                    
-                    doc.setFont(undefined, 'normal'); doc.setFontSize(10);
-                    if (A.furnishedItems && A.furnishedItems.length > 0) {
-                        A.furnishedItems.forEach(item => {
-                            need(5);
-                            doc.text('• ' + item, M + 5, y);
-                            y += 5;
+                    const statusText = (statusMap[APPX_STATUS] || {})[L === 'bm' ? 'bm' : 'en'] || APPX_STATUS;
+
+                    hang(L === 'bm' ? '1.' : '1.', M,
+                         (L === 'bm' ? 'Status Perabot: ' : 'Furnishing Status: ') + statusText,
+                         M + T, { gap: 6 });
+
+                    need(LEAD);
+                    F('normal', FS); doc.text(L === 'bm' ? '2.' : '2.', M, y);
+                    block(L === 'bm' ? 'Barang-Barang Disediakan:' : 'Items Provided:',
+                          M + T, RIGHT - (M + T), { justify: false, gap: 4 });
+
+                    if (APPX_ITEMS.length > 0) {
+                        APPX_ITEMS.forEach(function (item) {
+                            hang('\u2022', M + T, String(item), M + T + 6, { justify: false, gap: 2 });
                         });
                     } else {
-                        doc.text((L === 'bm' ? '[Tiada barang disediakan]' : '[No items provided]'), M + 5, y);
-                        y += 5;
+                        block(L === 'bm' ? '[Tiada barang disediakan]' : '[No items provided]',
+                              M + T, RIGHT - (M + T), { justify: false, gap: 2 });
                     }
-                    
-                    // Other items
-                    if (A.furnishedItemsOther) {
-                        y += 3;
-                        doc.setFont(undefined, 'bold');
-                        if (L === 'bm') {
-                            doc.text('Barang-Barang Lain:', M, y);
-                        } else {
-                            doc.text('Other Items:', M, y);
-                        }
-                        y += 5;
-                        doc.setFont(undefined, 'normal');
-                        para(A.furnishedItemsOther, { gap: 4 });
-                    }
-                    
-                    // Acknowledgement
-                    y += 8;
-                    doc.setFont(undefined, 'bold');
-                    if (L === 'bm') {
-                        doc.text('Pengakuan:', M, y);
-                    } else {
-                        doc.text('Acknowledgement:', M, y);
-                    }
-                    y += 6;
-                    doc.setFont(undefined, 'normal');
-                    if (L === 'bm') {
-                        para('Kedua-dua pihak mengakui bahawa barang-barang yang disenaraikan di atas telah diperiksa dan berada dalam keadaan baik serta berfungsi pada tarikh mula Tempoh. Penyewa hendaklah memulangkan barang-barang tersebut dalam keadaan yang sama pada akhir Tempoh, kecuali kehausan biasa. Senarai ini adalah tidak menyeluruh dan tidak menjejaskan mana-mana terma lain dalam Perjanjian ini.', { gap: 4, size: 9 });
-                    } else {
-                        para('Both parties acknowledge that the items listed above have been inspected and are in good working condition as at the commencement date of the Term. The Tenant shall return the said items in the same condition at the end of the Term, fair wear and tear excepted. This list is not exhaustive and does not derogate from any other term of this Agreement.', { gap: 4, size: 9 });
+                    y += 4;
+
+                    if (APPX_OTHER) {
+                        need(LEAD);
+                        F('normal', FS); doc.text('3.', M, y);
+                        block(L === 'bm' ? 'Barang-Barang Lain:' : 'Other Items:',
+                              M + T, RIGHT - (M + T), { justify: false, gap: 4 });
+                        block(APPX_OTHER, M + T, RIGHT - (M + T), { gap: 6 });
                     }
 
+                    y += 4;
+                    need(LEAD);
+                    F('normal', FS); doc.text(APPX_OTHER ? '4.' : '3.', M, y);
+                    block(L === 'bm' ? 'Pengakuan:' : 'Acknowledgement:',
+                          M + T, RIGHT - (M + T), { bold: true, justify: false, gap: 4 });
+                    block(L === 'bm'
+                        ? 'Kedua-dua pihak mengakui bahawa barang-barang yang disenaraikan di atas telah diperiksa dan berada dalam keadaan baik serta berfungsi pada tarikh mula Tempoh. Penyewa hendaklah memulangkan barang-barang tersebut dalam keadaan yang sama pada akhir Tempoh, kecuali kehausan biasa. Senarai ini adalah tidak menyeluruh dan tidak menjejaskan mana-mana terma lain dalam Perjanjian ini.'
+                        : 'Both parties acknowledge that the items listed above have been inspected and are in good working condition as at the commencement date of the Term. The Tenant shall return the said items in the same condition at the end of the Term, fair wear and tear excepted. This list is not exhaustive and does not derogate from any other term of this Agreement.',
+                        M + T, RIGHT - (M + T), { gap: 14 });
+
                     // ---- Appendix signature block: an unsigned annexure has
-                    // no contractual weight, so both parties initial it here.
-                    y += 10;
+                    // no contractual weight, so both parties sign it here too.
                     need(46);
-                    const colW = 78;
-                    const cols = [M, M + colW + 14];
                     const names = [A.llName, A.tnName];
                     const roles = [A.llRole, A.tnRole];
                     const sigs  = [d.landlordSig, d.tenantSig];
+                    const colW  = 66;
+                    const cols  = [M, RIGHT - colW];
                     const topY  = y;
                     let maxY = y;
                     for (let i = 0; i < 2; i++) {
                         let cy = topY;
                         const cx = cols[i];
                         if (sigs[i] && sigs[i].indexOf('data:image') === 0) {
-                            try { doc.addImage(sigs[i], 'PNG', cx, cy, 48, 16); } catch (e) {}
+                            try { doc.addImage(sigs[i], 'PNG', cx, cy, 50, 16); } catch (e) {}
                         }
                         cy += 18;
+                        doc.setLineWidth(0.2);
                         doc.line(cx, cy, cx + colW, cy);
+                        cy += 5;
+                        F('bold', 10); doc.text(String(names[i] || ''), cx, cy);
                         cy += 4.5;
-                        doc.setFontSize(9); doc.setFont(undefined, 'bold');
-                        doc.text(String(names[i] || ''), cx, cy);
-                        cy += 4.5;
-                        doc.setFontSize(8); doc.setFont(undefined, 'normal'); doc.setTextColor(90, 90, 90);
-                        doc.text(String(roles[i] || ''), cx, cy);
+                        F('normal', 10); doc.text(String(roles[i] || ''), cx, cy);
                         cy += 4.5;
                         doc.text(A.dateLbl + ' ' + A.today, cx, cy);
-                        doc.setTextColor(0, 0, 0);
                         if (cy > maxY) maxY = cy;
                     }
-                    doc.setFontSize(10);
                     y = maxY + 6;
                 }
 
-                // ---------- FOOTER ON EVERY PAGE ----------
+                // ---------- RUNNING HEADER & FOOTER ON EVERY PAGE ----------
                 try {
                     const total = doc.internal.getNumberOfPages();
                     const yr = new Date().getFullYear();
+                    const hdr1 = (L === 'bm') ? 'Perjanjian Penyewaan' : 'Tenancy Agreement';
+                    const hdr2 = (L === 'bm') ? 'Salinan Perlaksanaan' : 'Execution Copy';
                     for (let p = 1; p <= total; p++) {
                         doc.setPage(p);
+
+                        // header, right-aligned, as on a firm-drafted engrossment
+                        doc.setFont('times', 'normal');
+                        doc.setFontSize(10);
+                        doc.setTextColor(0, 0, 0);
+                        doc.text(hdr1, RIGHT, 15, { align: 'right' });
+                        doc.text(hdr2, RIGHT, 19.5, { align: 'right' });
+
+                        // page number, centred; the cover carries none
+                        if (p > 1) {
+                            doc.setFontSize(10);
+                            doc.text(String(p - 1), PW / 2, PH - 17, { align: 'center' });
+                        }
+
+                        // document reference, bottom left
+                        if (apiToken) {
+                            doc.setFontSize(8);
+                            doc.setTextColor(90, 90, 90);
+                            doc.text('{' + apiToken + '}', M, PH - 17);
+                        }
+
                         doc.setFontSize(7);
-                        doc.setTextColor(130, 130, 130);
-                        doc.setFont(undefined, 'normal');
-                        doc.text('AkadSewa\u2122  \u00A9 ' + yr + ' Impact Analytix Sdn. Bhd. (200901037283). Hak Cipta Terpelihara / All Rights Reserved.',
-                                 PW / 2, PH - 12, { align: 'center' });
-                        doc.text((apiToken ? 'Ref: ' + apiToken + '  \u2022  ' : '') +
-                                 (L === 'bm' ? 'Dokumen dijana secara digital' : 'Digitally generated document') +
-                                 '  \u2022  akad-sewa.vercel.app  \u2022  ' +
-                                 (L === 'bm' ? 'Halaman ' : 'Page ') + p + ' / ' + total,
-                                 PW / 2, PH - 8, { align: 'center' });
+                        doc.setTextColor(140, 140, 140);
+                        doc.text('AkadSewa\u2122  \u00A9 ' + yr + ' Impact Analytix Sdn. Bhd. (200901037283). ' +
+                                 (L === 'bm' ? 'Hak Cipta Terpelihara' : 'All Rights Reserved') +
+                                 '  \u2022  akad-sewa.vercel.app',
+                                 PW / 2, PH - 10, { align: 'center' });
                     }
                     doc.setTextColor(0, 0, 0);
                 } catch (e) { console.error('PDF footer error', e); }
