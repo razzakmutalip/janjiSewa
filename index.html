@@ -3513,6 +3513,35 @@
         }
 
         // ============================================================
+        // STRIPE PAYMENT LINKS — one per origin.
+        //
+        // A Stripe payment link has only ONE success redirect URL, and the
+        // token is recovered from localStorage, which is per-origin. So a
+        // payer who starts on one domain but is returned to another loses
+        // the token and the Download button stays locked. Each domain
+        // therefore needs its own link that returns to that same domain.
+        //
+        // When akad-sewa.vercel.app is eventually retired (301 to
+        // akadsewa.my), the vercel entries below can be removed and the
+        // old link deactivated in the Stripe dashboard.
+        // ============================================================
+        const STRIPE_LINK_VERCEL = 'https://buy.stripe.com/4gM8wP4tF1nSeYr7dW5AQ01';
+        const STRIPE_LINK_AKADSEWA = 'https://buy.stripe.com/fZudR93pB1nSaIbgOw5AQ02';
+
+        const STRIPE_LINKS = {
+            'akadsewa.my':           STRIPE_LINK_AKADSEWA,
+            'www.akadsewa.my':       STRIPE_LINK_AKADSEWA,
+            'akad-sewa.vercel.app':  STRIPE_LINK_VERCEL,
+            'janji-sewa.vercel.app': STRIPE_LINK_VERCEL
+        };
+
+        function getStripeLink() {
+            // Unknown host (preview deploy, local file, future domain):
+            // fall back to the vercel link so payment still works.
+            return STRIPE_LINKS[window.location.hostname] || STRIPE_LINK_VERCEL;
+        }
+
+        // ============================================================
         // STRIPE PAYMENT — saves COMPLETE data (landlord + tenant + both
         // signatures) to DATABASE first, gets final token, THEN redirects.
         // Token kept in localStorage so data can be re-fetched after payment.
@@ -3538,7 +3567,7 @@
             localStorage.setItem('akadSewa_pending_payment', token);
 
             // Also pass as client_reference_id (belt-and-suspenders).
-            const stripeUrl = 'https://buy.stripe.com/4gM8wP4tF1nSeYr7dW5AQ01'
+            const stripeUrl = getStripeLink()
                 + '?client_reference_id=' + encodeURIComponent(token);
             window.location.href = stripeUrl;
         }
