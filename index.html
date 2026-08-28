@@ -1551,6 +1551,48 @@
         let lang = 'bm';
         let apiToken = '';           // AS-xxx token from server (the record key)
         let userRole = 'landlord';
+        // ============================================================
+        // REFERRAL TRACKING — link only, no form field
+        // The person who clicks ?ref= is the LANDLORD; the person who pays
+        // is the TENANT, on a different device. So the code must be written
+        // into the AGREEMENT RECORD on the landlord's first save, not held
+        // in the browser until payment. loadedReferral carries it back when
+        // the tenant re-saves, exactly like the signatures below.
+        // ============================================================
+        let loadedReferral = '';
+        let VALID_REFS = null;
+
+        async function loadPartners() {
+            try {
+                const r = await fetch('/partners.json', { cache: 'no-store' });
+                if (!r.ok) throw new Error('http ' + r.status);
+                VALID_REFS = await r.json();
+            } catch (e) {
+                // false means "list unavailable", NOT "empty list". A broken
+                // or missing partners.json must never silently stop tracking.
+                VALID_REFS = false;
+            }
+        }
+
+        async function captureReferral() {
+            try {
+                const raw = new URLSearchParams(window.location.search).get('ref');
+                if (!raw) return;
+                const clean = raw.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 20);
+                if (!clean) return;
+                if (VALID_REFS === null) await loadPartners();
+                if (VALID_REFS === false) { localStorage.setItem('akadsewa_ref', clean); return; }
+                const rec = VALID_REFS[clean];
+                if (rec && rec.status === 'active') localStorage.setItem('akadsewa_ref', clean);
+            } catch (e) { /* referral must never break the form */ }
+        }
+
+        function getReferral() {
+            try { return localStorage.getItem('akadsewa_ref') || ''; } catch (e) { return ''; }
+        }
+
+        captureReferral();
+
         let loadedLandlordSig = '';  // signature dataURL loaded from database
         let loadedTenantSig = '';    // signature dataURL loaded from database
 
@@ -1836,6 +1878,10 @@
                 // opens the link on a fresh page that always starts in Malay,
                 // no matter which language the landlord filled the form in.
                 lang: lang,
+                // Referral: the landlord's captured code wins; if this browser
+                // has none (the tenant's device), keep what was already stored
+                // on the record so a tenant save cannot wipe it. (BUG FIX)
+                referralCode: getReferral() || loadedReferral || '',
                 landlordSig: landlordSig,
                 tenantSig: tenantSig
             };
@@ -1887,7 +1933,11 @@
                     penyewa_nama: formData.tenantName || '-',
                     harta_maklumat: JSON.stringify(formData),  // FULL data, encrypted server-side
                     harga_bulanan: parseFloat(formData.rent) || 0,
-                    durasi_bulan: months
+                    durasi_bulan: months,
+                    // Sent as its own field so the webhook can read it without
+                    // decrypting harta_maklumat. Ignored until save.php adds
+                    // the referral_code column.
+                    referral_code: formData.referralCode || ''
                 };
                 // Include existing token so a re-save UPDATES the same record.
                 if (apiToken && apiToken.startsWith('AS-')) {
@@ -1940,7 +1990,8 @@
                     penyewa_nama: formData.tenantName || '-',
                     harta_maklumat: JSON.stringify(formData),
                     harga_bulanan: parseFloat(formData.rent) || 0,
-                    durasi_bulan: months
+                    durasi_bulan: months,
+                    referral_code: formData.referralCode || ''
                 };
                 // CRITICAL: include the existing token so the server UPDATES
                 // the landlord's record (merging tenant data) instead of
@@ -2023,6 +2074,14 @@
                     }
                     if (formData.tenantSig && formData.tenantSig.startsWith('data:image')) {
                         loadedTenantSig = formData.tenantSig;
+                    }
+
+                    // Carry the referral code forward. The tenant's browser
+                    // never saw ?ref=, so without this the code would be lost
+                    // on the tenant's save — which is the save that precedes
+                    // payment. (BUG FIX)
+                    if (typeof formData.referralCode === 'string' && formData.referralCode) {
+                        loadedReferral = formData.referralCode;
                     }
 
                     // Restore furnished items (checkboxes + free text), then
@@ -2522,6 +2581,11 @@
                 'Room Only / Bilik Sahaja':      { bm: 'bilik sahaja',     en: 'a room only' }
             };
             const USE = (USE_MAP[USE_RAW] || {})[bm ? 'bm' : 'en'] || USE_RAW;
+            // Room-only lettings need a different scope for the defined term
+            // "Premises": it must mean the ROOM, not the whole house, or the
+            // tenant's covenants (utilities, repair, restoration, security)
+            // would bind them to the entire property. (SCOPE FIX)
+            const IS_ROOM = USE_RAW.indexOf('Room Only') > -1;
 
             const RENT     = sumInWords(d.rent, L);
             const MAINT    = sumInWords(d.maintenanceFee, L);
@@ -2608,10 +2672,19 @@
 
             A.recitalHead = bm ? 'BAHAWASANYA:' : 'WHEREAS:';
             A.recitals = [];
-            A.recitals.push((bm ? 'A.  Pemilik ialah pemilik berdaftar bagi premis yang dikenali sebagai '
-                                : 'A.  The Landlord is the registered owner of the premises known as ') + premDesc +
-                            (bm ? ' (kemudian daripada ini dirujuk sebagai "Premis").'
-                                : ' (hereinafter referred to as "the Demised Premises").'));
+            if (IS_ROOM) {
+                // The room is the subject of the tenancy; the building is only
+                // its location. Stating this once here keeps every later
+                // reference to "Premis" correctly scoped.
+                A.recitals.push(bm
+                    ? 'A.  Pemilik ialah pemilik berdaftar bagi hartanah yang dikenali sebagai ' + premDesc + '. Pemilik bersetuju untuk menyewakan kepada Penyewa satu (1) bilik di dalam hartanah tersebut, yang kemudian daripada ini dirujuk sebagai "Premis". Penyewaan ini tidak memberikan Penyewa apa-apa hak milikan eksklusif ke atas mana-mana bahagian lain hartanah tersebut.'
+                    : 'A.  The Landlord is the registered owner of the property known as ' + premDesc + '. The Landlord agrees to let to the Tenant one (1) room within the said property, hereinafter referred to as "the Demised Premises". This tenancy does not grant the Tenant any exclusive possession of any other part of the said property.');
+            } else {
+                A.recitals.push((bm ? 'A.  Pemilik ialah pemilik berdaftar bagi premis yang dikenali sebagai '
+                                    : 'A.  The Landlord is the registered owner of the premises known as ') + premDesc +
+                                (bm ? ' (kemudian daripada ini dirujuk sebagai "Premis").'
+                                    : ' (hereinafter referred to as "the Demised Premises").'));
+            }
             if (CO) {
                 A.recitals.push(bm
                     ? 'B.  Pemilik berdaftar bersama bagi Premis tersebut ialah ' + CONAME + ' (No. K.P. ' + COIC + '), beralamat di ' + COADDR + '. ' + CONAME + ' telah memberikan kebenaran kepada Pemilik untuk menyewakan Premis kepada Penyewa mengikut terma dan syarat yang dinyatakan dalam Perjanjian ini.'
@@ -2637,7 +2710,9 @@
                 '"Perjanjian ini" bermaksud Perjanjian Penyewaan ini yang dimeterai antara Pemilik dan Penyewa termasuk apa-apa variasi atau tambahan kepadanya dari semasa ke semasa;',
                 '"Pihak Berkuasa Berkenaan" bermaksud mana-mana kerajaan, badan separa kerajaan dan/atau pihak berkuasa berkanun, jabatan, agensi atau badan lain yang pada masa ini diberi kuasa di bawah mana-mana undang-undang bertulis yang berkuat kuasa di Malaysia untuk meluluskan pelan pembangunan, pelan bangunan, pengeluaran dokumen hak milik, membekalkan apa-apa perkhidmatan atau kemudahan kepada Premis dan menguatkuasakan apa-apa undang-undang, peraturan, kaedah atau undang-undang kecil yang berkaitan dengannya;',
                 '"Hari Perniagaan" bermaksud hari di mana bank dibuka untuk perniagaan di Malaysia;',
-                '"Premis" bermaksud premis yang dikenali sebagai ' + PREM + ' sebagaimana diperihalkan dalam Rekital A di atas;',
+                (IS_ROOM
+                    ? '"Premis" bermaksud bilik di dalam hartanah yang dikenali sebagai ' + PREM + ' sebagaimana diperihalkan dalam Rekital A di atas, dan tidak termasuk mana-mana bahagian lain hartanah tersebut;'
+                    : '"Premis" bermaksud premis yang dikenali sebagai ' + PREM + ' sebagaimana diperihalkan dalam Rekital A di atas;'),
                 '"Kanun Tanah Negara" bermaksud Kanun Tanah Negara 1965 dan termasuk semua pindaan, kaedah dan peraturan dan/atau pengubahsuaian berkanun di bawahnya;',
                 '"Sewa" bermaksud sewa bulanan sebanyak ' + RENT + ' sahaja yang perlu dibayar oleh Penyewa;',
                 '"Ringgit Malaysia dan RM" bermaksud mata wang sah Malaysia;',
@@ -2660,7 +2735,9 @@
                 '"this Agreement" means this Tenancy Agreement entered into between the Landlord and the Tenant including any variations or supplements thereto from time to time;',
                 '"Appropriate Authority" means any government, semi or quasi-governmental and/or other statutory authority, department, agency or body or any other corporation which is for the time being authorised under any written law in force in Malaysia to approve development plans, building plans, the issue of document of title, to provide or supply any services or amenities to the Demised Premises and to enforce any other laws, regulations, rules or by-laws relating thereto;',
                 '"Business Day" means a day on which banks are open for business in Malaysia;',
-                '"Demised Premises" means the premises known as ' + PREM + ' described in Recital A above;',
+                (IS_ROOM
+                    ? '"Demised Premises" means the room within the property known as ' + PREM + ' described in Recital A above, and does not include any other part of the said property;'
+                    : '"Demised Premises" means the premises known as ' + PREM + ' described in Recital A above;'),
                 '"National Land Code" means the National Land Code 1965 and includes all amendments thereto, rules and regulations and/or statutory modifications thereunder;',
                 '"Rental" means the monthly rental of ' + RENT + ' only to be paid by the Tenant;',
                 '"Ringgit Malaysia and RM" means the lawful currency of Malaysia;',
@@ -2682,11 +2759,17 @@
             // ---- 2 ----
             C.push({ no: '2', title: bm ? 'PERMULAAN PENYEWAAN' : 'COMMENCEMENT OF THE TENANCY', paras: bm ? [
                 'Tertakluk kepada terma dan syarat yang terkandung kemudian daripada ini, Pemilik dengan ini memberikan dan Penyewa dengan ini menerima penyewaan Premis bagi Tempoh sebagaimana ditakrifkan di atas pada sewa bulanan sebanyak ' + RENT + ' sahaja ("Sewa"). Bayaran sewa pertama bagi bulan pertama penyewaan hendaklah dibayar semasa Perjanjian ini ditandatangani.' +
-                (USE ? ' Premis disewakan sebagai ' + USE + (FURN ? ' dan diserahkan dalam keadaan ' + FURN + '.' : '.') : '') +
+                (IS_ROOM
+                    ? ' Premis disewakan sebagai bilik sahaja' + (FURN ? ' dan diserahkan dalam keadaan ' + FURN + '.' : '.') +
+                      ' Penyewa diberikan hak bukan eksklusif untuk menggunakan bahagian kongsi hartanah bersama-sama Pemilik dan mana-mana penghuni lain. Penyewa mengakui bahawa hartanah tersebut mungkin dihuni oleh penyewa atau penghuni lain.'
+                    : (USE ? ' Premis disewakan sebagai ' + USE + (FURN ? ' dan diserahkan dalam keadaan ' + FURN + '.' : '.') : '')) +
                 (HAS_APPX ? ' Kelengkapan dan perabot yang disediakan oleh Pemilik adalah sebagaimana yang disenaraikan dalam Lampiran A yang dilampirkan pada Perjanjian ini, dan Lampiran A tersebut hendaklah dibaca bersama serta menjadi sebahagian daripada Perjanjian ini.' : '')
             ] : [
                 'Subject to the terms and conditions hereinafter contained, the Landlord hereby grants and the Tenant hereby accepts a tenancy of the Demised Premises for a Term as defined above at a monthly rental of ' + RENT + ' only ("Rental"). The first payment of rental for the first month of tenancy shall be paid on the execution of this Agreement.' +
-                (USE ? ' The Demised Premises are let as ' + USE + (FURN ? ' and delivered ' + FURN + '.' : '.') : '') +
+                (IS_ROOM
+                    ? ' The Demised Premises are let as a room only' + (FURN ? ' and delivered ' + FURN + '.' : '.') +
+                      ' The Tenant is granted a non-exclusive right to use the common areas of the property together with the Landlord and any other occupants. The Tenant acknowledges that the said property may be occupied by other tenants or occupants.'
+                    : (USE ? ' The Demised Premises are let as ' + USE + (FURN ? ' and delivered ' + FURN + '.' : '.') : '')) +
                 (HAS_APPX ? ' The fixtures and furnishings provided by the Landlord are as listed in Appendix A annexed to this Agreement, which Appendix A shall be read together with and form an integral part of this Agreement.' : '')
             ]});
 
@@ -2754,8 +2837,12 @@
             C.push({ no: '7', title: bm ? 'AKUJANJI PENYEWA' : 'COVENANTS BY THE TENANT', paras: bm ? [
                 'Penyewa dengan ini berakujanji dengan Pemilik seperti berikut:',
                 '(a)  Membayar Sewa sebelum atau pada hari ' + DUETXT + ' setiap bulan kalendar semasa dengan memasukkan bayaran tersebut ke dalam akaun yang diselenggarakan oleh Pemilik mengikut terma dan syarat yang dinyatakan dalam Perjanjian ini, dan membayar yuran penyelenggaraan mengikut cara yang dirujuk dalam Klausa 3 di atas.',
-                '(b)  Membayar semua caj berkenaan elektrik, telefon, air dan apa-apa perbelanjaan lain yang digunakan di dalam atau dibekalkan kepada Premis dari tarikh penyerahan milikan kosong Premis.',
-                '(c)  Mengekalkan bahagian dalam Premis dalam keadaan baik dan terpelihara sepanjang Tempoh.',
+                (IS_ROOM
+                    ? '(b)  Membayar bahagian yang munasabah bagi caj elektrik, telefon, air dan apa-apa perbelanjaan lain yang digunakan di hartanah tersebut, sebagaimana dipersetujui antara Pihak-Pihak. Sekiranya utiliti dibekalkan melalui meter bersama, Pemilik hendaklah atas permintaan Penyewa mengemukakan salinan bil bagi tempoh berkenaan. Penyewa tidak bertanggungjawab bagi tunggakan yang timbul sebelum permulaan Tempoh.'
+                    : '(b)  Membayar semua caj berkenaan elektrik, telefon, air dan apa-apa perbelanjaan lain yang digunakan di dalam atau dibekalkan kepada Premis dari tarikh penyerahan milikan kosong Premis.'),
+                (IS_ROOM
+                    ? '(c)  Mengekalkan bahagian dalam Premis dalam keadaan baik dan terpelihara sepanjang Tempoh, serta menggunakan bahagian kongsi hartanah dengan berhemah dan membersihkannya selepas penggunaan. Penyewa tidak bertanggungjawab bagi penyelenggaraan struktur hartanah atau bahagian kongsi.'
+                    : '(c)  Mengekalkan bahagian dalam Premis dalam keadaan baik dan terpelihara sepanjang Tempoh.'),
                 '(d)  Membenarkan Pemilik dan/atau ejennya yang diberi kuasa pada bila-bila masa yang munasabah, setelah memberikan notis terdahulu, untuk memasuki Premis dan memeriksa keadaannya serta membuat inventori kelengkapan Pemilik di dalamnya (sebagaimana disenaraikan dalam Lampiran A, jika ada) dan melakukan pembaikan struktur atau luaran kepada Premis. Pemilik boleh menyampaikan kepada Penyewa notis bertulis yang menyatakan apa-apa pembaikan atau kerja yang perlu dilakukan atau penggantian yang perlu dibuat bagi mematuhi kewajipan Penyewa untuk membaiki yang terkandung di sini, dan menghendaki Penyewa dengan serta-merta melaksanakan pembaikan atau kerja tersebut. Sekiranya Penyewa tidak dalam tempoh tiga puluh (30) hari selepas penyampaian notis tersebut meneruskan dengan tekun pelaksanaan pembaikan atau kerja atau penggantian tersebut, maka adalah sah di sisi undang-undang bagi Pemilik memasuki Premis dan melaksanakan pembaikan atau kerja atau membuat penggantian tersebut, dan kos itu menjadi hutang yang kena dibayar oleh Penyewa kepada Pemilik dan boleh dituntut serta-merta melalui tindakan.',
                 '(e)  Memberikan notis kepada Pemilik tentang semua kecacatan struktur pada Premis.',
                 '(f)  Tidak menyimpan atau membawa ke dalam Premis senjata, peluru atau barang haram dan serbuk letupan di mana-mana bahagian Premis, dan tidak meletakkan atau meninggalkan di pintu masuk tangga, laluan atau koridor Premis apa-apa kotak atau sampah atau selainnya menghalang laluan tersebut, serta mengekalkan Premis dalam keadaan bersih dan bersanitasi.',
@@ -2771,13 +2858,19 @@
                 '(p)  Tidak melakukan atau membenarkan atau membiarkan dilakukan apa-apa perkara yang boleh menyebabkan polisi insurans berkenaan Premis terhadap kerosakan akibat kebakaran dan/atau risiko lain menjadi terbatal atau boleh dibatalkan atau yang boleh menyebabkan premiumnya meningkat, dan memperbaiki semua kerosakan yang dialami oleh Pemilik serta membayar balik kepada Pemilik apabila diminta semua jumlah yang dibayar olehnya sebagai premium yang meningkat dan semua perbelanjaan yang ditanggung oleh Pemilik berkenaan pembaharuan polisi tersebut yang menjadi perlu akibat pelanggaran atau ketidakpatuhan Penyewa terhadap akujanji ini.',
                 '(q)  Memulihkan Premis kepada keadaan asalnya pada tamatnya Tempoh. Pemulihan tersebut hendaklah dijalankan dan disiapkan sebelum atau pada tamatnya Tempoh, dan sekiranya gagal, Pemilik berhak menjalankan pemulihan tersebut dan kos serta perbelanjaannya hendaklah ditanggung oleh Penyewa dan dibayar oleh Penyewa kepada Pemilik apabila diminta. Sekiranya pemulihan tersebut tidak disiapkan pada tamatnya Tempoh, Penyewa hendaklah membayar kepada Pemilik sewa bagi hari tambahan tersebut yang dikira berdasarkan Sewa bulanan.',
                 '(r)  Tidak memasang atau membenarkan dipasang atau menanggalkan atau mengubah apa-apa soket elektrik, palam atau motor elektrik atau enjin atau perkakas atau antena tanpa wayar atau televisyen tanpa kebenaran bertulis terdahulu daripada Pemilik. Sekiranya kebenaran diberikan, Penyewa hendaklah atas kos dan perbelanjaannya sendiri menjalankan pemasangan tersebut dengan mematuhi undang-undang kecil yang berkaitan dan tidak boleh membebankan atau menyebabkan kerosakan kepada bekalan kuasa atau mana-mana pemasangan sedia ada di dalam Premis. Sekiranya Penyewa melanggar akujanji ini, Pemilik berhak memasuki Premis dan membetulkan serta, jika perlu, memutuskan pemasangan tersebut bagi mengurangkan kemungkinan kebakaran dan memastikan keselamatan Premis, dan Penyewa hendaklah dengan serta-merta menanggung rugi Pemilik terhadap apa-apa kos, perbelanjaan, kerugian atau kerosakan yang dialami akibat pelanggaran ini.',
-                '(s)  Bertanggungjawab sepenuhnya atas keselamatan Premis dan atas penguncian pintu dan tingkap Premis dengan betul, serta bertanggungjawab sepenuhnya atas penyimpanan selamat semua barang, harta, kelengkapan dan pemasangan di dalamnya pada setiap masa.',
+                (IS_ROOM
+                    ? '(s)  Bertanggungjawab atas penguncian pintu dan tingkap Premis dengan betul, dan atas penyimpanan selamat barang, harta, kelengkapan dan pemasangan di dalam Premis pada setiap masa. Penyewa hendaklah juga mengambil langkah munasabah untuk memastikan pintu utama hartanah dikunci apabila keluar, tetapi tidak bertanggungjawab atas perbuatan atau peninggalan penghuni lain.'
+                    : '(s)  Bertanggungjawab sepenuhnya atas keselamatan Premis dan atas penguncian pintu dan tingkap Premis dengan betul, serta bertanggungjawab sepenuhnya atas penyimpanan selamat semua barang, harta, kelengkapan dan pemasangan di dalamnya pada setiap masa.'),
                 '(t)  Menggunakan Premis sebagai kediaman sahaja.'
             ] : [
                 'The Tenant hereby covenants with the Landlord as follows:',
                 '(a)  To pay the Rental on or before the ' + DUETXT + ' day of each current calendar month by depositing the same into the account maintained by the Landlord in accordance with the terms and conditions set out in this Agreement, and to pay the maintenance fees in the manner referred to in Clause 3 above.',
-                '(b)  To pay all charges in respect of electricity, telephone, water and such other outgoings used in or provided to the Demised Premises from the date of the delivery of vacant possession of the Demised Premises.',
-                '(c)  To keep the interior of the Demised Premises in good repair and condition throughout the Term.',
+                (IS_ROOM
+                    ? '(b)  To pay a reasonable share of the charges for electricity, telephone, water and such other outgoings consumed at the said property, as agreed between the Parties. Where utilities are supplied through a shared meter, the Landlord shall upon the Tenant\u2019s request produce a copy of the relevant bill. The Tenant shall not be liable for arrears arising before the commencement of the Term.'
+                    : '(b)  To pay all charges in respect of electricity, telephone, water and such other outgoings used in or provided to the Demised Premises from the date of the delivery of vacant possession of the Demised Premises.'),
+                (IS_ROOM
+                    ? '(c)  To keep the interior of the Demised Premises in good repair and condition throughout the Term, and to use the common areas of the property with reasonable care and to clean the same after use. The Tenant shall not be responsible for the maintenance of the structure of the property or of the common areas.'
+                    : '(c)  To keep the interior of the Demised Premises in good repair and condition throughout the Term.'),
                 '(d)  To permit the Landlord and/or its duly authorised agents at all reasonable times upon giving prior notice to enter the Demised Premises and to view the condition thereof and to take inventories of the Landlord\u2019s fixtures therein (as listed in Appendix A, if any) and to do structural or external repairs to the Demised Premises. The Landlord may serve upon the Tenant notice in writing specifying any repairs or work necessary to be done or replacement necessary to be made to comply with the Tenant\u2019s obligations to repair herein contained and require the Tenant forthwith to execute such repairs or work or make such replacement, and if the Tenant shall not within thirty (30) days after the service of such notice proceed diligently with the execution of such repairs or work or the making of such replacements, then it shall be lawful for the Landlord to enter upon the Demised Premises and execute such repairs or work or make such replacements, and the cost thereof shall be a debt due from the Tenant to the Landlord and be forthwith recoverable by action.',
                 '(e)  To give the Landlord notice of all structural defects in the Demised Premises.',
                 '(f)  Not to store or bring upon the Demised Premises arms, ammunition or unlawful goods and gunpowder in any part of the Demised Premises, and not to place or leave in the entrance of stairways, passages or corridors of the Demised Premises any boxes or rubbish or otherwise encumber the same, and to keep the Demised Premises in a clean and sanitary condition.',
@@ -2793,7 +2886,9 @@
                 '(p)  Not to do or permit or suffer to be done anything whereby the policy or policies of insurance in respect of the Demised Premises against damage by fire and/or such risks as may be decided by the Landlord from time to time may become void or voidable, or whereby the premium thereon may be increased, and to make good all damage suffered by the Landlord and to repay the Landlord on demand all sums paid by it by way of increased premium and all expenses incurred by the Landlord in or about any renewal of such policy or policies rendered necessary by a breach or non-observance by the Tenant of this covenant.',
                 '(q)  To restore the Demised Premises to their original condition at the expiry of the Term. Such restoration shall be carried out and completed before or on the expiration of the Term, failing which the Landlord shall be at liberty to carry out such restoration and the costs and expenses thereof shall be borne by the Tenant and payable by the Tenant to the Landlord upon demand. In the event such restoration shall not be completed upon the expiry of the Term, the Tenant shall pay to the Landlord rent for such extra days calculated based on the monthly Rental.',
                 '(r)  Not to install or permit to be installed, or remove or vary or permit to be removed or varied, any electrical socket, plug, electrical motor, engine, appliance, wireless or television aerial without the prior written consent of the Landlord, and if such consent is given the Tenant shall at its own cost and expense carry out such installation in compliance with the relevant by-laws and shall not overload or cause damage to the power supply or to any of the existing installations in the Demised Premises. In the event the Tenant commits a breach of this covenant, the Landlord shall be entitled to enter the Demised Premises and remedy and, if necessary, disconnect the same in order to reduce the possibility of fire and to ensure the safety of the Demised Premises, and the Tenant shall forthwith indemnify the Landlord against any cost, expense, loss or damage suffered as a result of this breach.',
-                '(s)  To be solely responsible for the security of the Demised Premises and for the proper securing of the doors and windows of the Demised Premises, and to be solely responsible for the safekeeping of all goods, items, chattels, fixtures and fittings therein at all times.',
+                (IS_ROOM
+                    ? '(s)  To be responsible for the proper securing of the doors and windows of the Demised Premises, and for the safekeeping of all goods, items, chattels, fixtures and fittings therein at all times. The Tenant shall also take reasonable steps to ensure the main door of the property is locked upon leaving, but shall not be responsible for the acts or omissions of other occupants.'
+                    : '(s)  To be solely responsible for the security of the Demised Premises and for the proper securing of the doors and windows of the Demised Premises, and to be solely responsible for the safekeeping of all goods, items, chattels, fixtures and fittings therein at all times.'),
                 '(t)  To use the Demised Premises as a residence only.'
             ]});
 
@@ -2806,7 +2901,9 @@
                 '(d)  Sekiranya Premis atau mana-mana bahagiannya pada bila-bila masa semasa tempoh yang diwujudkan di sini rosak atau musnah akibat kebakaran sehingga menjadikan Premis tidak sesuai untuk digunakan, maka (kecuali apabila kebakaran tersebut disebabkan oleh keingkaran atau kecuaian Penyewa atau orang gaji atau ejennya) Sewa yang dikhaskan di sini hendaklah digantung sehingga Premis menjadi sesuai untuk digunakan semula.',
                 '(e)  Mengembalikan Deposit Keselamatan dan Deposit Utiliti tanpa faedah setelah tamatnya Tempoh atau apa-apa pembaharuannya atau penamatan awal penyewaan menurut Klausa 6.3 di atas, ditolak apa-apa jumlah yang kena dibayar dan terhutang oleh Penyewa yang timbul daripada kewajipannya yang terkandung di sini.',
                 '(f)  Walau apa pun yang bertentangan yang diperuntukkan di sini, Pemilik tidak bertanggungan atau bertanggungjawab kepada Penyewa atau mana-mana orang lain atas kerosakan atau ketidakfungsian mana-mana sistem elektrik, penyaman udara atau sistem lain, atau atas kerosakan atau ketidakfungsian mana-mana perkhidmatan atas apa jua sebab, dan atas ketiadaan penyediaan sepenuhnya atau sebahagiannya mana-mana sistem atau perkhidmatan akibat sebab atau perkara di luar kawalan Pemilik, orang gajinya, ejen atau kontraktornya, atau akibat mogok, sekat masuk, rusuhan, huru-hara awam, peperangan atau tindakan musuh, ribut, banjir, pergerakan bumi, gempa bumi atau apa-apa Kejadian Alam yang lain.',
-                '(g)  Dengan Penyewa membayar Sewa yang dikhaskan di sini dan mematuhi akujanji, terma, syarat dan peruntukan di pihaknya yang terkandung di sini, Penyewa hendaklah memegang dan menikmati Premis dengan aman tanpa apa-apa gangguan, halangan atau kacau ganggu oleh Pemilik atau mana-mana orang yang menuntut secara sah di bawah atau bagi pihaknya.',
+                (IS_ROOM
+                    ? '(g)  Dengan Penyewa membayar Sewa yang dikhaskan di sini dan mematuhi akujanji, terma, syarat dan peruntukan di pihaknya yang terkandung di sini, Penyewa hendaklah memegang dan menikmati Premis dengan aman tanpa gangguan yang tidak munasabah oleh Pemilik atau mana-mana orang yang menuntut secara sah di bawah atau bagi pihaknya. Pihak-Pihak mengakui bahawa hartanah tersebut dikongsi, dan kehadiran serta penggunaan biasa bahagian kongsi oleh penghuni lain tidak menjadi pelanggaran klausa ini.'
+                    : '(g)  Dengan Penyewa membayar Sewa yang dikhaskan di sini dan mematuhi akujanji, terma, syarat dan peruntukan di pihaknya yang terkandung di sini, Penyewa hendaklah memegang dan menikmati Premis dengan aman tanpa apa-apa gangguan, halangan atau kacau ganggu oleh Pemilik atau mana-mana orang yang menuntut secara sah di bawah atau bagi pihaknya.'),
                 'Dengan syarat sentiasa dan adalah dipersetujui secara nyata antara Pihak-Pihak seperti berikut:',
                 '(a)  Sekiranya Penyewa berhenti menduduki Premis kecuali atas penyerahan hak yang dibenarkan, atau melakukan apa-apa pelanggaran kewajipannya di bawah Perjanjian ini yang telah dimaklumkan kepada Penyewa tetapi tidak dibetulkan dalam tempoh tiga puluh (30) hari selepas itu, maka Pemilik boleh memasuki semula Premis atau mana-mana bahagiannya bagi pihak keseluruhannya dan dengan itu Perjanjian ini hendaklah ditamatkan sepenuhnya, tetapi tanpa menjejaskan hak tindakan Pemilik berkenaan apa-apa pelanggaran terdahulu terhadap akujanji Penyewa yang terkandung di sini.',
                 '(b)  Penerimaan Sewa yang dikhaskan di sini oleh Pemilik tidak boleh dianggap sebagai penepian oleh Pemilik terhadap apa-apa hak untuk bertindak terhadap Penyewa berkenaan pelanggaran oleh Penyewa terhadap mana-mana kewajipannya di bawah ini.',
@@ -2820,7 +2917,9 @@
                 '(d)  In the event of the Demised Premises or any part thereof at any time during the term hereby created being damaged or destroyed by fire so as to render the Demised Premises unfit for use, then (except where such fire has been caused by the default or negligence of the Tenant or its servants or agents) the Rental hereby reserved shall be suspended until the Demised Premises shall again be rendered fit for use.',
                 '(e)  To refund the Security Deposit and the Utilities Deposit free of interest upon the expiration of the Term or any renewal thereof or early termination of the tenancy pursuant to Clause 6.3 above, less any sums due and owing by the Tenant arising out of its obligations herein contained.',
                 '(f)  Notwithstanding anything to the contrary herein provided, the Landlord shall not be liable or responsible to the Tenant or any other person whomsoever for the breakdown or non-functioning of any of the electrical, air-conditioning or any other systems, or for the breakdown or non-functioning of any services for any reason whatsoever, and for the non-provision totally or partially of any of the systems or services consequent upon or arising as a result of causes or matters beyond the control of the Landlord, its servants, agents or contractors, or as a result of strike, lock-out, riot, disorder, civil commotion, war or enemy action, storm, tempest, flood, earth movements, earthquakes or any other Acts of God.',
-                '(g)  On the Tenant paying the Rental hereby reserved and observing the covenants, terms, conditions and stipulations on its part herein contained, the Tenant shall peaceably hold and enjoy the Demised Premises without any interference, interruption or disturbance by the Landlord or any person lawfully claiming under or in trust for it.',
+                (IS_ROOM
+                    ? '(g)  On the Tenant paying the Rental hereby reserved and observing the covenants, terms, conditions and stipulations on its part herein contained, the Tenant shall peaceably hold and enjoy the Demised Premises without unreasonable interference by the Landlord or any person lawfully claiming under or in trust for it. The Parties acknowledge that the property is shared, and that the presence and ordinary use of the common areas by other occupants shall not constitute a breach of this clause.'
+                    : '(g)  On the Tenant paying the Rental hereby reserved and observing the covenants, terms, conditions and stipulations on its part herein contained, the Tenant shall peaceably hold and enjoy the Demised Premises without any interference, interruption or disturbance by the Landlord or any person lawfully claiming under or in trust for it.'),
                 'Provided always and it is expressly agreed between the Parties as follows:',
                 '(a)  If the Tenant shall cease to occupy the Demised Premises except upon a permitted assignment, or shall commit any breach of its obligations under this Agreement which has been notified to the Tenant but not rectified within thirty (30) days thereafter, then the Landlord may re-enter the Demised Premises or any part thereof in the name of the whole, and thereupon this Agreement shall absolutely determine, but without prejudice to the right of action of the Landlord in respect of any antecedent breach of the Tenant\u2019s covenants herein contained.',
                 '(b)  Acceptance of Rental hereby reserved by the Landlord shall not be deemed to operate as a waiver by the Landlord of any right to proceed against the Tenant in respect of a breach by the Tenant of any of its obligations hereunder.',
